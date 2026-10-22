@@ -11,7 +11,7 @@ namespace _01.Scripts.TAE.Managers
         private List<Turn> _turnCycle = new();
         public Turn CurrentTurn { get; private set; }
         
-        [SerializeField] private PlayerTurn player;
+        [SerializeField] private DLJ_PlayerTurn player;
 
         private int index;
 
