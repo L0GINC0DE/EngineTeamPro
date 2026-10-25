@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class KTH_Boss : MonoBehaviour
+public class KTH_Boss : KTH_Enemy
 {
     [SerializeField]private KTH_PatternSO ps;
     
