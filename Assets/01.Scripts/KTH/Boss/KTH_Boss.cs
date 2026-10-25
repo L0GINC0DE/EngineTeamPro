@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class KTH_Boss : MonoBehaviour
 {
@@ -9,9 +7,19 @@ public class KTH_Boss : MonoBehaviour
     
     int index;
     public KTH_BossAction NextAction=>ps.patterns[index];
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TakeTurn();
+        }
+    }
     
     public void TakeTurn()
     {
+        if (ps.patterns.Count == 0) return;
+
         ps.patterns[index].Execute(this);
         index=(index+1)%ps.patterns.Count;
     }
