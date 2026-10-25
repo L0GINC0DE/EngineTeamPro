@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //[SerializeField] private
+    //[SerializeField] private KTH_Enemy enemy;
 
     public HealthModule HealthModule { get; private set; }
 
