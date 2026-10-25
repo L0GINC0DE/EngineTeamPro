@@ -7,7 +7,7 @@ public abstract class PlayableUI : MonoBehaviour
     public int Defend { get;  private set; }
     public int Utility { get;  private set; }
 
-    protected PlayableUI()
+    protected virtual void Awake()
     {
         if (UISo != null)
         {
@@ -17,6 +17,9 @@ public abstract class PlayableUI : MonoBehaviour
         }
 
     }
-    
-    public abstract void Use();
+
+    public virtual void Select()
+    {
+        PlayerUIManager.Instance.SelectPlayableUI(this);
+    }
 }
