@@ -2,11 +2,14 @@ using UnityEngine;
 
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Agents
 {
     public class HealthModule : MonoBehaviour
     {
+        public UnityEvent OnHitEvent;
+        
         public delegate void HealthChanged(int prev, int next);
 
         public event Action OnDead;
@@ -46,6 +49,7 @@ namespace Agents
 
             currentHealth = next;
             OnHealthChanged?.Invoke(previous, next);
+            OnHitEvent?.Invoke();
 
             if (previous > 0 && next == 0)
                 OnDead?.Invoke();
