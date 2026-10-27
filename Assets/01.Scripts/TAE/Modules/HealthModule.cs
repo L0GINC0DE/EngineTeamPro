@@ -37,6 +37,7 @@ namespace Agents
         {
             if (damage <= 0 || IsDead) return;
             SetHealth(currentHealth - damage);
+            OnHitEvent?.Invoke();
         }
 
         private void SetHealth(int value)
@@ -49,7 +50,6 @@ namespace Agents
 
             currentHealth = next;
             OnHealthChanged?.Invoke(previous, next);
-            OnHitEvent?.Invoke();
 
             if (previous > 0 && next == 0)
                 OnDead?.Invoke();
