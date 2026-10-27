@@ -7,10 +7,11 @@ public class AttackUI : PlayableUI
     public override void Select()
     {
         base.Select();
+        PlayerUIManager.Instance.SelectAction(action);
     }
 
-    private void ExecuteAction(PlayableUI player, PlayableUI weapon)
+    private void ExecuteAction(Player player, PlayableUI playerUI, PlayableUI weaponUI)
     {
-        action.PlayAction(player, weapon);
+        action.PlayAction(player, playerUI, weaponUI);
     }
 }
