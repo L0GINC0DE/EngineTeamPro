@@ -327,7 +327,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1483476345408708555, guid: dcbc61d2848fba742a0c2b94f29ff15f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1395410616}
   m_SourcePrefab: {fileID: 100100000, guid: dcbc61d2848fba742a0c2b94f29ff15f, type: 3}
 --- !u!1001 &1160395660
 PrefabInstance:
@@ -391,12 +394,30 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8807789958093094726, guid: dcbc61d2848fba742a0c2b94f29ff15f, type: 3}
   m_PrefabInstance: {fileID: 458817223}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1395410612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 063c977779f242d7bb8247730b44faab, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e392dd9d7995a4faa54fe941606c0d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.PlayerTurn
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.BattleUnit
+--- !u!1 &1395410612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1483476345408708555, guid: dcbc61d2848fba742a0c2b94f29ff15f, type: 3}
+  m_PrefabInstance: {fileID: 458817223}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1395410616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395410612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2f8333caf246efb82eaabcb65831a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.PlayerAttack
+  target: {fileID: 1252580753}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

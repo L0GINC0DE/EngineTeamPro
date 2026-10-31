@@ -1,0 +1,21 @@
+{
+  "status": "preserved",
+  "protectedKinds": [
+    "code-span",
+    "stable-id",
+    "numeric-token-with-unit",
+    "calendar-date",
+    "markdown-link-destination",
+    "table-semantic-row",
+    "file-path",
+    "url",
+    "claim-boundary",
+    "gate-state",
+    "uncertainty",
+    "prompt-injection-data"
+  ],
+  "originalDigest": "54efc2f0d27ba5b2f2df04b08157462238d47dfeefa7d7ac5738e9ab5d52674a",
+  "revisedDigest": "54efc2f0d27ba5b2f2df04b08157462238d47dfeefa7d7ac5738e9ab5d52674a",
+  "changeRate": 0,
+  "changeRateStatus": "unchanged"
+}

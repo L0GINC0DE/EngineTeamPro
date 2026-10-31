@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-27",
+  "mathAndGameDirectionCases": 60,
+  "workedExample": true,
+  "inputHandlers": true,
+  "offlineDependencies": true,
+  "documentLinks": true,
+  "scriptSyntax": true,
+  "browserVisuallyTested": false
+}
