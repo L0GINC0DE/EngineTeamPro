@@ -8,6 +8,7 @@ namespace _01.Scripts.KTH
     {
         public event Action OnJumpKeyPressed;
         public event Action OnInteractKeyPressed;
+        public event Action OnAttackKeyPressed;
         public Vector2 MoveInput { get; private set; }
 
         private InputSystem_Actions _controls;
@@ -39,6 +40,8 @@ namespace _01.Scripts.KTH
 
         public void OnAttack(InputAction.CallbackContext context)
         {
+            if (context.performed)
+                OnAttackKeyPressed?.Invoke();
         }
 
         public void OnInteract(InputAction.CallbackContext context)

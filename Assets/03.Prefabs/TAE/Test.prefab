@@ -63,6 +63,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8410246083159601419}
   - component: {fileID: 815698486758581915}
+  - component: {fileID: 810000000000000001}
+  - component: {fileID: 810000000000000002}
   m_Layer: 0
   m_Name: Enemy (3)
   m_TagString: Untagged
@@ -94,10 +96,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1745424127105814060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbf38a760e946a2afba5bdf87a6ac0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e392dd9d7995a4faa54fe941606c0d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.EnemyTurn
-  canExecute: 0
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.BattleUnit
+  type: 1
 --- !u!1 &3519606407603259161
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +110,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3598683838414347145}
   - component: {fileID: 1635540261535588275}
+  - component: {fileID: 810000000000000003}
+  - component: {fileID: 810000000000000004}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -139,10 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3519606407603259161}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbf38a760e946a2afba5bdf87a6ac0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e392dd9d7995a4faa54fe941606c0d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.EnemyTurn
-  canExecute: 0
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.BattleUnit
+  type: 1
 --- !u!1 &4912552814404037174
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +157,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4971172813934346170}
   - component: {fileID: 6380271238774961054}
+  - component: {fileID: 810000000000000005}
+  - component: {fileID: 810000000000000006}
   m_Layer: 0
   m_Name: Enemy (2)
   m_TagString: Untagged
@@ -184,10 +190,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4912552814404037174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbf38a760e946a2afba5bdf87a6ac0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e392dd9d7995a4faa54fe941606c0d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.EnemyTurn
-  canExecute: 0
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.BattleUnit
+  type: 1
 --- !u!1 &7591604710227029746
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +204,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1020847389193703739}
   - component: {fileID: 955163292171788432}
+  - component: {fileID: 810000000000000007}
+  - component: {fileID: 810000000000000008}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -229,7 +237,127 @@ MonoBehaviour:
   m_GameObject: {fileID: 7591604710227029746}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbf38a760e946a2afba5bdf87a6ac0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e392dd9d7995a4faa54fe941606c0d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.EnemyTurn
-  canExecute: 0
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.BattleUnit
+  type: 1
+--- !u!114 &810000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745424127105814060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52c9c8a87ecb1b41afad9f2d88936b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Attacker
+  damage: 10
+--- !u!114 &810000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745424127105814060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7626dd9537446392cd1288ec731d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Agents.HealthModule
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 50
+  currentHealth: 0
+--- !u!114 &810000000000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519606407603259161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52c9c8a87ecb1b41afad9f2d88936b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Attacker
+  damage: 10
+--- !u!114 &810000000000000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519606407603259161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7626dd9537446392cd1288ec731d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Agents.HealthModule
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 50
+  currentHealth: 0
+--- !u!114 &810000000000000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4912552814404037174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52c9c8a87ecb1b41afad9f2d88936b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Attacker
+  damage: 10
+--- !u!114 &810000000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4912552814404037174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7626dd9537446392cd1288ec731d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Agents.HealthModule
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 50
+  currentHealth: 0
+--- !u!114 &810000000000000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591604710227029746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52c9c8a87ecb1b41afad9f2d88936b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Attacker
+  damage: 10
+--- !u!114 &810000000000000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591604710227029746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7626dd9537446392cd1288ec731d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Agents.HealthModule
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 50
+  currentHealth: 0
