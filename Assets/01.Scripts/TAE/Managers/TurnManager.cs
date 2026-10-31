@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using CoreLib;
 using UnityEngine;
@@ -6,7 +7,12 @@ namespace _01.Scripts.TAE.Managers
 {
     public class TurnManager : MonoSingleton<TurnManager>
     {
+        private enum BattleState { Ready, PlayerTurn, Processing, Ended }
+
+        private BattleState state;
+        
         [SerializeField] private BattleUnit player;
+        [SerializeField] private float turnDelay = 0.8f;
 
         private readonly List<BattleUnit> enemies = new();
         private bool isProcessing;
@@ -43,13 +49,17 @@ namespace _01.Scripts.TAE.Managers
         {
             if (!isActiveAndEnabled || isProcessing) return false;
             if (!IsPlayerTurn) return false;
-            if (target == null || !enemies.Contains(target)) return false;
+            if (target == null || !enemies.Contains(target) || !IsAlive(target)) return false;
 
-            isProcessing = true;
+            state = BattleState.Processing;
             bool executed = new AttackCommand(player, target).Execute();
-            isProcessing = false;
 
-            if (!executed) return false;
+            if (!executed) 
+            {
+                state = BattleState.PlayerTurn;
+                return false;
+            }
+
             Debug.Log($"플레이어가 적 [{target.name}]을 공격", target);
             EndTurn();
             return true;
@@ -62,9 +72,7 @@ namespace _01.Scripts.TAE.Managers
             if (!IsPlayerTurn) return;
 
             isProcessing = true;
-            enemies.ForEach(EnemyTurn);
-            isProcessing = false;
-            BeginPlayerTurn();
+            StartCoroutine(EnemyRoutine());
         }
 
         private void BeginPlayerTurn()
@@ -77,24 +85,40 @@ namespace _01.Scripts.TAE.Managers
         private bool CheckBattleEnd()
         {
             if (BattleEnded) return true;
-            bool playerAlive = IsAlive(player);
-            if (playerAlive && GetFirstLivingEnemy() != null) return false;
+            if (IsAlive(player) && GetFirstLivingEnemy() != null) return false;
 
             BattleEnded = true;
             CurrentUnit = null;
-            Debug.Log(playerAlive ? "승리" : "패배", this);
+            Debug.Log(IsAlive(player) ? "승리" : "패배", this);
             return true;
         }
 
         public BattleUnit GetFirstLivingEnemy() => enemies.Find(IsAlive);
 
-        public void EnemyTurn(BattleUnit enemy)
+        
+
+        private IEnumerator EnemyRoutine()
+        {
+            foreach (var enemy in enemies)
+            {
+                EnemyTurn(enemy);
+                yield return new WaitForSeconds(turnDelay);
+            }
+
+            isProcessing = false;
+            BeginPlayerTurn();
+        }
+
+        private void EnemyTurn(BattleUnit enemy)
         {
             if (CheckBattleEnd() || !IsAlive(enemy)) return;
             CurrentUnit = enemy;
             Debug.Log($"적 턴: {enemy.name}", enemy);
             new AttackCommand(enemy, player).Execute();
+            Debug.Log($"적 공격");
         }
+
+
         private static bool IsAlive(BattleUnit unit) => unit != null && unit.IsAlive;
     }
 }
