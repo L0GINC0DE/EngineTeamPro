@@ -1,12 +1,13 @@
-using UnityEngine;
-
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Agents
 {
     public class HealthModule : MonoBehaviour
     {
+        public UnityEvent OnHitEvent = new();
+        
         public delegate void HealthChanged(int prev, int next);
 
         public event Action OnDead;
@@ -14,29 +15,43 @@ namespace Agents
 
         [SerializeField] private int maxHealth = 50;
         [SerializeField] private int currentHealth;
+        private bool initialized;
 
         public int MaxHealth => maxHealth;
-        public int CurrentHealth => currentHealth;
-        public bool IsDead => currentHealth == 0;
+        public int CurrentHealth
+        {
+            get
+            {
+                EnsureInitialized();
+                return currentHealth;
+            }
+        }
+        public bool IsDead => CurrentHealth <= 0;
 
         private void Awake()
         {
-            maxHealth = Mathf.Max(1, maxHealth);
-            ResetHealth();
+            EnsureInitialized();
         }
 
         public void ResetHealth()
         {
+            maxHealth = Mathf.Max(1, maxHealth);
+            initialized = true;
             SetHealth(maxHealth);
+        }
+
+        private void EnsureInitialized()
+        {
+            if (!initialized) ResetHealth();
         }
 
         public void TakeDamage(int damage)
         {
             if (damage <= 0 || IsDead) return;
-            SetHealth(currentHealth - damage);
+            SetHealth(currentHealth - damage, true);
         }
 
-        private void SetHealth(int value)
+        private void SetHealth(int value, bool isHit = false)
         {
             int previous = currentHealth;
             int next = Mathf.Clamp(value, 0, maxHealth);
@@ -46,6 +61,7 @@ namespace Agents
 
             currentHealth = next;
             OnHealthChanged?.Invoke(previous, next);
+            if (isHit) OnHitEvent?.Invoke();
 
             if (previous > 0 && next == 0)
                 OnDead?.Invoke();

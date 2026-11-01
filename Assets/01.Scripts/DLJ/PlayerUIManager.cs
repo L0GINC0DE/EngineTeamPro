@@ -13,6 +13,7 @@ public enum SelectionStep
 public class PlayerUIManager : MonoBehaviour
 {
     [SerializeField] private List<PlayableUI> uiList;
+    [SerializeField] private Player player;
 
     public static PlayerUIManager Instance { get; private set; }
 
@@ -27,6 +28,19 @@ public class PlayerUIManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if (selectionStep != SelectionStep.Execute) return;
+        
+        selectionStep = SelectionStep.Player;
+        
+        selectedAction.PlayAction(player, selectedPlayer, selectedWeapon);
+
+        selectedPlayer = null;
+        selectedWeapon = null;
+        selectedAction = null;
     }
 
     public void SelectPlayableUI(PlayableUI ui)
@@ -44,7 +58,7 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    private void SelectAction(PlayerAction action)
+    public void SelectAction(PlayerAction action)
     {
         if (selectionStep == SelectionStep.Action)
         {

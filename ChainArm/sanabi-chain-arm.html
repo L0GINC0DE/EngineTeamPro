@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산나비 · 사슬팔 액션 — A/D FLOW</title>
+<style>
+:root{color-scheme:dark;--cyan:#67f1ed;--pink:#ff68b0;--muted:#899bb2;--line:#203647;--panel:rgba(7,15,25,.88)}
+*{box-sizing:border-box;user-select:none}body{margin:0;overflow:hidden;background:#060a12;color:#e7f2f7;font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;font-size:12px}canvas{display:block;width:100vw;height:100vh;cursor:none}button,input{font:inherit}button{cursor:pointer;color:#c1d3df;background:#101e2c;border:1px solid #294457;border-radius:7px;padding:9px 12px;transition:background .15s,border-color .15s}button:hover{background:#193248;border-color:var(--cyan);color:white}button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}kbd{font:700 11px Consolas,monospace;background:#172c3d;border:1px solid #35556b;border-bottom-width:2px;padding:3px 6px;border-radius:4px;color:#d4edf8;white-space:nowrap}.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(10px);box-shadow:0 8px 30px #0004}.hud{position:fixed;left:20px;top:20px;width:320px;padding:17px 20px;pointer-events:none;border-top:2px solid var(--cyan)}.eyebrow{font:10px Consolas,monospace;letter-spacing:2px;color:var(--cyan)}h1{font-size:20px;letter-spacing:-.8px;margin:6px 0 13px}h1 small{font:10px Consolas,monospace;color:var(--pink);letter-spacing:1px;margin-left:6px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px}.label{color:var(--muted);font-size:10px;margin-bottom:5px}.value{font:700 19px Consolas,monospace}#hudTimer{color:#ffe39b}.bar{height:4px;border-radius:4px;background:#203041;overflow:hidden;margin-top:7px}.bar>div{height:100%;background:var(--cyan);width:0}#dashChargeBar{background:linear-gradient(90deg,var(--cyan),var(--pink));width:100%}.dash-row{display:flex;justify-content:space-between;margin-top:14px;font-size:10px}#dashStatusText{color:var(--pink)}.tools{position:fixed;right:20px;top:20px;display:flex;gap:6px}.tools button{background:var(--panel)}.guide{position:fixed;left:20px;bottom:76px;width:320px;padding:17px 20px;pointer-events:none}.guide h2{font-size:12px;margin:0 0 12px;display:flex;justify-content:space-between}.guide h2 span{color:var(--muted);font-size:10px;font-weight:400}.guide-row{display:flex;align-items:center;gap:9px;margin:9px 0;color:#b6cada;font-size:11px}.guide-row kbd{min-width:67px;text-align:center}.guide-note{border-top:1px solid var(--line);padding-top:10px;margin-top:12px;line-height:1.7;color:var(--muted);font-size:10px}.guide-note b{color:var(--pink);font-weight:500}.bottom{position:fixed;bottom:18px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;gap:12px}.sectors{padding:7px;display:flex;gap:4px}.sector-btn{border-color:transparent;background:transparent;padding:8px;font-size:10px}.sector-btn.selected{color:var(--cyan);background:#12303a;border-color:#256373}.input-status{display:flex;align-items:center;gap:10px;padding:10px 13px;pointer-events:none}.input-status kbd{font-size:14px;min-width:27px;text-align:center}.input-status kbd.active{color:#06131a;background:var(--cyan);box-shadow:0 0 14px #67f1ed55}.input-status span{font-size:11px;color:#b9cad9}#inspectorPanel{position:fixed;right:20px;top:68px;width:295px;padding:18px;max-height:calc(100vh - 150px);overflow:auto}.inspector-title{font-size:13px;font-weight:700;margin-bottom:12px}#stateBadge{color:var(--cyan);font:10px Consolas,monospace}.telemetry{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0;border-block:1px solid var(--line);margin:12px 0;font:12px Consolas,monospace}.telemetry small{display:block;color:var(--muted);font-size:9px;margin-bottom:6px}.field{margin-top:15px}.field label{display:flex;justify-content:space-between;font-size:11px}.field label span{color:var(--cyan)}input[type=range]{width:100%;accent-color:var(--cyan);margin:9px 0 0;height:6px}input[type=checkbox]{accent-color:var(--cyan)}#bannerToast{position:fixed;top:174px;left:50%;transform:translateX(-50%);padding:10px 17px;max-width:80vw;color:#dffcff;font-size:12px;pointer-events:none;transition:opacity .25s;text-align:center;border-color:#36706f}.hidden{display:none!important}.opacity-0{opacity:0}.pause{position:fixed;inset:0;display:grid;place-items:center;background:#030914b8;backdrop-filter:blur(8px)}.pause-card{text-align:center;padding:32px 45px;max-width:90vw}.pause-card h2{font-size:24px;margin:12px 0}.pause-card p{color:#9eb5c6;line-height:1.8}.pause-card button{color:#03131b;background:var(--cyan);border:0;padding:12px 30px;font-weight:700;margin-top:14px}.scanline{position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#0001 0px,#0001 1px,transparent 1px,transparent 4px);opacity:.25}.badge{position:fixed;left:50%;top:24px;transform:translateX(-50%);font:10px Consolas,monospace;letter-spacing:2px;color:#52707f;pointer-events:none}
+@media(max-width:1050px){.badge{display:none}.tools{gap:4px}.tools button{padding:9px;font-size:10px}.input-status span{max-width:210px}.guide{width:290px}.hud{width:290px}}
+@media(max-height:700px){.guide{padding:10px 16px;bottom:70px}.guide-row{margin:6px 0}.guide-note{display:none}.hud{padding:12px 16px}#bannerToast{top:155px}}
+@media(max-width:750px){.hud{width:250px;left:12px;top:12px}.tools{top:12px;right:12px;max-width:210px;justify-content:flex-end;flex-wrap:wrap}.tools button{font-size:10px;padding:7px}.guide{left:12px;width:260px}.bottom{left:12px;right:12px;bottom:12px}.input-status span{display:none}.sector-btn{padding:7px 4px}.sectors{gap:0}.badge{display:none}#inspectorPanel{right:12px;top:92px}h1{font-size:17px}}
+</style></head><body>
+<canvas id="gameCanvas" aria-label="사슬팔 액션 게임. 키보드와 마우스를 사용하세요."></canvas><div class="scanline"></div>
+<header class="hud panel"><div class="eyebrow">CHAIN-ARM ACTION LAB / 04</div><h1>산나비 · 사슬팔 액션 <small>A/D FLOW</small></h1><div class="metrics"><div><div class="label">구간 기록</div><div id="hudTimer" class="value">00:00.00</div></div><div><div class="label">순간 속력</div><div id="speedText" class="value">0 px/s</div><div class="bar"><div id="speedBar"></div></div></div></div><div class="dash-row"><span>사슬팔 대시</span><span id="dashStatusText">사슬 연결 대기</span></div><div class="bar"><div id="dashChargeBar"></div></div></header>
+<div class="badge">MAGO CITY / MOVEMENT STUDY</div>
+<nav class="tools" aria-label="게임 메뉴"><button id="btnResetPlayer">복귀 <b>R</b></button><button id="btnResetCourse">처음부터</button><button id="btnHelp">조작 <b>H</b></button><button id="btnToggleInspector">물리 설정</button><button id="btnFullscreen">전체화면</button></nav>
+<section id="controlsGuide" class="guide panel"><h2>사슬을 유지하며 가속하세요 <span>H 접기</span></h2><div class="guide-row"><kbd>A / D</kbd><span>사슬 회전 기준 좌우 보기 / 빠른 반전</span></div><div class="guide-row"><kbd>좌클릭 유지</kbd><span>벽·천장에 사슬 고정 / 놓으면 해제</span></div><div class="guide-row"><kbd>Shift / 우클릭</kbd><span>사슬 유지 + 스윙 대시</span></div><div class="guide-row"><kbd>A·D + 대시</kbd><span>몸체가 바라보는 방향으로 대시</span></div><div class="guide-row"><kbd>W / S</kbd><span>사슬 감기·풀기 / 벽 등반</span></div><div class="guide-row"><kbd>Space</kbd><span>점프 · 벽 차기 · 사슬 해제 도약</span></div><div class="guide-note"><b>보는 방향 = 분홍 화살표 = 대시 방향</b><br>대시 중 사슬 유지. 좌클릭을 놓으면 해제됩니다.<br>훅 즉시 사슬 선에 회전 고정 · A/D는 몸체 기준<br>지상에서는 A/D를 놓으면 미끄러짐 없이 정지.<br>새 사슬 연결·착지 시 충전 · Esc 일시정지<br>키보드·마우스용 팬 제작 조작 프로토타입</div></section>
+<div id="bannerToast" class="panel opacity-0"><span id="bannerToastText"></span></div>
+<aside id="inspectorPanel" class="panel hidden"><div class="inspector-title">물리 설정 <span id="stateBadge">AIRBORNE</span></div><div class="telemetry"><div><small>VELOCITY</small><span id="telVel">0, 0</span></div><div><small>CHAIN d / L</small><span id="telChainLen">-- / --</span></div><div><small>ANGULAR VELOCITY</small><span id="telOmega">0</span></div><div><small>TENSION</small><span id="telTension">0</span></div></div><label><input id="chkVectors" type="checkbox"> 속도·장력 벡터 표시</label>
+<div class="field"><label for="sliderMaxRange">사슬 사거리 <span id="valMaxRange">480 px</span></label><input id="sliderMaxRange" type="range" min="280" max="750" step="10" value="480"></div>
+<div class="field"><label for="sliderDashPower">대시 추진력 <span id="valDashPower">1080</span></label><input id="sliderDashPower" type="range" min="600" max="1600" step="20" value="1080"></div>
+<div class="field"><label for="sliderGravity">중력 <span id="valGravity">1480</span></label><input id="sliderGravity" type="range" min="700" max="2400" step="20" value="1480"></div>
+<div class="field"><label for="sliderBounce">사슬 탄성 <span id="valBounce">0.18</span></label><input id="sliderBounce" type="range" min="0" max="0.5" step="0.02" value="0.18"></div>
+<div class="field"><label for="sliderTimeScale">시간 배율 <span id="valTimeScale">1.00x</span></label><input id="sliderTimeScale" type="range" min="0.25" max="1.25" step="0.05" value="1"></div>
+<button id="btnResetParams" style="margin-top:18px;width:100%">기본값 복원</button></aside>
+<footer class="bottom"><nav class="sectors panel" aria-label="연습 구간"><button class="sector-btn selected" data-sector="0">1 하층 훈련장</button><button class="sector-btn" data-sector="1">2 진자 협곡</button><button class="sector-btn" data-sector="2">3 수직 샤프트</button><button class="sector-btn" data-sector="3">4 코어 타워</button></nav><div class="input-status panel"><kbd id="inputA">A</kbd><kbd id="inputD">D</kbd><span id="dashHint">청록색 천장에 좌클릭 유지</span></div></footer>
+<div id="pauseOverlay" class="pause hidden"><div class="pause-card panel"><div class="eyebrow">TAKE A BREATH</div><h2>잠시 멈췄습니다</h2><p>돌아오면 같은 위치에서 이어집니다.<br>사슬을 유지하려면 좌클릭을 다시 눌러주세요.</p><button id="btnResume">계속 플레이 · Esc</button></div></div>
+<script>
+        /**
+         * ============================================================================
+         * SANABI (산나비) CHAIN-ARM PHYSICS & ACTION ENGINE
+         * ============================================================================
+         * Core Features Implemented:
+         * 1. Raycast Aiming against Grabbable (Cyan) vs Ungrabbable (Red Armor) vs Hazard (Laser)
+         *    plus Homing Lock-on onto Floating Boost Drones.
+         * 2. Slack/Taut Tension Constraint (d <= L):
+         *    - Free flight while d < L (slack chain).
+         *    - Instant centripetal projection onto tangent vector when d >= L.
+         *    - Subtle initial grapple yank impulse & reel-in/out (W/S).
+         * 3. Swing Dash (Right Click / Shift while grappling):
+         *    - Keep chain connected and inject speed along its A/D-selected tangent.
+         *    - Time-dilation hitstop, screen shake, cyan/magenta afterimages.
+         * 4. Wall Grab & Climb:
+         *    - Automatic wall cling when touching grabbable vertical surfaces in air.
+         *    - Climb up/down with W/S and leap away with Space.
+         * 5. Drone Homing Pull & Execution Bounce:
+         *    - Grappling a Drone pulls the player at high speed; colliding triggers a bullet-time
+         *      upward launch and restores Swing Dash charges.
+         */
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Resize canvas smoothly
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Prevent context menu so Right Click works seamlessly for Swing Dash
+        window.addEventListener('contextmenu', e => e.preventDefault());
+
+        // ============================================================================
+        // PHYSICS PARAMETERS (Tweakable via Inspector)
+        // ============================================================================
+        const DEFAULT_PARAMS = {
+            gravity: 1480,
+            maxChainRange: 480,
+            swingDashImpulse: 1080,
+            chainBounce: 0.18,
+            timeScale: 1.0,
+            airDrag: 0.998,
+            swingPumpForce: 1850,
+            reelSpeed: 280,
+            wallClimbSpeed: 230,
+            showVectors: false
+        };
+
+        const params = { ...DEFAULT_PARAMS };
+
+        // ============================================================================
+        // INPUT STATE
+        // ============================================================================
+        const keys = {
+            w: false,
+            a: false,
+            s: false,
+            d: false,
+            space: false,
+            shift: false
+        };
+
+        const mouse = {
+            screenX: window.innerWidth * 0.6,
+            screenY: window.innerHeight * 0.4,
+            worldX: 0,
+            worldY: 0,
+            leftDown: false,
+            rightDown: false
+        };
+
+        // ============================================================================
+        // LEVEL DESIGN: MAGO CITY NEO-JOSEON OBSTACLE COURSE
+        // ============================================================================
+        // Platform types:
+        // - 'grabbable': Cyan neon edges; chain hooks onto it, walls can be climbed.
+        // - 'ungrabbable': Dark crimson armor; solid collision, chain sparks & bounces off.
+        // - 'hazard': Plasma laser wall; resets player to last checkpoint on contact.
+
+        const checkpoints = [
+            { id: 0, x: 180, y: 820, name: '제1구역 : 하층 사슬 훈련장 (SECTOR 01)' },
+            { id: 1, x: 2050, y: 690, name: '제2구역 : 진자 가속 협곡 (PENDULUM CANYON)' },
+            { id: 2, x: 4220, y: 540, name: '제3구역 : 수직 사일로 샤프트 (VERTICAL SHAFT)' },
+            { id: 3, x: 5050, y: -960, name: '제4구역 : 마고 최상층 루프탑 (MAGO SKYLINE)' }
+        ];
+
+        const goalZone = {
+            x: 6850,
+            y: -1280,
+            w: 180,
+            h: 220,
+            name: '최종 목표 지점 : 전술 코어 확보'
+        };
+
+        const platforms = [
+            // --- SECTOR 1: Training Ground ---
+            { x: 0, y: 900, w: 920, h: 120, type: 'grabbable', label: '출발 플랫폼' },
+            { x: -80, y: 100, w: 80, h: 920, type: 'ungrabbable' },
+            // Ceiling anchor bar 1
+            { x: 380, y: 480, w: 380, h: 48, type: 'grabbable', label: '천장 앵커 [좌클릭 유지]' },
+            // Second ceiling bar for double swing or swing dash
+            { x: 960, y: 400, w: 420, h: 48, type: 'grabbable', label: '스윙 대쉬 가속 구간 [우클릭/Shift]' },
+            // Safety mid platform
+            { x: 1120, y: 860, w: 360, h: 90, type: 'grabbable' },
+            // Hazard floor under Sector 1 gap
+            { x: 920, y: 1060, w: 1050, h: 50, type: 'hazard' },
+            // High overhang before Checkpoint 1
+            { x: 1560, y: 340, w: 340, h: 50, type: 'grabbable' },
+            { x: 1920, y: 760, w: 420, h: 120, type: 'grabbable', label: '체크포인트 01' },
+
+            // --- SECTOR 2: Pendulum Canyon & Ungrabbable Shields ---
+            // Long hazard abyss
+            { x: 2340, y: 1060, w: 1860, h: 60, type: 'hazard' },
+            // High ceiling grapple blocks separated by ungrabbable red shields
+            { x: 2380, y: 310, w: 320, h: 52, type: 'grabbable', label: '고속 진자 앵커 A' },
+            { x: 2820, y: 470, w: 60, h: 280, type: 'ungrabbable', label: '사슬 차단 격벽' },
+            { x: 3000, y: 240, w: 360, h: 52, type: 'grabbable', label: '고속 진자 앵커 B' },
+            // Low ungrabbable obstacle forcing high arc
+            { x: 3480, y: 580, w: 90, h: 360, type: 'ungrabbable' },
+            // Grabbable ceiling anchor past obstacle
+            { x: 3560, y: 190, w: 360, h: 52, type: 'grabbable', label: '급강하 스윙 포인트' },
+            // Sector 2 Landing -> Checkpoint 2
+            { x: 4080, y: 610, w: 420, h: 110, type: 'grabbable', label: '체크포인트 02' },
+
+            // --- SECTOR 3: Vertical Shaft (Wall Climb + Grapple Ascent) ---
+            // Left Shaft Walls
+            { x: 4000, y: -380, w: 70, h: 990, type: 'ungrabbable' },
+            { x: 4160, y: 80, w: 56, h: 380, type: 'grabbable', label: '수직 등반 벽면' },
+            { x: 4160, y: -560, w: 56, h: 440, type: 'grabbable' },
+            { x: 4160, y: -1120, w: 56, h: 420, type: 'ungrabbable' },
+
+            // Right Shaft Walls
+            { x: 4680, y: -120, w: 64, h: 780, type: 'grabbable', label: '벽 점프 구간 [Space]' },
+            { x: 4680, y: -640, w: 64, h: 380, type: 'ungrabbable' },
+            { x: 4680, y: -1020, w: 64, h: 360, type: 'grabbable' },
+
+            // Mid-shaft floating grapple blocks & hazards
+            { x: 4380, y: -210, w: 140, h: 44, type: 'grabbable' },
+            { x: 4390, y: -690, w: 140, h: 44, type: 'grabbable' },
+            { x: 4340, y: -440, w: 190, h: 32, type: 'hazard' },
+
+            // Top of Shaft Platform -> Checkpoint 3
+            { x: 4920, y: -890, w: 450, h: 100, type: 'grabbable', label: '체크포인트 03' },
+
+            // --- SECTOR 4: Mago Skyline Final Run ---
+            { x: 5480, y: -1350, w: 340, h: 48, type: 'grabbable', label: '스카이라인 고공 앵커' },
+            { x: 5980, y: -1440, w: 380, h: 48, type: 'grabbable', label: '최종 가속 스윙' },
+            { x: 5820, y: -1040, w: 120, h: 320, type: 'ungrabbable' },
+            { x: 5380, y: -620, w: 1550, h: 60, type: 'hazard' },
+            // Final Goal Platform
+            { x: 6680, y: -1060, w: 520, h: 120, type: 'grabbable', label: '마고 코어 터미널 (GOAL)' }
+        ];
+
+        // Floating Boost Drones (Homing Grapple Pull + Upward Launch + Dash Reset)
+        const initialDrones = [
+            { id: 1, x: 850, y: 650, r: 24, cooldown: 0 },
+            { id: 2, x: 1800, y: 540, r: 24, cooldown: 0 },
+            { id: 3, x: 2740, y: 350, r: 24, cooldown: 0 },
+            { id: 4, x: 3420, y: 410, r: 24, cooldown: 0 },
+            { id: 5, x: 3920, y: 440, r: 24, cooldown: 0 },
+            { id: 6, x: 4440, y: 240, r: 24, cooldown: 0 },
+            { id: 7, x: 4440, y: -920, r: 24, cooldown: 0 },
+            { id: 8, x: 5420, y: -1050, r: 24, cooldown: 0 },
+            { id: 9, x: 5900, y: -1160, r: 24, cooldown: 0 },
+            { id: 10, x: 6480, y: -1180, r: 24, cooldown: 0 }
+        ];
+
+        let drones = JSON.parse(JSON.stringify(initialDrones));
+
+        // Decorative Cyberpunk Signs in Background
+        const neonBillboards = [
+            { x: 220, y: 660, w: 210, h: 90, title: '마고특별시', sub: 'MAGO METROPOLIS', color: '#00f3ff' },
+            { x: 1240, y: 640, w: 220, h: 85, title: '사슬팔 출력 100%', sub: 'CHAIN-ARM OVERDRIVE', color: '#ff007f' },
+            { x: 2120, y: 540, w: 230, h: 90, title: '제2구역 : 협곡', sub: 'PENDULUM ZONE', color: '#fbbf24' },
+            { x: 3180, y: 440, w: 240, h: 95, title: '스윙 대쉬 허가', sub: 'RIGHT CLICK / SHIFT', color: '#00f3ff' },
+            { x: 4320, y: 380, w: 220, h: 90, title: '수직 엘리베이터', sub: 'WALL CLIMB & GRAPPLE', color: '#ff007f' },
+            { x: 5080, y: -1120, w: 250, h: 95, title: '산나비 작전 구역', sub: 'TOP ROOFTOP SECTOR', color: '#00f3ff' },
+            { x: 6780, y: -1240, w: 230, h: 100, title: '작전 목표 지점', sub: 'FINISH LINE', color: '#10b981' }
+        ];
+
+        // ============================================================================
+        // PLAYER & CHAIN STATE MACHINE
+        // ============================================================================
+        const player = {
+            x: checkpoints[0].x,
+            y: checkpoints[0].y,
+            vx: 0,
+            vy: 0,
+            radius: 16,
+            state: 'AIRBORNE', // 'GROUNDED' | 'AIRBORNE' | 'GRAPPLING' | 'DRONE_PULL' | 'WALL_CLIMB'
+            facing: 1,
+            rotation: 0, visualFacing: 1,
+            swingDashReady: true,
+            wallSide: 0, // -1 if wall is on left, +1 if wall is on right
+            wallPlatform: null,
+            checkpointIndex: 0,
+            scarfNodes: [],
+            afterimages: [],
+            dashFlashTimer: 0,
+            angularVel: 0,
+            tensionForce: 0,
+            onGround: false, dashControlLock: 0, wallDetachTimer: 0, coyoteTimer: 0, jumpBuffer: 0
+        };
+
+        // Initialize dynamic glowing scarf trail nodes
+        for (let i = 0; i < 10; i++) {
+            player.scarfNodes.push({ x: player.x, y: player.y });
+        }
+
+        const grapple = {
+            active: false,
+            mode: 'WALL', // 'WALL' | 'DRONE'
+            steerAxis: 0,
+            anchorX: 0,
+            anchorY: 0,
+            length: 0,
+            shootProgress: 0, // 0 -> 1 visual extension
+            targetDrone: null
+        };
+
+        const aimResult = {
+            hasHit: false,
+            grabbable: false,
+            isDrone: false,
+            droneRef: null,
+            x: 0,
+            y: 0,
+            nx: 0,
+            ny: 0,
+            dist: 0
+        };
+
+        // Camera with smooth Lerp & Velocity Lookahead
+        const camera = {
+            x: player.x,
+            y: player.y - Math.min(110, canvas.height * 0.16),
+            shakeTimer: 0,
+            shakeMagnitude: 0
+        };
+
+        // Stopwatch & Effects
+        let trialTime = 0;
+        let trialRunning = false;
+        let trialFinished = false;
+        let hitstopTimer = 0;
+        let slowMoTimer = 0;
+        const particles = [];
+        const floatingTexts = [];
+
+        // Parallax background skyscrapers generated once
+        const bgLayers = [
+            { parallax: 0.15, color: '#090d16', buildings: [] },
+            { parallax: 0.35, color: '#0f172a', buildings: [] }
+        ];
+        function initBackgroundCity() {
+            bgLayers.forEach((layer, idx) => {
+                for (let i = -10; i < 65; i++) {
+                    const bw = 90 + Math.abs(Math.sin(i * 12.3 + idx)) * 140;
+                    const bh = 400 + Math.abs(Math.cos(i * 7.7 + idx)) * 950;
+                    layer.buildings.push({
+                        x: i * 160,
+                        w: bw,
+                        h: bh,
+                        hasNeon: (i % 3 === 0),
+                        neonColor: (i % 2 === 0) ? '#00f3ff' : '#ff007f'
+                    });
+                }
+            });
+        }
+        initBackgroundCity();
+
+        // ============================================================================
+        // VISUAL EFFECTS HELPERS
+        // ============================================================================
+        function triggerScreenShake(magnitude, duration = 0.18) {
+            camera.shakeMagnitude = Math.max(camera.shakeMagnitude, magnitude);
+            camera.shakeTimer = Math.max(camera.shakeTimer, duration);
+        }
+
+        function spawnParticles(x, y, count, color, speedMin = 80, speedMax = 380, baseAngle = null, spread = Math.PI * 2) {
+            for (let i = 0; i < count; i++) {
+                const angle = baseAngle !== null
+                    ? baseAngle + (Math.random() - 0.5) * spread
+                    : Math.random() * Math.PI * 2;
+                const spd = speedMin + Math.random() * (speedMax - speedMin);
+                particles.push({
+                    x,
+                    y,
+                    vx: Math.cos(angle) * spd,
+                    vy: Math.sin(angle) * spd,
+                    life: 0.25 + Math.random() * 0.35,
+                    maxLife: 0.6,
+                    size: 2 + Math.random() * 3.5,
+                    color
+                });
+            }
+        }
+
+        function spawnFloatingText(x, y, text, color = '#00f3ff') {
+            floatingTexts.push({
+                x,
+                y,
+                text,
+                color,
+                life: 0.85,
+                maxLife: 0.85
+            });
+        }
+
+        function showBannerToast(message) {
+            const banner = document.getElementById('bannerToast');
+            const textEl = document.getElementById('bannerToastText');
+            textEl.textContent = message;
+            banner.classList.remove('opacity-0', '-translate-y-4');
+            banner.classList.add('opacity-100', 'translate-y-0');
+            clearTimeout(showBannerToast._timer);
+            showBannerToast._timer = setTimeout(() => {
+                banner.classList.remove('opacity-100', 'translate-y-0');
+                banner.classList.add('opacity-0', '-translate-y-4');
+            }, 2400);
+        }
+
+        // ============================================================================
+        // RAYCASTING & DRONE HOMING LOCK-ON
+        // ============================================================================
+        function intersectRayAABB(ox, oy, dx, dy, maxDist, rx, ry, rw, rh) {
+            let tmin = 0;
+            let tmax = maxDist;
+            let hitNx = 0;
+            let hitNy = 0;
+
+            if (Math.abs(dx) < 1e-8) {
+                if (ox < rx || ox > rx + rw) return null;
+            } else {
+                const invX = 1 / dx;
+                let t1 = (rx - ox) * invX;
+                let t2 = (rx + rw - ox) * invX;
+                let nx = -Math.sign(dx);
+                if (t1 > t2) {
+                    const tmp = t1; t1 = t2; t2 = tmp;
+                }
+                if (t1 > tmin) {
+                    tmin = t1;
+                    hitNx = nx;
+                    hitNy = 0;
+                }
+                tmax = Math.min(tmax, t2);
+                if (tmin > tmax) return null;
+            }
+
+            if (Math.abs(dy) < 1e-8) {
+                if (oy < ry || oy > ry + rh) return null;
+            } else {
+                const invY = 1 / dy;
+                let t1 = (ry - oy) * invY;
+                let t2 = (ry + rh - oy) * invY;
+                let ny = -Math.sign(dy);
+                if (t1 > t2) {
+                    const tmp = t1; t1 = t2; t2 = tmp;
+                }
+                if (t1 > tmin) {
+                    tmin = t1;
+                    hitNx = 0;
+                    hitNy = ny;
+                }
+                tmax = Math.min(tmax, t2);
+                if (tmin > tmax) return null;
+            }
+
+            if (tmin >= 0 && tmin <= maxDist) {
+                return {
+                    dist: tmin,
+                    x: ox + dx * tmin,
+                    y: oy + dy * tmin,
+                    nx: hitNx,
+                    ny: hitNy
+                };
+            }
+            return null;
+        }
+
+        function updateAimRaycast() {
+            mouse.worldX = camera.x - canvas.width / 2 + mouse.screenX;
+            mouse.worldY = camera.y - canvas.height / 2 + mouse.screenY;
+
+            // 1. Check if cursor is near an active Boost Drone within range (Homing Snap)
+            let bestDrone = null;
+            let bestDroneCursorDist = 72; // generous lock-on snap radius around cursor
+
+            for (const d of drones) {
+                if (d.cooldown > 0) continue;
+                const distFromPlayer = Math.hypot(d.x - player.x, d.y - player.y);
+                if (distFromPlayer <= params.maxChainRange * 1.15) {
+                    const cursorDist = Math.hypot(d.x - mouse.worldX, d.y - mouse.worldY);
+                    if (cursorDist < bestDroneCursorDist) {
+                        bestDroneCursorDist = cursorDist;
+                        bestDrone = d;
+                    }
+                }
+            }
+
+            if (bestDrone) {
+                aimResult.hasHit = true;
+                aimResult.grabbable = true;
+                aimResult.isDrone = true;
+                aimResult.droneRef = bestDrone;
+                aimResult.x = bestDrone.x;
+                aimResult.y = bestDrone.y;
+                aimResult.dist = Math.hypot(bestDrone.x - player.x, bestDrone.y - player.y);
+                aimResult.nx = 0;
+                aimResult.ny = -1;
+                return;
+            }
+
+            // 2. Raycast from player towards mouse cursor against platforms
+            const dxRaw = mouse.worldX - player.x;
+            const dyRaw = mouse.worldY - player.y;
+            const len = Math.hypot(dxRaw, dyRaw) || 1;
+            const dx = dxRaw / len;
+            const dy = dyRaw / len;
+
+            let closestHit = null;
+            let closestPlatform = null;
+
+            for (const plat of platforms) {
+                const hit = intersectRayAABB(
+                    player.x, player.y,
+                    dx, dy,
+                    params.maxChainRange,
+                    plat.x, plat.y, plat.w, plat.h
+                );
+                if (hit && (!closestHit || hit.dist < closestHit.dist)) {
+                    closestHit = hit;
+                    closestPlatform = plat;
+                }
+            }
+
+            if (closestHit && closestPlatform) {
+                aimResult.hasHit = true;
+                aimResult.grabbable = (closestPlatform.type === 'grabbable');
+                aimResult.isDrone = false;
+                aimResult.droneRef = null;
+                aimResult.x = closestHit.x;
+                aimResult.y = closestHit.y;
+                aimResult.nx = closestHit.nx;
+                aimResult.ny = closestHit.ny;
+                aimResult.dist = closestHit.dist;
+            } else {
+                aimResult.hasHit = false;
+                aimResult.grabbable = false;
+                aimResult.isDrone = false;
+                aimResult.droneRef = null;
+                aimResult.x = player.x + dx * params.maxChainRange;
+                aimResult.y = player.y + dy * params.maxChainRange;
+                aimResult.dist = params.maxChainRange;
+            }
+        }
+
+        // ============================================================================
+        // CHAIN ARM ACTIONS: FIRE, RELEASE, SWING DASH
+        // ============================================================================
+        function fireChainArm() {
+            updateAimRaycast();
+
+            if (!trialRunning && !trialFinished) {
+                trialRunning = true;
+            }
+
+            // Case A: Lock-on Boost Drone Pull
+            if (aimResult.hasHit && aimResult.isDrone && aimResult.droneRef) {
+                grapple.active = true;
+                grapple.steerAxis = 0;
+                grapple.mode = 'DRONE';
+                grapple.targetDrone = aimResult.droneRef;
+                grapple.anchorX = aimResult.droneRef.x;
+                grapple.anchorY = aimResult.droneRef.y;
+                grapple.length = aimResult.dist;
+                grapple.shootProgress = 0;
+
+                player.state = 'DRONE_PULL';
+                updatePlayerRotation(0);
+                player.swingDashReady = true;
+                spawnParticles(grapple.anchorX, grapple.anchorY, 16, '#ff007f', 90, 280);
+                triggerScreenShake(4, 0.1);
+                return;
+            }
+
+            // Case B: Grabbable Neon Wall / Ceiling
+            if (aimResult.hasHit && aimResult.grabbable) {
+                grapple.active = true;
+                grapple.steerAxis = 0;
+                grapple.mode = 'WALL';
+                grapple.targetDrone = null;
+                grapple.anchorX = aimResult.x;
+                grapple.anchorY = aimResult.y;
+                // Slightly shorten initial constraint so attaching immediately feels responsive
+                grapple.length = Math.max(48, aimResult.dist * 0.96);
+                grapple.shootProgress = 0;
+
+                player.state = 'GRAPPLING';
+                updatePlayerRotation(0);
+                player.swingDashReady = true; // Recharge Swing Dash on new grapple anchor
+
+                // Subtle initial pull impulse toward anchor (SANABI signature grapple snap)
+                const dx = grapple.anchorX - player.x;
+                const dy = grapple.anchorY - player.y;
+                const d = Math.hypot(dx, dy) || 1;
+                player.vx += (dx / d) * 165;
+                player.vy += (dy / d) * 165;
+
+                spawnParticles(grapple.anchorX, grapple.anchorY, 18, '#00f3ff', 100, 320);
+                triggerScreenShake(3.5, 0.08);
+            } else if (aimResult.hasHit && !aimResult.grabbable) {
+                // Case C: Hit Red Ungrabbable Armor -> Clank Sparks
+                spawnParticles(aimResult.x, aimResult.y, 14, '#fb7185', 80, 260);
+                spawnFloatingText(aimResult.x, aimResult.y - 12, '사슬 고정 불가!', '#fb7185');
+                triggerScreenShake(2.5, 0.06);
+            }
+        }
+
+        function releaseChainArm() {
+            if (!grapple.active) return;
+            grapple.active = false;
+            grapple.targetDrone = null;
+            player.tensionForce = 0;
+            player.angularVel = 0;
+            if (player.state === 'GRAPPLING' || player.state === 'DRONE_PULL') {
+                player.state = 'AIRBORNE';
+            }
+        }
+
+        // One chain-relative frame drives body rotation, A/D steering and dash.
+        // Local up points at the hook; local right is perpendicular to the chain.
+        function getGrappleFrame() {
+            const rx = player.x - grapple.anchorX, ry = player.y - grapple.anchorY;
+            const distance = Math.hypot(rx, ry);
+            if (distance < 0.001) {
+                return { rotation: player.rotation, rightX: Math.cos(player.rotation), rightY: Math.sin(player.rotation) };
+            }
+            return { rotation: Math.atan2(-rx, ry), rightX: ry / distance, rightY: -rx / distance };
+        }
+
+        function updateSwingControl(axis, ux, uy, dt, groundControl) {
+            if (!axis) { grapple.steerAxis = 0; return; }
+            const tx = uy, ty = -ux;
+            const alongSwing = player.vx * tx + player.vy * ty;
+            const changed = axis !== grapple.steerAxis;
+            if (changed) {
+                grapple.steerAxis = axis;
+                // Explicit reverse input overrides dash protection; holding the
+                // same key still preserves the launch rather than clamping it.
+                if (alongSwing * axis < 0) player.dashControlLock = 0;
+            }
+            if (groundControl || player.dashControlLock > 0) return;
+            const acceleration = params.swingPumpForce * 3.4;
+            const reverseAcceleration = params.swingPumpForce * 16;
+            const direction = axis;
+            if (alongSwing * direction >= 720) return;
+            const rate = alongSwing * direction < 0 ? reverseAcceleration : acceleration;
+            const nextSpeed = moveTowards(alongSwing, direction * 720, rate * dt);
+            const change = nextSpeed - alongSwing;
+            // Modify only tangential speed; radial motion and rope length remain physical.
+            player.vx += tx * change;
+            player.vy += ty * change;
+        }
+
+        // Without new A/D input, keep the last chosen local facing. Neither
+        // momentum nor mouse aim can silently choose the other side.
+        function getDashDirection() {
+            const frame = getGrappleFrame();
+            const facing = getMoveAxis() || player.facing;
+            return { x: frame.rightX * facing, y: frame.rightY * facing };
+        }
+
+        function executeSwingDash() {
+            // Can Swing Dash while Grappling and charge is available
+            if (!grapple.active || grapple.mode !== 'WALL') return;
+            if (!player.swingDashReady) {
+                spawnFloatingText(player.x, player.y - 24, '대쉬 재충전 필요', '#94a3b8');
+                return;
+            }
+
+            player.swingDashReady = false;
+            player.dashFlashTimer = 0.28;
+            hitstopTimer = 0.045; // crisp SANABI impact frame
+
+            updatePlayerRotation(0);
+            const direction = getDashDirection();
+            const tx = direction.x, ty = direction.y;
+            player.state = 'GRAPPLING';
+            grapple.steerAxis = getMoveAxis();
+            player.dashControlLock = 0.12;
+            player.wallDetachTimer = 0.12;
+            player.coyoteTimer = 0;
+            player.jumpBuffer = 0;
+
+                    // Project existing speed along chosen tangent and inject massive Swing Dash impulse
+            const currentTangentialSpeed = Math.max(0, player.vx * tx + player.vy * ty);
+            const newSpeed = Math.min(1850, Math.max(params.swingDashImpulse, currentTangentialSpeed + params.swingDashImpulse * 0.68));
+
+            player.vx = tx * newSpeed;
+            player.vy = ty * newSpeed;
+            player.visualFacing = player.facing;
+
+            // Visual burst
+            triggerScreenShake(11, 0.22);
+            const oppAngle = Math.atan2(-ty, -tx);
+            spawnParticles(player.x, player.y, 34, '#ff007f', 180, 560, oppAngle, 1.3);
+            spawnParticles(player.x, player.y, 24, '#00f3ff', 140, 480, oppAngle, 1.0);
+            spawnFloatingText(player.x, player.y - 26, 'SWING DASH!!', '#ff007f');
+        }
+
+        // ============================================================================
+        // PLAYER RESET & CHECKPOINT MANAGEMENT
+        // ============================================================================
+        function teleportToSector(index) {
+            const cp = checkpoints[index] || checkpoints[0];
+            player.checkpointIndex = index;
+            respawnAtCheckpoint();
+            showBannerToast(cp.name);
+        }
+
+        function respawnAtCheckpoint() {
+            const cp = checkpoints[player.checkpointIndex] || checkpoints[0];
+            releaseChainArm();
+            player.x = cp.x;
+            player.y = cp.y;
+            player.vx = 0;
+            player.vy = 0;
+            player.state = 'AIRBORNE';
+            player.swingDashReady = true;
+            player.afterimages.length = 0;
+            player.dashControlLock = 0;
+            player.wallDetachTimer = 0;
+            player.coyoteTimer = 0;
+            player.jumpBuffer = 0;
+            player.dashFlashTimer = 0;
+            player.wallPlatform = null;
+            player.onGround = false;
+            player.rotation = 0;
+            player.visualFacing = player.facing;
+            player.tensionForce = 0;
+            player.angularVel = 0;
+            hitstopTimer = 0;
+            slowMoTimer = 0;
+            physicsAccumulator = 0;
+            clearInput();
+            camera.x = player.x;
+            camera.y = player.y - Math.min(110, canvas.height * 0.16);
+            updateSectorButtonsUI();
+            for (const node of player.scarfNodes) {
+                node.x = player.x;
+                node.y = player.y;
+            }
+            drones = JSON.parse(JSON.stringify(initialDrones));
+            spawnParticles(player.x, player.y, 24, '#00f3ff', 60, 260);
+        }
+
+        function resetFullCourse() {
+            player.checkpointIndex = 0;
+            trialTime = 0;
+            trialRunning = false;
+            trialFinished = false;
+            respawnAtCheckpoint();
+            showBannerToast('타임 어택 초기화 : 제1구역 출발');
+        }
+
+        // ============================================================================
+        // CORE PHYSICS STEP (SUB-STEPPED FOR HIGH-PRECISION PENDULUM & COLLISIONS)
+        // ============================================================================
+        function updatePhysics(dt) {
+            simulatePhysics(dt);
+            // Position constraints/collisions have finished: the visible pose and
+            // next dash now use the exact same, current chain geometry.
+            updatePlayerRotation(dt);
+        }
+
+        function simulatePhysics(dt) {
+            player.dashControlLock = Math.max(0, player.dashControlLock - dt);
+            player.wallDetachTimer = Math.max(0, player.wallDetachTimer - dt);
+            if (player.onGround || player.state === 'GROUNDED') player.coyoteTimer = 0.1;
+            else player.coyoteTimer = Math.max(0, player.coyoteTimer - dt);
+            tryJump();
+            player.jumpBuffer = Math.max(0, player.jumpBuffer - dt);
+
+            // Update Drones cooldown
+            for (const d of drones) {
+                if (d.cooldown > 0) d.cooldown = Math.max(0, d.cooldown - dt);
+            }
+
+            // Record afterimages when moving fast or during Swing Dash
+            const currentSpeed = Math.hypot(player.vx, player.vy);
+            if (currentSpeed > 680 || player.dashFlashTimer > 0 || player.state === 'DRONE_PULL') {
+                player.afterimages.push({
+                    x: player.x,
+                    y: player.y,
+                    rotation: player.rotation,
+                    facing: player.visualFacing,
+                    color: player.dashFlashTimer > 0 ? '#ff007f' : '#00f3ff',
+                    alpha: 0.72
+                });
+                if (player.afterimages.length > 14) player.afterimages.shift();
+            }
+            for (let i = player.afterimages.length - 1; i >= 0; i--) {
+                player.afterimages[i].alpha -= dt * 3.4;
+                if (player.afterimages[i].alpha <= 0) player.afterimages.splice(i, 1);
+            }
+
+            if (player.dashFlashTimer > 0) {
+                player.dashFlashTimer = Math.max(0, player.dashFlashTimer - dt);
+            }
+
+            // Animate chain shooting visual progress
+            if (grapple.active && grapple.shootProgress < 1) {
+                grapple.shootProgress = Math.min(1, grapple.shootProgress + dt * 18);
+            }
+
+            // ------------------------------------------------------------------------
+            // STATE 1: DRONE HOMING PULL (High-speed zip + Bullet-time Launch on hit)
+            // ------------------------------------------------------------------------
+            if (player.state === 'DRONE_PULL' && grapple.active && grapple.targetDrone) {
+                const d = grapple.targetDrone;
+                const dx = d.x - player.x;
+                const dy = d.y - player.y;
+                const dist = Math.hypot(dx, dy) || 1;
+
+                const pullSpeed = 1380;
+                player.vx = (dx / dist) * pullSpeed;
+                player.vy = (dy / dist) * pullSpeed;
+                player.x += player.vx * dt;
+                player.y += player.vy * dt;
+
+                // Check impact with Drone
+                if (dist < player.radius + d.r + 18) {
+                    d.cooldown = 2.6;
+                    releaseChainArm();
+                    // Launch player high & preserve horizontal momentum
+                    player.vx = (dx / dist) * 560;
+                    player.vy = -860;
+                    player.state = 'AIRBORNE';
+                    player.swingDashReady = true;
+
+                    slowMoTimer = 0.18;
+                    hitstopTimer = 0.04;
+                    triggerScreenShake(10, 0.2);
+                    spawnParticles(d.x, d.y, 36, '#ff007f', 140, 520);
+                    spawnParticles(d.x, d.y, 24, '#00f3ff', 100, 420);
+                    spawnFloatingText(d.x, d.y - 28, 'BOOST LAUNCH! [대쉬 충전]', '#00f3ff');
+                }
+                return;
+            }
+
+            // ------------------------------------------------------------------------
+            // STATE 2: WALL CLIMB (Clinging onto a Grabbable vertical wall)
+            // ------------------------------------------------------------------------
+            if (player.state === 'WALL_CLIMB' && !grapple.active && getMoveAxis() === -player.wallSide) {
+                player.state = 'AIRBORNE';
+                player.vx = -player.wallSide * 260;
+                player.wallPlatform = null;
+                player.wallDetachTimer = 0.18;
+            }
+            if (player.state === 'WALL_CLIMB' && !grapple.active) {
+                player.vx = 0;
+                if (keys.w) {
+                    player.vy = -params.wallClimbSpeed;
+                } else if (keys.s) {
+                    player.vy = params.wallClimbSpeed;
+                } else {
+                    player.vy = 0;
+                }
+
+                player.y += player.vy * dt;
+
+                // Keep adhered to the wall or detach if climbing past top/bottom edge
+                const wp = player.wallPlatform;
+                if (!wp || player.y + player.radius < wp.y || player.y - player.radius > wp.y + wp.h) {
+                    // Vault lightly onto top if climbing upward past top edge
+                    if (wp && player.y + player.radius < wp.y + 8 && keys.w) {
+                        player.y = wp.y - player.radius;
+                        player.vx = player.wallSide * 220;
+                        player.vy = -180;
+                    }
+                    player.state = 'AIRBORNE';
+                    player.wallPlatform = null;
+                }
+                return;
+            }
+
+            // ------------------------------------------------------------------------
+            // STATE 3: GROUNDED / AIRBORNE / GRAPPLING (Pendulum Tension Physics)
+            // ------------------------------------------------------------------------
+            // Apply Gravity
+            player.vy += params.gravity * dt;
+
+            // Ground motion is immediate; chain input directly controls swing speed.
+            const axis = getMoveAxis();
+            if (axis) player.facing = axis;
+            const groundControl = (player.onGround || player.state === 'GROUNDED') && player.vy >= 0 && player.dashControlLock <= 0 && (!grapple.active || !axis);
+            if (groundControl) player.vx = axis * 440;
+            if (grapple.active && grapple.mode === 'WALL') {
+                const reelAxis = Number(keys.s) - Number(keys.w);
+                grapple.length = Math.max(55, Math.min(params.maxChainRange, grapple.length + reelAxis * params.reelSpeed * dt));
+                const rx = player.x - grapple.anchorX, ry = player.y - grapple.anchorY;
+                const distance = Math.hypot(rx, ry) || 1;
+                const ux = rx / distance, uy = ry / distance;
+                updateSwingControl(axis, ux, uy, dt, groundControl);
+            } else if (!groundControl && axis && player.dashControlLock <= 0) {
+                // Do not clamp launch momentum when holding the same direction.
+                if (player.vx * axis < 520) {
+                    const acceleration = player.vx * axis < 0 ? 1750 : 1050;
+                    player.vx = moveTowards(player.vx, axis * 520, acceleration * dt);
+                }
+            }
+
+                    // Subtle air drag
+            if (!groundControl) player.vx *= Math.pow(params.airDrag, dt * 60);
+            player.vy *= Math.pow(params.airDrag, dt * 60);
+
+            // Integrate Position
+            player.x += player.vx * dt;
+            player.y += player.vy * dt;
+
+            // ------------------------------------------------------------------------
+            // CHAIN MAX-DISTANCE TENSION CONSTRAINT (d <= L)
+            // ------------------------------------------------------------------------
+            player.tensionForce = 0;
+            player.angularVel = 0;
+
+            if (grapple.active && grapple.mode === 'WALL') {
+                const rx = player.x - grapple.anchorX;
+                const ry = player.y - grapple.anchorY;
+                const dist = Math.hypot(rx, ry) || 1;
+                const ux = rx / dist;
+                const uy = ry / dist;
+
+                // Calculate angular velocity (omega = v_tangent / r) for telemetry
+                const vTangent = -uy * player.vx + ux * player.vy;
+                player.angularVel = vTangent / dist;
+
+                // Slack vs Taut check: Only constrain when chain is stretched to max length
+                if (dist >= grapple.length) {
+                    // Snap position back onto constraint circle radius L
+                    player.x = grapple.anchorX + ux * grapple.length;
+                    player.y = grapple.anchorY + uy * grapple.length;
+
+                    // Radial velocity (outward along chain)
+                    const vRadial = player.vx * ux + player.vy * uy;
+                    if (vRadial > 0) {
+                        // Project velocity onto tangent + apply elastic yank bounce
+                        const bounceFactor = 1 + params.chainBounce;
+                        player.vx -= ux * vRadial * bounceFactor;
+                        player.vy -= uy * vRadial * bounceFactor;
+
+                        // Centripetal Tension Force T = m * (v_t^2 / L + g * cos(theta))
+                        const speedSq = player.vx * player.vx + player.vy * player.vy;
+                        player.tensionForce = Math.round((speedSq / grapple.length) + params.gravity * Math.max(0, uy));
+                    }
+                }
+            }
+
+            // ------------------------------------------------------------------------
+            // PLATFORM AABB COLLISIONS & AUTOMATIC WALL CLING
+            // ------------------------------------------------------------------------
+            let groundedThisFrame = false;
+
+            for (const plat of platforms) {
+                // Find closest point on platform AABB to player circle center
+                const closestX = Math.max(plat.x, Math.min(player.x, plat.x + plat.w));
+                const closestY = Math.max(plat.y, Math.min(player.y, plat.y + plat.h));
+                const dx = player.x - closestX;
+                const dy = player.y - closestY;
+                const distSq = dx * dx + dy * dy;
+
+                if (distSq < player.radius * player.radius) {
+                    // Check Hazard Laser
+                    if (plat.type === 'hazard') {
+                        triggerScreenShake(12, 0.25);
+                        spawnParticles(player.x, player.y, 35, '#f43f5e', 120, 480);
+                        showBannerToast('고에너지 플라즈마 접촉! 체크포인트 복귀');
+                        respawnAtCheckpoint();
+                        return;
+                    }
+
+                    // Resolve overlap
+                    const overlapLeft = (player.x + player.radius) - plat.x;
+                    const overlapRight = (plat.x + plat.w) - (player.x - player.radius);
+                    const overlapTop = (player.y + player.radius) - plat.y;
+                    const overlapBottom = (plat.y + plat.h) - (player.y - player.radius);
+                    const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+
+                    if (minOverlap === overlapTop && player.vy >= 0) {
+                        // Landing on top of platform
+                        player.y = plat.y - player.radius;
+                        player.vy = 0;
+                        groundedThisFrame = true;
+                        if (!grapple.active) { player.rotation = 0; player.visualFacing = player.facing; }
+                        if (!player.onGround) player.swingDashReady = true;
+                        if (player.dashControlLock <= 0 && (!grapple.active || !axis)) player.vx = axis * 440;
+                        if (!grapple.active) {
+                            player.state = 'GROUNDED';
+                        }
+                    } else if (minOverlap === overlapBottom && player.vy < 0) {
+                        // Hitting ceiling
+                        player.y = plat.y + plat.h + player.radius;
+                        player.vy = 0;
+                    } else if (minOverlap === overlapLeft) {
+                        // Touching Left Vertical Wall of Platform
+                        player.x = plat.x - player.radius;
+                        if (plat.type === 'grabbable' && !grapple.active && player.state !== 'GROUNDED' && player.wallDetachTimer <= 0) {
+                            player.state = 'WALL_CLIMB';
+                            player.wallSide = 1; // wall is on right of player
+                            player.wallPlatform = plat;
+                            player.vx = 0;
+                            player.vy = 0;
+                            player.swingDashReady = true;
+                        } else {
+                            player.vx = 0;
+                        }
+                    } else if (minOverlap === overlapRight) {
+                        // Touching Right Vertical Wall of Platform
+                        player.x = plat.x + plat.w + player.radius;
+                        if (plat.type === 'grabbable' && !grapple.active && player.state !== 'GROUNDED' && player.wallDetachTimer <= 0) {
+                            player.state = 'WALL_CLIMB';
+                            player.wallSide = -1; // wall is on left of player
+                            player.wallPlatform = plat;
+                            player.vx = 0;
+                            player.vy = 0;
+                            player.swingDashReady = true;
+                        } else {
+                            player.vx = 0;
+                        }
+                    }
+                }
+            }
+
+            player.onGround = groundedThisFrame;
+            if (!groundedThisFrame && player.state === 'GROUNDED') {
+                player.state = 'AIRBORNE';
+            }
+
+            // Check Abyss fall out of bounds
+            if (player.y > 1450) {
+                showBannerToast('하층 추락! 체크포인트 복귀');
+                respawnAtCheckpoint();
+            }
+
+            // Check Checkpoints
+            for (let i = 0; i < checkpoints.length; i++) {
+                const cp = checkpoints[i];
+                if (Math.hypot(player.x - cp.x, player.y - cp.y) < 120) {
+                    if (player.checkpointIndex !== i) {
+                        player.checkpointIndex = i;
+                        showBannerToast(`체크포인트 활성화 : ${cp.name}`);
+                        spawnParticles(cp.x, cp.y, 26, '#00f3ff', 80, 320);
+                        updateSectorButtonsUI();
+                    }
+                }
+            }
+
+            // Check Goal Zone
+            if (
+                player.x > goalZone.x &&
+                player.x < goalZone.x + goalZone.w &&
+                player.y > goalZone.y &&
+                player.y < goalZone.y + goalZone.h
+            ) {
+                if (!trialFinished) {
+                    trialFinished = true;
+                    trialRunning = false;
+                    triggerScreenShake(9, 0.25);
+                    spawnParticles(player.x, player.y, 50, '#10b981', 120, 560);
+                    spawnParticles(player.x, player.y, 40, '#00f3ff', 100, 480);
+                    showBannerToast(`작전 성공! 최종 기록: ${formatTime(trialTime)}`);
+                }
+            }
+        }
+
+        // Visual pose is independent of the circular collider and steering input.
+        function updatePlayerRotation(dt) {
+            if (grapple.active) {
+                const axis = getMoveAxis();
+                if (axis) player.facing = axis;
+                player.visualFacing = player.facing;
+                const target = getGrappleFrame().rotation;
+                // Snap to the actual chain line, preserving continuous angle values.
+                // This also runs inside the attachment/input event before any frame.
+                player.rotation += Math.atan2(Math.sin(target - player.rotation), Math.cos(target - player.rotation));
+                return;
+            }
+            if (player.onGround || player.state === 'GROUNDED' || player.state === 'WALL_CLIMB') {
+                player.rotation = 0;
+                player.visualFacing = player.facing;
+                return;
+            }
+            let target = 0;
+            if (Math.hypot(player.vx, player.vy) > 120) {
+                if (Math.abs(player.vx) > 40) player.visualFacing = Math.sign(player.vx);
+                target = Math.atan2(player.vy, player.vx) - (player.visualFacing < 0 ? Math.PI : 0);
+            }
+            // Unwrap across +/-PI so a full orbit never causes a backward spin.
+            const delta = Math.atan2(Math.sin(target - player.rotation), Math.cos(target - player.rotation));
+            player.rotation += delta * (1 - Math.exp(-32 * dt));
+        }
+
+        // Update trailing scarf physics
+        function updateScarfAndParticles(dt) {
+            const cos = Math.cos(player.rotation), sin = Math.sin(player.rotation);
+            const neckX = -player.visualFacing * 6;
+            player.scarfNodes[0].x = player.x + cos * neckX + sin * 4;
+            player.scarfNodes[0].y = player.y + sin * neckX - cos * 4;
+
+            for (let i = 1; i < player.scarfNodes.length; i++) {
+                const prev = player.scarfNodes[i - 1];
+                const curr = player.scarfNodes[i];
+                // Slight upward wind flutter
+                curr.y += 120 * dt;
+                curr.x -= cos * player.visualFacing * 35 * dt;
+                curr.y -= sin * player.visualFacing * 35 * dt;
+
+                const dx = curr.x - prev.x;
+                const dy = curr.y - prev.y;
+                const dist = Math.hypot(dx, dy) || 1;
+                const segLen = 5.5;
+                if (dist > segLen) {
+                    curr.x = prev.x + (dx / dist) * segLen;
+                    curr.y = prev.y + (dy / dist) * segLen;
+                }
+            }
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx * dt;
+                p.y += p.vy * dt;
+                p.vx *= 0.95;
+                p.vy *= 0.95;
+                p.life -= dt;
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+
+            for (let i = floatingTexts.length - 1; i >= 0; i--) {
+                const ft = floatingTexts[i];
+                ft.y -= 42 * dt;
+                ft.life -= dt;
+                if (ft.life <= 0) floatingTexts.splice(i, 1);
+            }
+        }
+
+        // ============================================================================
+        // RENDERING: CYBERPUNK MAGO CITY, CHAIN LINKS, VECTORS & RETICLE
+        // ============================================================================
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background Gradient
+            const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            bgGrad.addColorStop(0, '#04060b');
+            bgGrad.addColorStop(0.55, '#091020');
+            bgGrad.addColorStop(1, '#120b22');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Compute Camera Shake Offset
+            let shakeX = 0;
+            let shakeY = 0;
+            if (camera.shakeTimer > 0) {
+                shakeX = (Math.random() - 0.5) * 2 * camera.shakeMagnitude;
+                shakeY = (Math.random() - 0.5) * 2 * camera.shakeMagnitude;
+            }
+
+            // 1. Parallax Cityscape Silhouettes
+            bgLayers.forEach(layer => {
+                ctx.fillStyle = layer.color;
+                for (const b of layer.buildings) {
+                    const sx = b.x - camera.x * layer.parallax + canvas.width / 2;
+                    const sy = 1050 - b.h - camera.y * layer.parallax * 0.5 + canvas.height / 2;
+                    if (sx + b.w < -100 || sx > canvas.width + 100) continue;
+                    ctx.fillRect(sx, sy, b.w, b.h + 800);
+
+                    if (b.hasNeon) {
+                        ctx.strokeStyle = b.neonColor;
+                        ctx.globalAlpha = 0.22;
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(sx + 10, sy + 20, b.w - 20, 45);
+                        ctx.globalAlpha = 1.0;
+                    }
+                }
+            });
+
+            ctx.save();
+            ctx.translate(
+                Math.round(canvas.width / 2 - camera.x + shakeX),
+                Math.round(canvas.height / 2 - camera.y + shakeY)
+            );
+
+            // 2. Subtle World Cyber Grid
+            const gridSize = 120;
+            const startX = Math.floor((camera.x - canvas.width / 2) / gridSize) * gridSize;
+            const endX = camera.x + canvas.width / 2;
+            const startY = Math.floor((camera.y - canvas.height / 2) / gridSize) * gridSize;
+            const endY = camera.y + canvas.height / 2;
+
+            ctx.strokeStyle = 'rgba(0, 243, 255, 0.04)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let gx = startX; gx <= endX; gx += gridSize) {
+                ctx.moveTo(gx, startY);
+                ctx.lineTo(gx, endY);
+            }
+            for (let gy = startY; gy <= endY; gy += gridSize) {
+                ctx.moveTo(startX, gy);
+                ctx.lineTo(endX, gy);
+            }
+            ctx.stroke();
+
+            // 3. Background Neon Billboards (Mago City Hangul Signs)
+            for (const sign of neonBillboards) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(6, 11, 23, 0.88)';
+                ctx.strokeStyle = sign.color;
+                ctx.lineWidth = 2;
+                ctx.shadowColor = sign.color;
+                ctx.shadowBlur = 14;
+                ctx.fillRect(sign.x, sign.y, sign.w, sign.h);
+                ctx.strokeRect(sign.x, sign.y, sign.w, sign.h);
+                ctx.shadowBlur = 0;
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '900 22px "Noto Sans KR", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(sign.title, sign.x + sign.w / 2, sign.y + 42);
+
+                ctx.fillStyle = sign.color;
+                ctx.font = '700 11px "Chakra Petch", sans-serif';
+                ctx.fillText(sign.sub, sign.x + sign.w / 2, sign.y + 68);
+                ctx.restore();
+            }
+
+            // 4. Checkpoints & Goal Portal
+            for (let i = 0; i < checkpoints.length; i++) {
+                const cp = checkpoints[i];
+                const isActive = (player.checkpointIndex === i);
+                const beaconColor = isActive ? '#00f3ff' : '#475569';
+                ctx.save();
+                // Light pillar
+                const grad = ctx.createLinearGradient(cp.x, cp.y - 110, cp.x, cp.y + 60);
+                grad.addColorStop(0, 'rgba(0, 243, 255, 0)');
+                grad.addColorStop(1, isActive ? 'rgba(0, 243, 255, 0.25)' : 'rgba(100, 116, 139, 0.12)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(cp.x - 24, cp.y - 110, 48, 170);
+
+                ctx.strokeStyle = beaconColor;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(cp.x, cp.y + 20, 16, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.fillStyle = beaconColor;
+                ctx.font = '700 11px "Chakra Petch", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`CP-0${i + 1}`, cp.x, cp.y - 12);
+                ctx.restore();
+            }
+
+            // Goal Zone Portal
+            ctx.save();
+            const goalGrad = ctx.createLinearGradient(goalZone.x, goalZone.y, goalZone.x, goalZone.y + goalZone.h);
+            goalGrad.addColorStop(0, 'rgba(16, 185, 129, 0.05)');
+            goalGrad.addColorStop(1, 'rgba(16, 185, 129, 0.35)');
+            ctx.fillStyle = goalGrad;
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.shadowColor = '#10b981';
+            ctx.shadowBlur = 18;
+            ctx.fillRect(goalZone.x, goalZone.y, goalZone.w, goalZone.h);
+            ctx.strokeRect(goalZone.x, goalZone.y, goalZone.w, goalZone.h);
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#ecfdf5';
+            ctx.font = '900 18px "Noto Sans KR", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('GOAL : 작전 완료', goalZone.x + goalZone.w / 2, goalZone.y + goalZone.h / 2);
+            ctx.restore();
+
+            // 5. Render Platforms (Grabbable Cyan vs Ungrabbable Crimson vs Hazard Plasma)
+            for (const plat of platforms) {
+                ctx.save();
+                if (plat.type === 'grabbable') {
+                    ctx.fillStyle = '#0d1526';
+                    ctx.fillRect(plat.x, plat.y, plat.w, plat.h);
+
+                    // Industrial inner hatch lines
+                    ctx.strokeStyle = 'rgba(0, 243, 255, 0.12)';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(plat.x + 4, plat.y + 4, plat.w - 8, plat.h - 8);
+
+                    // Glowing Cyan Grabbable Perimeter
+                    ctx.strokeStyle = '#00f3ff';
+                    ctx.lineWidth = 2.5;
+                    ctx.shadowColor = '#00f3ff';
+                    ctx.shadowBlur = 10;
+                    ctx.strokeRect(plat.x, plat.y, plat.w, plat.h);
+                } else if (plat.type === 'ungrabbable') {
+                    ctx.fillStyle = '#190d1a';
+                    ctx.fillRect(plat.x, plat.y, plat.w, plat.h);
+
+                    ctx.strokeStyle = '#9f1239';
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeRect(plat.x, plat.y, plat.w, plat.h);
+
+                    // Diagonal warning stripes
+                    ctx.strokeStyle = 'rgba(244, 63, 94, 0.25)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    const step = 24;
+                    for (let sx = plat.x; sx < plat.x + plat.w; sx += step) {
+                        ctx.moveTo(sx, plat.y);
+                        ctx.lineTo(Math.min(plat.x + plat.w, sx + 16), Math.min(plat.y + plat.h, plat.y + 16));
+                    }
+                    ctx.stroke();
+                } else if (plat.type === 'hazard') {
+                    ctx.fillStyle = 'rgba(244, 63, 94, 0.28)';
+                    ctx.fillRect(plat.x, plat.y, plat.w, plat.h);
+                    ctx.strokeStyle = '#ff0055';
+                    ctx.lineWidth = 3;
+                    ctx.shadowColor = '#ff0055';
+                    ctx.shadowBlur = 16;
+                    ctx.strokeRect(plat.x, plat.y, plat.w, plat.h);
+                }
+
+                if (plat.label) {
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = plat.type === 'grabbable' ? '#67e8f9' : '#fda4af';
+                    ctx.font = '700 12px "Noto Sans KR", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(plat.label, plat.x + plat.w / 2, plat.y - 10);
+                }
+                ctx.restore();
+            }
+
+            // 6. Floating Boost Drones
+            const timeSec = performance.now() / 1000;
+            for (const d of drones) {
+                ctx.save();
+                const isReady = d.cooldown <= 0;
+                const bobY = Math.sin(timeSec * 4 + d.id) * 5;
+                const dy = d.y + bobY;
+
+                ctx.translate(d.x, dy);
+                if (isReady) {
+                    // Outer rotating target ring
+                    ctx.save();
+                    ctx.rotate(timeSec * 2.2);
+                    ctx.strokeStyle = '#ff007f';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([8, 6]);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, d.r + 8, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // Drone Core
+                    ctx.fillStyle = '#1e1b4b';
+                    ctx.strokeStyle = '#00f3ff';
+                    ctx.lineWidth = 2.5;
+                    ctx.shadowColor = '#00f3ff';
+                    ctx.shadowBlur = 12;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, d.r, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Inner eye
+                    ctx.fillStyle = '#ff007f';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 7, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Cooldown hologram state
+                    ctx.strokeStyle = '#475569';
+                    ctx.lineWidth = 1.5;
+                    ctx.setLineDash([4, 4]);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, d.r, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+
+            // 7. Max Chain Range Subtle Ring around Player
+            ctx.save();
+            ctx.strokeStyle = 'rgba(0, 243, 255, 0.09)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([6, 8]);
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, params.maxChainRange, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            // 8. Aiming Laser Sight & Dynamic Reticle (when not actively grappling)
+            if (!grapple.active) {
+                ctx.save();
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([6, 6]);
+                if (aimResult.hasHit && aimResult.grabbable) {
+                    ctx.strokeStyle = aimResult.isDrone ? 'rgba(255, 0, 127, 0.75)' : 'rgba(0, 243, 255, 0.65)';
+                } else if (aimResult.hasHit && !aimResult.grabbable) {
+                    ctx.strokeStyle = 'rgba(244, 63, 94, 0.55)';
+                } else {
+                    ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+                }
+                ctx.beginPath();
+                ctx.moveTo(player.x, player.y);
+                ctx.lineTo(aimResult.x, aimResult.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Hit Point Reticle
+                if (aimResult.hasHit) {
+                    ctx.translate(aimResult.x, aimResult.y);
+                    if (aimResult.grabbable) {
+                        const retColor = aimResult.isDrone ? '#ff007f' : '#00f3ff';
+                        ctx.strokeStyle = retColor;
+                        ctx.lineWidth = 2;
+                        ctx.shadowColor = retColor;
+                        ctx.shadowBlur = 10;
+                        ctx.rotate(timeSec * 4);
+                        ctx.strokeRect(-9, -9, 18, 18);
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fill();
+                    } else {
+                        // Red X on ungrabbable wall
+                        ctx.strokeStyle = '#f43f5e';
+                        ctx.lineWidth = 2.5;
+                        ctx.beginPath();
+                        ctx.moveTo(-7, -7); ctx.lineTo(7, 7);
+                        ctx.moveTo(7, -7); ctx.lineTo(-7, 7);
+                        ctx.stroke();
+                    }
+                }
+                ctx.restore();
+            }
+
+            // 9. Active Chain Arm Rendering (Individual Mechanical Links + Claw)
+            if (grapple.active) {
+                ctx.save();
+                const targetX = player.x + (grapple.anchorX - player.x) * grapple.shootProgress;
+                const targetY = player.y + (grapple.anchorY - player.y) * grapple.shootProgress;
+
+                // Swing Arc Guide Circle when grappling wall
+                if (grapple.mode === 'WALL') {
+                    ctx.strokeStyle = 'rgba(0, 243, 255, 0.11)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.arc(grapple.anchorX, grapple.anchorY, grapple.length, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                // Glowing core cable
+                const isTaut = Math.hypot(player.x - grapple.anchorX, player.y - grapple.anchorY) >= grapple.length - 2;
+                const chainColor = grapple.mode === 'DRONE'
+                    ? '#ff007f'
+                    : (isTaut ? '#00f3ff' : '#38bdf8');
+
+                ctx.strokeStyle = chainColor;
+                ctx.lineWidth = isTaut ? 3.5 : 2;
+                ctx.shadowColor = chainColor;
+                ctx.shadowBlur = isTaut ? 14 : 6;
+                ctx.beginPath();
+                ctx.moveTo(player.x, player.y);
+                ctx.lineTo(targetX, targetY);
+                ctx.stroke();
+
+                // Segmented metallic chain links along the cable
+                const dx = targetX - player.x;
+                const dy = targetY - player.y;
+                const dist = Math.hypot(dx, dy) || 1;
+                const angle = Math.atan2(dy, dx);
+                const linkStep = 16;
+
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = '#e2e8f0';
+                for (let d = 14; d < dist - 10; d += linkStep) {
+                    const lx = player.x + (dx / dist) * d;
+                    const ly = player.y + (dy / dist) * d;
+                    ctx.save();
+                    ctx.translate(lx, ly);
+                    ctx.rotate(angle);
+                    ctx.fillRect(-5, -2.5, 10, 5);
+                    ctx.restore();
+                }
+
+                // Mechanical Grapple Claw at Anchor
+                ctx.save();
+                ctx.translate(targetX, targetY);
+                ctx.rotate(angle);
+                ctx.fillStyle = '#00f3ff';
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(6, 0);
+                ctx.lineTo(-8, -9);
+                ctx.lineTo(-4, 0);
+                ctx.lineTo(-8, 9);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.restore();
+            }
+
+            // 10. Speed / Swing Dash Afterimages
+            for (const ghost of player.afterimages) {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, ghost.alpha * 0.55);
+                ctx.fillStyle = ghost.color;
+                ctx.shadowColor = ghost.color;
+                ctx.shadowBlur = 12;
+                ctx.beginPath();
+                ctx.translate(ghost.x, ghost.y);
+                ctx.rotate(ghost.rotation);
+                ctx.scale(ghost.facing, 1);
+                ctx.ellipse(0, 0, player.radius * 0.72, player.radius * 0.92, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // 11. Player Trailing Cyber Scarf
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(player.scarfNodes[0].x, player.scarfNodes[0].y);
+            for (let i = 1; i < player.scarfNodes.length; i++) {
+                ctx.lineTo(player.scarfNodes[i].x, player.scarfNodes[i].y);
+            }
+            ctx.strokeStyle = player.swingDashReady ? '#ff007f' : '#64748b';
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowColor = player.swingDashReady ? '#ff007f' : 'transparent';
+            ctx.shadowBlur = 12;
+            ctx.stroke();
+            ctx.restore();
+
+            // 12. Player Character (Brigadier General Cyber-Unit)
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(player.rotation);
+            ctx.scale(player.visualFacing, 1);
+
+            // Body core
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = player.dashFlashTimer > 0 ? '#ff007f' : '#00f3ff';
+            ctx.lineWidth = 3;
+            ctx.shadowColor = ctx.strokeStyle;
+            ctx.shadowBlur = 14;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, player.radius * 0.78, player.radius, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Glowing Cyber Visor Eyes
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#00f3ff';
+            ctx.fillRect(2, -5, 9, 4);
+
+            // Mechanical Chain-Arm Shoulder Indicator
+            ctx.fillStyle = player.swingDashReady ? '#ff007f' : '#475569';
+            ctx.beginPath();
+            ctx.arc(-4, 4, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            drawDashPreview();
+
+            // 13. Physics Vector Visualization (Velocity, Tangent, Tension)
+            if (params.showVectors) {
+                ctx.save();
+                // Green Velocity Vector (v)
+                const vLen = Math.hypot(player.vx, player.vy);
+                if (vLen > 15) {
+                    const vxEnd = player.x + player.vx * 0.12;
+                    const vyEnd = player.y + player.vy * 0.12;
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(player.x, player.y);
+                    ctx.lineTo(vxEnd, vyEnd);
+                    ctx.stroke();
+                }
+
+                // Yellow Tension Vector toward Anchor when grappling
+                if (grapple.active && grapple.mode === 'WALL' && player.tensionForce > 0) {
+                    const rx = grapple.anchorX - player.x;
+                    const ry = grapple.anchorY - player.y;
+                    const rLen = Math.hypot(rx, ry) || 1;
+                    const tScale = Math.min(90, player.tensionForce * 0.015);
+                    ctx.strokeStyle = '#fbbf24';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(player.x, player.y);
+                    ctx.lineTo(player.x + (rx / rLen) * tScale, player.y + (ry / rLen) * tScale);
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+
+            // 14. Sparks & Floating Combat Text
+            for (const p of particles) {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+                ctx.fillStyle = p.color;
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 8;
+                ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+                ctx.restore();
+            }
+
+            for (const ft of floatingTexts) {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, ft.life / ft.maxLife);
+                ctx.fillStyle = ft.color;
+                ctx.font = '900 13px "Chakra Petch", "Noto Sans KR", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.shadowColor = '#000000';
+                ctx.shadowBlur = 4;
+                ctx.fillText(ft.text, ft.x, ft.y);
+                ctx.restore();
+            }
+
+            ctx.restore();
+
+            // 15. Screen-Space Custom Cyber Crosshair at Mouse Cursor
+            ctx.save();
+            ctx.translate(mouse.screenX, mouse.screenY);
+            const crossColor = (aimResult.hasHit && aimResult.grabbable)
+                ? (aimResult.isDrone ? '#ff007f' : '#00f3ff')
+                : '#94a3b8';
+            ctx.strokeStyle = crossColor;
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.arc(0, 0, 12, 0, Math.PI * 2);
+            ctx.moveTo(-18, 0); ctx.lineTo(-8, 0);
+            ctx.moveTo(8, 0);  ctx.lineTo(18, 0);
+            ctx.moveTo(0, -18); ctx.lineTo(0, -8);
+            ctx.moveTo(0, 8);   ctx.lineTo(0, 18);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // ============================================================================
+        // HUD & TELEMETRY UPDATER
+        // ============================================================================
+        function drawDashPreview() {
+            if (!grapple.active || grapple.mode !== 'WALL' || !player.swingDashReady) return;
+            const direction = getDashDirection();
+            const angle = Math.atan2(direction.y, direction.x);
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(angle);
+            ctx.strokeStyle = '#ff5baa';
+            ctx.fillStyle = '#ff5baa';
+            ctx.shadowColor = '#ff007f';
+            ctx.shadowBlur = 10;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([6, 5]);
+            ctx.beginPath(); ctx.moveTo(27, 0); ctx.lineTo(98, 0); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(110, 0); ctx.lineTo(94, -7); ctx.lineTo(94, 7); ctx.closePath(); ctx.fill();
+            ctx.restore();
+        }
+
+        function formatTime(sec) {
+            const mins = Math.floor(sec / 60);
+            const secs = Math.floor(sec % 60);
+            const ms = Math.floor((sec % 1) * 100);
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(ms).padStart(2, '0')}`;
+        }
+
+        const domTimer = document.getElementById('hudTimer');
+        const domDashStatus = document.getElementById('dashStatusText');
+        const domDashBar = document.getElementById('dashChargeBar');
+        const domSpeedText = document.getElementById('speedText');
+        const domSpeedBar = document.getElementById('speedBar');
+        const domStateBadge = document.getElementById('stateBadge');
+        const domTelVel = document.getElementById('telVel');
+        const domTelChainLen = document.getElementById('telChainLen');
+        const domTelOmega = document.getElementById('telOmega');
+        const domTelTension = document.getElementById('telTension');
+
+        function updateHUD() {
+            domTimer.textContent = formatTime(trialTime);
+            const axis = getMoveAxis();
+            document.getElementById('inputA').classList.toggle('active', axis === -1);
+            document.getElementById('inputD').classList.toggle('active', axis === 1);
+            document.getElementById('dashHint').textContent = grapple.active && grapple.mode === 'WALL'
+                ? (player.facing < 0 ? '사슬 기준 왼쪽을 보는 중 · 그 방향으로 대시' : '사슬 기준 오른쪽을 보는 중 · 그 방향으로 대시')
+                : '청록색 벽·천장에 좌클릭 유지 → Shift 대시';
+
+            const speed = Math.round(Math.hypot(player.vx, player.vy));
+            domSpeedText.textContent = `${speed} px/s`;
+            domSpeedBar.style.width = `${Math.min(100, (speed / 1600) * 100)}%`;
+
+            if (player.swingDashReady) {
+                domDashStatus.textContent = grapple.active && grapple.mode === 'WALL' ? '대시 준비' : '사슬 연결 대기';
+                domDashStatus.className = 'font-cyber font-bold text-cyan-400';
+                domDashBar.style.width = '100%';
+            } else {
+                domDashStatus.textContent = '재연결 · 착지로 충전';
+                domDashStatus.className = 'font-cyber font-bold text-rose-400';
+                domDashBar.style.width = '0%';
+            }
+
+            domStateBadge.textContent = player.state;
+            domTelVel.textContent = `${Math.round(player.vx)}, ${Math.round(player.vy)}`;
+
+            if (grapple.active) {
+                const curDist = Math.round(Math.hypot(player.x - grapple.anchorX, player.y - grapple.anchorY));
+                domTelChainLen.textContent = `${curDist} / ${Math.round(grapple.length)} px`;
+            } else {
+                domTelChainLen.textContent = `-- / ${params.maxChainRange} px`;
+            }
+
+            domTelOmega.textContent = `${player.angularVel.toFixed(2)} rad/s`;
+            domTelTension.textContent = `${player.tensionForce} N`;
+        }
+
+        function updateSectorButtonsUI() {
+            document.querySelectorAll('.sector-btn').forEach(btn => {
+                btn.classList.toggle('selected', Number(btn.dataset.sector) === player.checkpointIndex);
+            });
+        }
+
+                // ============================================================================
+        // INPUT LISTENERS & UI CONTROLS
+        // ============================================================================
+        const heldKeys = new Set();
+        let lastMoveAxis = 1;
+        let paused = false;
+        let physicsAccumulator = 0;
+        const FIXED_DT = 1 / 240;
+        function moveTowards(value, target, step) {
+            return value < target ? Math.min(target, value + step) : Math.max(target, value - step);
+        }
+        function getMoveAxis() {
+            return keys.a && keys.d ? lastMoveAxis : Number(keys.d) - Number(keys.a);
+        }
+        function syncKeys() {
+            keys.a = heldKeys.has('KeyA') || heldKeys.has('ArrowLeft');
+            keys.d = heldKeys.has('KeyD') || heldKeys.has('ArrowRight');
+            keys.w = heldKeys.has('KeyW') || heldKeys.has('ArrowUp');
+            keys.s = heldKeys.has('KeyS') || heldKeys.has('ArrowDown');
+            keys.space = heldKeys.has('Space');
+            keys.shift = heldKeys.has('ShiftLeft') || heldKeys.has('ShiftRight');
+            const axis = getMoveAxis();
+            if (axis) player.facing = axis;
+            if (grapple.active) updatePlayerRotation(0);
+            if ((player.onGround || player.state === 'GROUNDED') && player.vy >= 0 && player.dashControlLock <= 0 && (!grapple.active || !axis)) {
+                player.vx = getMoveAxis() * 440;
+            }
+        }
+        function clearInput() {
+            heldKeys.clear();
+            syncKeys();
+            mouse.leftDown = mouse.rightDown = false;
+        }
+        function setPaused(value) {
+            paused = value;
+            clearInput();
+            player.jumpBuffer = 0;
+            physicsAccumulator = 0;
+            lastFrameTime = performance.now();
+            document.getElementById('pauseOverlay').classList.toggle('hidden', !value);
+        }
+        function tryJump() {
+            if (player.jumpBuffer <= 0) return;
+            if (grapple.active) {
+                releaseChainArm();
+                player.vy -= 260;
+            } else if (player.state === 'WALL_CLIMB') {
+                player.vx = -player.wallSide * 540;
+                player.vy = -610;
+                player.facing = -player.wallSide;
+                player.wallDetachTimer = 0.2;
+                player.wallPlatform = null;
+                player.swingDashReady = true;
+            } else if (player.state === 'GROUNDED' || player.coyoteTimer > 0) {
+                player.vy = -590;
+            } else return;
+            player.state = 'AIRBORNE';
+            player.onGround = false;
+            player.coyoteTimer = 0;
+            player.jumpBuffer = 0;
+            spawnParticles(player.x, player.y + player.radius, 10, '#00f3ff', 50, 180);
+        }
+        window.addEventListener('mousemove', e => {
+            mouse.screenX = e.clientX;
+            mouse.screenY = e.clientY;
+        });
+        canvas.addEventListener('mousedown', e => {
+            if (paused) return;
+            e.preventDefault();
+            if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+            mouse.screenX = e.clientX;
+            mouse.screenY = e.clientY;
+            if (e.button === 0) {
+                mouse.leftDown = true;
+                fireChainArm();
+            } else if (e.button === 2) {
+                mouse.rightDown = true;
+                if (grapple.active) executeSwingDash();
+                else {
+                    updateAimRaycast();
+                    if (aimResult.hasHit && aimResult.isDrone) fireChainArm();
+                }
+            }
+        });
+        window.addEventListener('mouseup', e => {
+            if (e.button === 0) { mouse.leftDown = false; if (!paused) releaseChainArm(); }
+            if (e.button === 2) mouse.rightDown = false;
+        });
+        window.addEventListener('keydown', e => {
+            const code = e.code;
+            if (code === 'Escape') { if (!e.repeat) setPaused(!paused); return; }
+            if (paused) return;
+            if (e.target instanceof HTMLElement && e.target.matches('input, button, select, textarea')) return;
+            if (['Space','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(code)) e.preventDefault();
+            if (e.repeat) return;
+            heldKeys.add(code);
+            if (code === 'KeyA' || code === 'ArrowLeft') lastMoveAxis = -1;
+            if (code === 'KeyD' || code === 'ArrowRight') lastMoveAxis = 1;
+            const shiftWasDown = keys.shift;
+            syncKeys();
+            if (['KeyA','KeyD','ArrowLeft','ArrowRight','Space'].includes(code) && !trialFinished) trialRunning = true;
+            if ((code === 'ShiftLeft' || code === 'ShiftRight') && !shiftWasDown) executeSwingDash();
+            if (code === 'Space') { player.jumpBuffer = 0.12; tryJump(); }
+            if (code === 'KeyR') respawnAtCheckpoint();
+            if (code === 'KeyH') document.getElementById('controlsGuide').classList.toggle('hidden');
+            if (/^Digit[1-4]$/.test(code)) teleportToSector(Number(code.slice(-1)) - 1);
+        });
+        window.addEventListener('keyup', e => { heldKeys.delete(e.code); syncKeys(); });
+        window.addEventListener('blur', () => setPaused(true));
+        document.addEventListener('visibilitychange', () => { if (document.hidden) setPaused(true); });
+        document.getElementById('btnResume').addEventListener('click', () => { setPaused(false); document.getElementById('btnResume').blur(); });
+        document.getElementById('btnHelp').addEventListener('click', () => document.getElementById('controlsGuide').classList.toggle('hidden'));
+        document.getElementById('btnFullscreen').addEventListener('click', async () => {
+            try {
+                if (document.fullscreenElement) await document.exitFullscreen();
+                else await document.documentElement.requestFullscreen();
+            } catch { showBannerToast('브라우저의 F11 키로 전체화면을 사용할 수 있습니다.'); }
+        });
+
+                // Inspector & UI Buttons
+        document.getElementById('btnResetPlayer').addEventListener('click', respawnAtCheckpoint);
+        document.getElementById('btnResetCourse').addEventListener('click', resetFullCourse);
+        document.getElementById('btnToggleInspector').addEventListener('click', () => {
+            const panel = document.getElementById('inspectorPanel');
+            panel.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.sector-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx = parseInt(btn.getAttribute('data-sector'), 10);
+                teleportToSector(idx);
+                updateSectorButtonsUI();
+            });
+        });
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => button.blur());
+        });
+
+        // Physics Sliders Binding
+        const sliderMaxRange = document.getElementById('sliderMaxRange');
+        const sliderDashPower = document.getElementById('sliderDashPower');
+        const sliderGravity = document.getElementById('sliderGravity');
+        const sliderBounce = document.getElementById('sliderBounce');
+        const sliderTimeScale = document.getElementById('sliderTimeScale');
+        const chkVectors = document.getElementById('chkVectors');
+
+        sliderMaxRange.addEventListener('input', e => {
+            params.maxChainRange = parseFloat(e.target.value);
+            document.getElementById('valMaxRange').textContent = `${params.maxChainRange} px`;
+        });
+        sliderDashPower.addEventListener('input', e => {
+            params.swingDashImpulse = parseFloat(e.target.value);
+            document.getElementById('valDashPower').textContent = params.swingDashImpulse;
+        });
+        sliderGravity.addEventListener('input', e => {
+            params.gravity = parseFloat(e.target.value);
+            document.getElementById('valGravity').textContent = params.gravity;
+        });
+        sliderBounce.addEventListener('input', e => {
+            params.chainBounce = parseFloat(e.target.value);
+            document.getElementById('valBounce').textContent = params.chainBounce.toFixed(2);
+        });
+        sliderTimeScale.addEventListener('input', e => {
+            params.timeScale = parseFloat(e.target.value);
+            document.getElementById('valTimeScale').textContent = `${params.timeScale.toFixed(2)}x`;
+        });
+        chkVectors.addEventListener('change', e => {
+            params.showVectors = e.target.checked;
+        });
+
+        document.getElementById('btnResetParams').addEventListener('click', () => {
+            Object.assign(params, DEFAULT_PARAMS);
+            sliderMaxRange.value = params.maxChainRange;
+            sliderDashPower.value = params.swingDashImpulse;
+            sliderGravity.value = params.gravity;
+            sliderBounce.value = params.chainBounce;
+            sliderTimeScale.value = params.timeScale;
+            chkVectors.checked = params.showVectors;
+
+            document.getElementById('valMaxRange').textContent = `${params.maxChainRange} px`;
+            document.getElementById('valDashPower').textContent = params.swingDashImpulse;
+            document.getElementById('valGravity').textContent = params.gravity;
+            document.getElementById('valBounce').textContent = params.chainBounce.toFixed(2);
+            document.getElementById('valTimeScale').textContent = `${params.timeScale.toFixed(2)}x`;
+        });
+
+        // ============================================================================
+        // MAIN GAME LOOP
+        // ============================================================================
+        let lastFrameTime = performance.now();
+
+        function gameLoop(now) {
+            let rawDt = (now - lastFrameTime) / 1000;
+            lastFrameTime = now;
+            if (rawDt > 0.05) rawDt = 0.05; // Clamp large tab-switch spikes
+
+            if (paused) { requestAnimationFrame(gameLoop); return; }
+
+            // Camera shake countdown
+            if (camera.shakeTimer > 0) {
+                camera.shakeTimer = Math.max(0, camera.shakeTimer - rawDt);
+            }
+
+            // Hitstop freeze frames (for impactful Swing Dash & Drone Boost)
+            if (hitstopTimer > 0) {
+                hitstopTimer = Math.max(0, hitstopTimer - rawDt);
+                updateAimRaycast();
+                render();
+                requestAnimationFrame(gameLoop);
+                return;
+            }
+
+            // Bullet-time slow-mo after Drone boost
+            let effectiveTimeScale = params.timeScale;
+            if (slowMoTimer > 0) {
+                slowMoTimer = Math.max(0, slowMoTimer - rawDt);
+                effectiveTimeScale *= 0.35;
+            }
+
+            const dt = rawDt * effectiveTimeScale;
+
+            if (trialRunning && !trialFinished) {
+                trialTime += dt;
+            }
+
+            // Fixed 240 Hz physics: max launch travel is under 8 px per step.
+            physicsAccumulator += dt;
+            let physicsSteps = 0;
+            while (physicsAccumulator >= FIXED_DT && physicsSteps < 24) {
+                physicsAccumulator -= FIXED_DT;
+                updatePhysics(FIXED_DT);
+                physicsSteps++;
+                if (hitstopTimer > 0) { physicsAccumulator = 0; break; }
+            }
+
+                    updateScarfAndParticles(dt);
+
+            // Smooth Camera Lerp with Velocity Lookahead
+            const lookaheadX = player.vx * 0.22 + (mouse.screenX - canvas.width / 2) * 0.18;
+            const lookaheadY = player.vy * 0.14 + (mouse.screenY - canvas.height / 2) * 0.14;
+            const targetCamX = player.x + lookaheadX;
+            const targetCamY = player.y - Math.min(110, canvas.height * 0.16) + lookaheadY;
+            camera.x += (targetCamX - camera.x) * Math.min(1, rawDt * 8.5);
+            camera.y += (targetCamY - camera.y) * Math.min(1, rawDt * 8.5);
+
+            updateAimRaycast();
+            render();
+            updateHUD();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        window.onload = function () {
+            showBannerToast('D로 이동 → 청록색 천장에 좌클릭 유지 → D + Shift로 스윙 대시');
+            updateSectorButtonsUI();
+            updateAimRaycast();
+            updateHUD();
+            render();
+            requestAnimationFrame(gameLoop);
+        };
+    </script></body></html>

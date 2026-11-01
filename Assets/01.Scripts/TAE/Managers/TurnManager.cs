@@ -1,59 +1,124 @@
-    using System;
-    using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
+using CoreLib;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Managers
 {
-        public class TurnManager : MonoBehaviour
+    public class TurnManager : MonoSingleton<TurnManager>
     {
-        public static TurnManager Instance;
-        
-        private List<Turn> _turnCycle = new();
-        public Turn CurrentTurn { get; private set; }
-        
-        [SerializeField] private DLJ_PlayerTurn player;
+        private enum BattleState { Ready, PlayerTurn, Processing, Ended }
 
-        private int index;
+        private BattleState state;
+        
+        [SerializeField] private BattleUnit player;
+        [SerializeField] private float turnDelay = 0.8f;
 
-        private void Awake()
+        private readonly List<BattleUnit> enemies = new();
+        private bool isProcessing;
+
+        public BattleUnit CurrentUnit { get; private set; }
+        public bool BattleEnded { get; private set; }
+        public bool IsPlayerTurn => CurrentUnit != null && CurrentUnit == player;
+
+        private void LateUpdate()
         {
-            if (Instance == null)
-                Instance = this;
-            else
-                Destroy(gameObject);
-            
-            _turnCycle.Add(player);
+            if (CurrentUnit != null && !isProcessing) CheckBattleEnd();
+        }
+
+        public void AddTurn(IEnumerable<BattleUnit> units)
+        {
+            if (isProcessing) return;
+
+            CurrentUnit = null;
+            enemies.Clear();
+            BattleEnded = false;
+
+            if (units != null) enemies.AddRange(units);
         }
 
         public void StartTurn()
         {
-            index = 0;
-            CurrentTurn = _turnCycle[index];
-            CurrentTurn.Execute();
+            if (!isActiveAndEnabled || isProcessing) return;
+            if (CurrentUnit != null || BattleEnded) return;
+            if (player == null) return;
+            BeginPlayerTurn();
         }
 
-        public void AddTurn(List<EnemyTurn> enemies)
+        public bool PlayerAttack(BattleUnit target)
         {
-            foreach (var e in enemies) _turnCycle.Add(e);
-            index = _turnCycle.Count - 1;
-        }
+            if (!isActiveAndEnabled || isProcessing) return false;
+            if (!IsPlayerTurn) return false;
+            if (target == null || !enemies.Contains(target) || !IsAlive(target)) return false;
 
-        public void NextTurn()
-        {
-            CurrentTurn = _turnCycle[NextTurnIndex()];
-            CurrentTurn?.Execute();
-        }
+            state = BattleState.Processing;
+            bool executed = new AttackCommand(player, target).Execute();
 
-        private int NextTurnIndex()
-        {
-            if (index == _turnCycle.Count - 1)
+            if (!executed) 
             {
-                index = 0;
-                return 0;
+                state = BattleState.PlayerTurn;
+                return false;
             }
 
-            index++;
-            return index;
+            Debug.Log($"플레이어가 적 [{target.name}]을 공격", target);
+            EndTurn();
+            return true;
         }
+
+
+        public void EndTurn()
+        {
+            if (!isActiveAndEnabled || isProcessing) return;
+            if (!IsPlayerTurn) return;
+
+            isProcessing = true;
+            StartCoroutine(EnemyRoutine());
+        }
+
+        private void BeginPlayerTurn()
+        {
+            if (CheckBattleEnd()) return;
+            CurrentUnit = player;
+            Debug.Log("플레이어 턴", player);
+        }
+
+        private bool CheckBattleEnd()
+        {
+            if (BattleEnded) return true;
+            if (IsAlive(player) && GetFirstLivingEnemy() != null) return false;
+
+            BattleEnded = true;
+            CurrentUnit = null;
+            Debug.Log(IsAlive(player) ? "승리" : "패배", this);
+            return true;
+        }
+
+        public BattleUnit GetFirstLivingEnemy() => enemies.Find(IsAlive);
+
+        
+
+        private IEnumerator EnemyRoutine()
+        {
+            foreach (var enemy in enemies)
+            {
+                EnemyTurn(enemy);
+                yield return new WaitForSeconds(turnDelay);
+            }
+
+            isProcessing = false;
+            BeginPlayerTurn();
+        }
+
+        private void EnemyTurn(BattleUnit enemy)
+        {
+            if (CheckBattleEnd() || !IsAlive(enemy)) return;
+            CurrentUnit = enemy;
+            Debug.Log($"적 턴: {enemy.name}", enemy);
+            new AttackCommand(enemy, player).Execute();
+            Debug.Log($"적 공격");
+        }
+
+
+        private static bool IsAlive(BattleUnit unit) => unit != null && unit.IsAlive;
     }
 }

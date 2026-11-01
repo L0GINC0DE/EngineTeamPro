@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //[SerializeField] private KTH_Enemy enemy;
+    [SerializeField] private KTH_Enemy enemy;
 
+    public KTH_Enemy Enemy => enemy;
+    
     public HealthModule HealthModule { get; private set; }
 
     private void Awake()

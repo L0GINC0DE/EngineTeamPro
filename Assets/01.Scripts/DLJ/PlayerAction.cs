@@ -2,5 +2,5 @@ using UnityEngine;
 
 public abstract class PlayerAction
 {
-    public abstract void PlayAction(PlayableUI player, PlayableUI weapon);
+    public abstract void PlayAction(Player owner, PlayableUI playerUI, PlayableUI weaponUI);
 }
