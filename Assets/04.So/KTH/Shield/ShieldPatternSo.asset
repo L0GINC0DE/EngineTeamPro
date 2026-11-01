@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02853b9faf0df2e4cba966468d58412d, type: 3}
   m_Name: ShieldPatternSo
   m_EditorClassIdentifier: Assembly-CSharp::KTH_PatternSO
-  patterns: []
+  patterns:
+  - {fileID: 11400000, guid: 7c2575c85bb90c148a99cb4fe04ee308, type: 2}
