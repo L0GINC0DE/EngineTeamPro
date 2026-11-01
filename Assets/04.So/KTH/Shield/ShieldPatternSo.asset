@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2735435f04f24204d94123c6465ea944, type: 3}
-  m_Name: Boss3Test
-  m_EditorClassIdentifier: Assembly-CSharp::Boss3Test
+  m_Script: {fileID: 11500000, guid: 02853b9faf0df2e4cba966468d58412d, type: 3}
+  m_Name: ShieldPatternSo
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_PatternSO
+  patterns: []
