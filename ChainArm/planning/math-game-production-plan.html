@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>사슬팔 수학 액션 · 제작 기획서</title>
+<style>
+:root{--bg:#f4f3ed;--paper:#fffefa;--ink:#1d303a;--muted:#587079;--line:#d9e1de;--teal:#176e63;--pink:#af315f}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.85 "Malgun Gothic","Apple SD Gothic Neo",sans-serif}a{color:var(--teal);text-underline-offset:4px}button,input,select{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #d880aa;outline-offset:4px}.layout{max-width:1450px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;padding:32px}aside{position:sticky;top:30px;align-self:start}.brand{font:700 13px Consolas,monospace;letter-spacing:2px;color:var(--teal);padding:12px 0 22px;border-bottom:1px solid var(--line)}nav{display:grid;gap:10px;margin-top:24px}nav a{text-decoration:none;color:var(--muted);font-size:13px}nav a:hover{color:var(--teal)}.actions{display:grid;gap:10px;margin-top:28px}.actions>*{padding:9px 12px;border:1px solid var(--line);background:var(--paper);text-align:center;border-radius:8px;text-decoration:none;color:var(--ink);font-size:13px}.actions small{border:0;background:none;text-align:left;color:var(--muted);line-height:1.7;padding:0;margin-top:10px}.hero{background:var(--paper);padding:44px;border:1px solid var(--line);border-radius:18px;margin-bottom:24px;border-top:4px solid var(--teal)}.eyebrow{color:var(--teal);letter-spacing:2px;font-size:11px;font-weight:700}.hero h1{font-size:clamp(28px,3.5vw,46px);line-height:1.35;letter-spacing:-2px;word-break:keep-all;max-width:850px;margin:15px 0 22px}.hero p{max-width:700px;color:var(--muted);margin-bottom:0}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:25px}.badges span{border:1px solid #c9ded6;background:#eef6f1;border-radius:30px;padding:4px 13px;color:var(--teal);font-size:12px}.lab{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:24px 0 38px}.lab h2{margin:0;font-size:22px;letter-spacing:-.7px}.lab p{color:var(--muted);font-size:13px}.lab-top{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(205px,1fr);gap:24px;align-items:start}.stage svg{width:100%;height:auto;display:block;border-radius:14px}.controls label{display:block;font-size:13px;font-weight:700;margin:15px 0 8px}.controls label:first-child{margin-top:0}.controls output{float:right;color:var(--teal)}input[type=range]{width:100%;accent-color:var(--teal);min-height:26px}select{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;padding:7px;font-size:13px}.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.presets button{background:#edf3ef;color:var(--teal);border:1px solid #cbded4;border-radius:5px;padding:3px 9px;font-size:12px}.live-math{margin-top:18px;font-size:12px}.live-math>div{padding:9px 0;border-bottom:1px solid var(--line)}.live-math span{display:block;color:var(--muted)}.live-math strong{font:700 15px/1.8 Consolas,"Malgun Gothic",monospace}.graph{margin-top:20px;background:#f3f6ef;border-radius:10px;padding:12px 18px}.graph h3{font-size:13px;margin:0;color:var(--teal)}.graph svg{width:100%;max-height:150px;display:block}.lab .note{padding-left:12px;border-left:3px solid #cf6d91;margin-bottom:0}.document{background:var(--paper);padding:22px 44px 44px;border:1px solid var(--line);border-radius:18px}.document h2{font-size:25px;line-height:1.45;letter-spacing:-1px;margin:46px 0 18px;padding-top:10px;border-top:1px solid var(--line)}.document h3{font-size:18px;margin-top:32px;color:var(--teal)}.document p{word-break:keep-all;overflow-wrap:anywhere}.document code{font:13px/1.8 Consolas,"Malgun Gothic",monospace;background:#edf3f0;padding:2px 5px;border-radius:4px;white-space:normal}.document pre{background:#edf3f0;border-left:3px solid #61a895;padding:18px 20px;border-radius:4px;overflow:auto;break-inside:avoid}.document pre code{padding:0;white-space:pre;line-height:1.9}.table-wrap{overflow-x:auto;margin:20px 0}table{width:100%;border-collapse:collapse;font-size:12px;line-height:1.8;min-width:520px}th{background:#eaf1ec;color:var(--teal);text-align:left;font-weight:700}th,td{padding:11px 12px;vertical-align:top;border-bottom:1px solid var(--line)}td:first-child{font-weight:700}strong{font-weight:700}.appendix{margin-top:40px;background:#f6f6f0;border:1px solid var(--line);padding:15px;border-radius:8px}.appendix summary{cursor:pointer;color:var(--muted);font-size:13px}.appendix h2{margin-top:20px}.footer{font-size:12px;color:var(--muted);margin:24px 4px} @media(max-width:1080px){.layout{grid-template-columns:1fr;max-width:980px;padding:20px}aside{position:static}.brand{padding-bottom:10px}nav{display:none}.actions{display:flex;flex-wrap:wrap;margin-top:12px}.actions small{flex-basis:100%}.hero{padding:30px}.document{padding:15px 26px 30px}}@media(max-width:650px){.layout{padding:12px;gap:15px}.hero{padding:24px}.lab{padding:16px}.lab-top{grid-template-columns:1fr;gap:16px}.document{padding:10px 18px 24px}.document h2{font-size:22px}.hero h1{letter-spacing:-1px}.live-math{display:grid;grid-template-columns:1fr 1fr;gap:10px}body{font-size:14px}}@media print{@page{size:A4;margin:16mm}body{background:white;color:#111;font-size:10pt}.layout{display:block;padding:0;max-width:none}aside,.controls,.presets,.footer{display:none}.hero,.lab,.document{border:0;padding:0;border-radius:0}.hero{page-break-after:always}.hero h1{font-size:32pt;margin-top:35mm}.hero p{font-size:13pt}.lab{page-break-after:always}.lab-top{display:block}.stage{max-width:145mm;margin:auto}.graph{max-width:150mm;margin:auto}.document h2{font-size:18pt;break-after:avoid}.document h3{font-size:13pt;break-after:avoid}.table-wrap{overflow:visible}table{min-width:0;font-size:8.5pt}tr{break-inside:avoid}.document pre{font-size:9pt}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body><div class="layout"><aside><div class="brand">CHAIN MATH / PLAN</div><nav aria-label="문서 목차"><a href="#math-lab">각도와 길이로 확인하기</a><a href="#section-0">1. 제작 목적과 완성할 결과물</a><a href="#section-1">2. 플레이와 수학 학습의 연결</a><a href="#section-2">3. 조작과 사슬팔 규칙</a><a href="#section-3">4. 사용할 수학 원리</a><a href="#section-4">5. 수학을 보여 주는 화면과 코스</a><a href="#section-5">6. 구현 구조와 처리 순서</a><a href="#section-6">7. 제작 범위와 순서</a><a href="#section-7">8. 검증과 완료 기준</a><a href="#section-8">9. 현재 상태, 수치, 남은 결정</a></nav><div class="actions"><button id="printButton" type="button">인쇄 / PDF로 저장</button><a href="../sanabi-chain-arm.html">기존 게임 열기</a><a href="math-game-production-plan.md">Markdown 원문</a><small>제작 기획 초안입니다.<br>학습 화면과 교육용 코스는 추가 제작 제안입니다.</small></div></aside><main>
+<header class="hero"><div class="eyebrow">MATHEMATICS × ACTION · 제작 기획</div><h1>삼각함수(Sin)와<br>두 점 사이의 거리 공식으로<br>사슬팔 액션 만들기</h1><p>거리를 계산해 닿는 곳을 정하고, 각도를 읽어 다음 움직임을 예측한다. 기존 사슬팔 프로토타입에 수학을 관찰하고 설명하는 학습 경험을 더한다.</p><div class="badges"><span>거리 · 사거리와 길이</span><span>Sin / Cos · 위치와 방향</span><span>접선 · 시선 방향 대시</span></div></header>
+<section class="lab" id="math-lab"><h2>각도와 길이를 바꿔 확인하기</h2><p>팽팽한 사슬을 가정한 설명용 도식입니다. θ는 고정점의 수직 아래쪽부터 잽니다. D/A는 회전된 몸체의 좌우를 뜻합니다.</p><div class="lab-top"><div id="chainStage" class="stage"></div><div class="controls"><label for="angle">각도 θ <output id="angleLabel" for="angle"></output></label><input type="range" id="angle" min="-180" max="180" step="0.01" value="53.13"><div class="presets"><button type="button" data-angle="0">아래 0°</button><button type="button" data-angle="90">오른쪽 90°</button><button type="button" data-angle="180">위 180°</button><button type="button" data-angle="-90">왼쪽 −90°</button></div><label for="length">사슬 길이 L <output id="lengthLabel" for="length"></output></label><input type="range" id="length" min="100" max="480" value="300"><label for="facing">몸체 기준 시선</label><select id="facing"><option value="1">D · 몸체 오른쪽</option><option value="-1">A · 몸체 왼쪽</option></select><div class="live-math" id="liveMath" aria-live="polite" aria-atomic="true"></div></div></div><div class="graph"><h3>현재 각도와 Sin 값</h3><div id="sinGraph"></div></div><p class="note">화살표는 대시가 시작되는 방향입니다. 실제 게임에서는 사슬을 유지하므로 이후 궤적이 고정점을 중심으로 휘어집니다. 도식의 속력 1000 px/s는 설명용 값입니다.</p></section>
+<article class="document">
+<p>제작 기획 초안 · 2026-10-27 · 가제 CHAIN MATH</p>
+<p>거리로 사슬이 닿는 곳을 정하고, 각도로 이동 방향을 정한다. 플레이어는 사슬을 걸고 몸을 회전시키며 장애물을 통과한다. 이때 화면에 나타나는 길이와 방향을 수학 공식으로 설명하는 액션형 수학 게임이다.</p>
+<h2 id="section-0">1. 제작 목적과 완성할 결과물</h2>
+<p>두 점 사이의 거리 공식으로 사슬의 사거리와 길이를 계산하고, 삼각함수로 사슬의 각도에 따른 위치·몸체 회전·대시 방향을 표현한다. 플레이어가 공식을 읽은 뒤 실제 움직임에서 같은 관계를 확인하도록 구성한다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>기획 내용</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>형식</td>
+<td>키보드·마우스로 조작하는 2D 사슬팔 액션</td>
+</tr>
+<tr>
+<td>실행 환경</td>
+<td>현재 HTML Canvas 프로토타입을 확장한 오프라인 단일 HTML</td>
+</tr>
+<tr>
+<td>플레이 목표</td>
+<td>고정점을 선택하고 스윙·대시·해제를 연결해 도착 지점에 도달</td>
+</tr>
+<tr>
+<td>학습 목표</td>
+<td>사거리 판단, 사슬 길이 제약, 각도에 따른 좌표와 접선 방향 설명</td>
+</tr>
+<tr>
+<td>대상</td>
+<td>좌표·피타고라스 정리·삼각비를 배우는 학습자와 수학 구현 시연 관람자라는 가정. 학년과 선수 지식은 미정</td>
+</tr>
+<tr>
+<td>제출물 제안</td>
+<td>실행 HTML, 제작 기획서, 수학 원리 설명, 검증 결과</td>
+</tr>
+<tr>
+<td>미정 사항</td>
+<td>제출 형식, 제작 인원, 마감일, 실제 학습 대상, 발표·공개 범위</td>
+</tr>
+</tbody></table></div>
+<p>기존 프로토타입의 사슬 연결, 빠른 A/D 반전, 회전 기준 시선, 사슬을 유지하는 대시, 지상 미끄러짐 방지를 이어 쓴다. 이 문서는 추가 제작안을 정리한 것이며 학습 화면과 교육용 코스는 아직 구현하지 않았다.</p>
+<h2 id="section-1">2. 플레이와 수학 학습의 연결</h2>
+<p>플레이 흐름은 <strong>고정점 찾기 → 거리 판단 → 사슬 연결 → 각도와 시선 조절 → 대시 → 해제·착지 → 다음 고정점</strong>으로 이어진다. 실패하면 가까운 체크포인트에서 다시 시도한다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>플레이 행동</th>
+<th>확인할 수학 관계</th>
+<th>학습자가 설명할 내용</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>고정점을 조준한다</td>
+<td>두 점 사이의 거리와 최대 사거리 비교</td>
+<td>화면상 가까워 보여도 가로·세로 차이를 함께 계산해야 한다</td>
+</tr>
+<tr>
+<td>사슬에 매달린다</td>
+<td>고정점에서 플레이어까지의 거리 제한</td>
+<td>팽팽한 사슬은 일정한 반지름의 원 위에서 움직인다</td>
+</tr>
+<tr>
+<td>스윙한다</td>
+<td>각도 변화에 따른 Sin·Cos 값 변화</td>
+<td>같은 길이에서도 각도에 따라 가로·세로 위치가 달라진다</td>
+</tr>
+<tr>
+<td>A/D를 바꾼다</td>
+<td>회전한 몸체의 좌우 방향</td>
+<td>화면의 좌우와 몸체의 좌우는 다를 수 있다</td>
+</tr>
+<tr>
+<td>사슬을 잡고 대시한다</td>
+<td>사슬 방향에 수직인 접선</td>
+<td>현재 위치와 시선으로 대시 시작 방향을 예측한다</td>
+</tr>
+<tr>
+<td>W/S로 사슬 길이를 바꾼다</td>
+<td>반지름과 이동 범위의 관계</td>
+<td>사슬 길이가 달라지면 닿는 위치와 회전 속도도 달라진다</td>
+</tr>
+</tbody></table></div>
+<p>학습 기능은 상황을 관찰하고 예측하는 데 사용한다. 진행 중에는 작은 수치만 표시하고, 자세한 풀이를 볼 때 일시정지해 장면을 살펴보도록 제안한다. 학습 효과는 아직 검증하지 않았다.</p>
+<h2 id="section-2">3. 조작과 사슬팔 규칙</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>입력</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A / D</td>
+<td>지상에서는 즉시 좌우 이동. 사슬 연결 중에는 몸체 기준 좌우 보기와 스윙 조절</td>
+</tr>
+<tr>
+<td>좌클릭 유지</td>
+<td>사거리 안의 연결 가능한 벽·천장에 사슬 고정</td>
+</tr>
+<tr>
+<td>좌클릭 해제</td>
+<td>사슬을 해제하고 당시 속도로 비행</td>
+</tr>
+<tr>
+<td>Shift / 우클릭</td>
+<td>사슬을 유지한 채 현재 시선 방향으로 대시</td>
+</tr>
+<tr>
+<td>W / S</td>
+<td>사슬 감기·풀기. 기존 벽 등반 동작도 유지</td>
+</tr>
+<tr>
+<td>Space</td>
+<td>점프. 사슬 연결 중에는 해제 도약</td>
+</tr>
+<tr>
+<td>R / Esc</td>
+<td>체크포인트 복귀 / 일시정지</td>
+</tr>
+<tr>
+<td>M — 추가 제작 제안</td>
+<td>수학 표시 켜기·끄기</td>
+</tr>
+</tbody></table></div>
+<p><strong>회전 기준.</strong> 훅이 걸리는 순간 몸체의 위쪽 축이 고정점을 향한다. 사슬 연결 중에는 매 물리 갱신 후 이 각도를 유지한다. A/D는 회전된 몸체의 좌우를 정하며, 좌우 전환은 몸체의 기준 회전을 바꾸지 않고 시선을 뒤집는다.</p>
+<p><strong>대시 기준.</strong> 몸체의 시선, 분홍 화살표, 대시 시작 방향이 일치한다. 키를 놓으면 마지막 시선을 유지한다. 대시는 사슬을 해제하거나 길이를 바꾸지 않는다. 사슬이 팽팽하면 대시 후 원호를 따라 움직이고, 느슨하면 다시 팽팽해질 때까지 원 안에서 움직인다. 화살표는 시작 속도 방향을 나타낸다.</p>
+<p><strong>조작 반응.</strong> 지상에서 이동 키를 놓으면 수평 속도가 즉시 0이 된다. 스윙 중 반대 키를 누르면 시선은 즉시 바뀌고 접선 속도에는 강한 제동이 적용된다. 반대 입력이 없는 스윙 관성은 유지한다.</p>
+<p><strong>충전과 입력 충돌.</strong> 새 사슬 연결 또는 새 착지로 대시를 충전한다. A와 D를 함께 누르면 마지막 입력을 우선한다. 같은 방향을 유지하면 대시 추진력을 보존하며, 새 반대 입력은 대시 직후에도 방향을 전환한다. 벽·천장에 건 사슬을 핵심 학습 대상으로 삼고, 기존 드론 당기기는 별도 확장 요소로 둔다.</p>
+<h2 id="section-3">4. 사용할 수학 원리</h2>
+<h3>4.1 좌표와 기호</h3>
+<p>화면 좌표는 오른쪽이 +x, 아래쪽이 +y다. 고정점을 H, 플레이어 중심을 P라고 한다. 화면 이동과 확대는 표시만 바꾸며 거리 계산은 게임 안의 좌표로 수행한다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>기호</th>
+<th>뜻</th>
+<th>단위·기준</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H = (hx, hy)</td>
+<td>사슬 고정점</td>
+<td>px</td>
+</tr>
+<tr>
+<td>P = (px, py)</td>
+<td>플레이어 중심</td>
+<td>px</td>
+</tr>
+<tr>
+<td>rx, ry</td>
+<td>고정점에서 플레이어로 향하는 좌표 차이</td>
+<td>rx = px − hx, ry = py − hy</td>
+</tr>
+<tr>
+<td>d</td>
+<td>두 점 사이의 실제 거리</td>
+<td>px</td>
+</tr>
+<tr>
+<td>L</td>
+<td>현재 사슬이 허용하는 최대 길이</td>
+<td>px</td>
+</tr>
+<tr>
+<td>R</td>
+<td>사슬을 발사할 수 있는 최대 거리</td>
+<td>px</td>
+</tr>
+<tr>
+<td>θ</td>
+<td>고정점에서 수직 아래쪽을 기준으로 오른쪽을 향해 잰 각도</td>
+<td>내부 계산 rad, 화면 표시 °</td>
+</tr>
+<tr>
+<td>φ</td>
+<td>몸체의 그리기 회전 각도</td>
+<td>φ = −θ</td>
+</tr>
+<tr>
+<td>s</td>
+<td>몸체 기준 시선</td>
+<td>D는 +1, A는 −1</td>
+</tr>
+<tr>
+<td>V</td>
+<td>대시 시작 속력</td>
+<td>px/s</td>
+</tr>
+</tbody></table></div>
+<h3>4.2 두 점 사이의 거리</h3>
+<pre><code class="language-text">rx = px − hx
+ry = py − hy
+d = √(rx² + ry²)
+</code></pre>
+<p>발사 시에는 조준선에서 실제로 맞은 표면을 H로 삼는다. <code>d ≤ R</code>이고 사슬을 걸 수 있는 표면이며 앞을 가로막는 다른 물체가 없을 때 연결한다. 거리는 필요조건이고 표면 판정도 함께 수행한다.</p>
+<p>연결 후에는 <code>d ≤ L</code>을 유지한다. <code>d &lt; L</code>이면 사슬이 느슨하므로 플레이어를 강제로 원 위로 밀어내지 않는다. <code>d &gt; L</code>이면 다음 식으로 위치를 최대 길이까지 되돌린다.</p>
+<pre><code class="language-text">nx = rx / d
+ny = ry / d
+px = hx + L × nx
+py = hy + L × ny
+</code></pre>
+<p>이때 바깥쪽으로 나가려는 속도 성분도 제거하거나 제한해야 사슬이 계속 늘어나지 않는다. <code>d</code>가 거의 0이면 나눗셈을 피하고 직전의 유효한 방향을 사용한다.</p>
+<p>현재 프로토타입은 연결감을 위해 처음 사슬 길이를 맞은 거리의 <code>0.96배</code>로 줄인다. 그래서 최초 거리와 설정 길이가 잠깐 다를 수 있다. 학습 화면에서는 <code>실제 거리 d</code>와 <code>허용 길이 L</code>을 따로 표시한다. 기본 수학 예제에서는 이해를 돕기 위해 <code>d = L</code>인 팽팽한 사슬을 사용한다.</p>
+<h3>4.3 Sin으로 가로 위치, Cos로 세로 위치 계산</h3>
+<p>θ는 수직 아래쪽에서 잰 각도다. 팽팽한 사슬의 위치는 다음과 같다.</p>
+<pre><code class="language-text">px = hx + L × sin(θ)
+py = hy + L × cos(θ)
+
+sin²(θ) + cos²(θ) = 1
+d = √((L × sin(θ))² + (L × cos(θ))²) = L
+</code></pre>
+<p>Sin은 사슬 길이 중 가로 방향으로 차지하는 비율이고, Cos는 세로 방향으로 차지하는 비율이다. 각도를 바꿔도 두 점 사이의 거리가 L로 유지되는 이유를 두 식으로 확인한다. Cos는 <code>cos(θ) = sin(θ + π/2)</code>로 Sin과 연결된다.</p>
+<p>느슨한 사슬의 실제 위치를 표현할 때는 위 식의 L 대신 d를 사용한다. 현재 게임은 속도와 중력으로 위치를 먼저 갱신한 뒤 거리 제약을 적용한다. Sin·Cos는 그 위치의 기하 관계와 방향을 설명하며, 입력과 무관한 일정한 왕복 운동을 지정하지 않는다.</p>
+<h3>4.4 사슬 방향에서 몸체 회전 구하기</h3>
+<pre><code class="language-text">θ = atan2(rx, ry)
+φ = −θ
+몸체의 위쪽 방향 = (−sin(θ), −cos(θ))
+</code></pre>
+<p><code>atan2</code>는 두 좌표 차이로 각도를 구하고 어느 사분면에 있는지도 구분한다. 여기서는 수직 아래쪽을 기준으로 잡았기 때문에 인수가 <code>(rx, ry)</code> 순서다. 몸체의 위쪽은 언제나 고정점을 향한다. 현재 구현의 <code>atan2(−rx, ry)</code>는 φ를 직접 구하는 같은 방향 계산이며, 회전이 이어질 때 각도 경계에서 튀지 않도록 연결한다.</p>
+<h3>4.5 바라보는 방향으로 대시하기</h3>
+<pre><code class="language-text">몸체의 오른쪽 단위 방향 t = (cos(θ), −sin(θ))
+대시 방향 D = s × t
+대시 시작 속도 = V × D
+
+vx = s × V × cos(θ)
+vy = −s × V × sin(θ)
+</code></pre>
+<p>사슬의 단위 방향 <code>(sin(θ), cos(θ))</code>와 t의 내적은 0이다. 따라서 대시 시작 방향은 사슬에 수직이다. 구현에서는 같은 방향을 <code>(ry/d, −rx/d)</code>로도 구할 수 있다. 현재 프로토타입은 이 정규화된 좌표 차이를 몸체·입력·대시의 공통 기준으로 사용한다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>플레이어 위치</th>
+<th>θ</th>
+<th>D를 눌렀을 때</th>
+<th>A를 눌렀을 때</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>고정점 아래</td>
+<td>0°</td>
+<td>화면 오른쪽</td>
+<td>화면 왼쪽</td>
+</tr>
+<tr>
+<td>고정점 오른쪽</td>
+<td>90°</td>
+<td>화면 위쪽</td>
+<td>화면 아래쪽</td>
+</tr>
+<tr>
+<td>고정점 위</td>
+<td>180°</td>
+<td>화면 왼쪽</td>
+<td>화면 오른쪽</td>
+</tr>
+<tr>
+<td>고정점 왼쪽</td>
+<td>−90°</td>
+<td>화면 아래쪽</td>
+<td>화면 위쪽</td>
+</tr>
+</tbody></table></div>
+<p>같은 D 입력도 몸체가 돌아간 만큼 화면에서의 방향이 달라진다. 사슬을 유지하므로 접선으로 출발한 뒤 거리 제약에 따라 궤적이 휜다. 팽팽한 사슬에서 접선 속력이 같으면 각속도 크기는 <code>|ω| = V/L</code>이므로 짧은 사슬일수록 더 빠르게 회전한다.</p>
+<p>JavaScript의 삼각함수에는 라디안을 넣는다. 화면에 도 단위로 표시할 때만 <code>도 = 라디안 × 180/π</code>로 바꾼다.</p>
+<h3>4.6 수치로 확인하는 예제</h3>
+<p>고정점이 <code>H = (100, 100)</code>, 플레이어가 <code>P = (340, 280)</code>인 장면을 사용한다.</p>
+<pre><code class="language-text">rx = 240, ry = 180
+d = √(240² + 180²) = 300
+L = 300인 팽팽한 사슬
+sin(θ) = 240/300 = 0.8
+cos(θ) = 180/300 = 0.6
+θ ≈ 53.13°
+φ ≈ −53.13°
+</code></pre>
+<p>설명용 대시 속력을 <code>V = 1000 px/s</code>로 두면 D 방향의 속도는 <code>(600, −800) px/s</code>다. 화면 오른쪽 위로 출발한다. A를 누르면 <code>(-600, 800) px/s</code>가 되어 왼쪽 아래로 출발한다. 속력은 어느 쪽이든 <code>√(600² + 800²) = 1000</code>이다. 이 속력은 계산 예제용이며 게임의 기본 대시 수치를 바꾼다는 뜻은 아니다.</p>
+<h2 id="section-4">5. 수학을 보여 주는 화면과 코스</h2>
+<p>학습 표시를 켜면 고정점 H와 플레이어 P 사이에 직각삼각형을 겹쳐 그린다. 가로선에는 <code>rx</code>, 세로선에는 <code>ry</code>, 사슬에는 <code>d / L</code>, 고정점에는 <code>θ</code>를 표시한다. 화면 한쪽에는 현재 좌표·Sin·Cos 값과 대입식을 배치한다. 플레이어 앞에는 몸체의 로컬 오른쪽 방향과 현재 대시 방향을 구분해서 보여 준다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>화면 상태</th>
+<th>플레이어에게 보여 줄 정보</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>조준 중</td>
+<td>연결 가능 여부, 실제 교차점까지의 거리, 최대 사거리</td>
+</tr>
+<tr>
+<td>연결 성공</td>
+<td>H·P, d·L, θ, 회전한 몸체와 현재 시선</td>
+</tr>
+<tr>
+<td>사슬이 느슨함</td>
+<td>실제 거리와 허용 길이를 따로 표시하고 느슨함을 문자로 표시</td>
+</tr>
+<tr>
+<td>대시 준비</td>
+<td>시선 방향의 화살표, 시작 속도의 가로·세로 성분</td>
+</tr>
+<tr>
+<td>대시 사용 후</td>
+<td>소모 상태, 재연결·새 착지로 충전한다는 안내</td>
+</tr>
+<tr>
+<td>연결 실패</td>
+<td>거리 초과·고정 불가 표면·장애물 차단을 구분해서 안내</td>
+</tr>
+<tr>
+<td>학습 일시정지</td>
+<td>정지한 장면의 삼각형과 계산식을 읽고 다시 진행</td>
+</tr>
+</tbody></table></div>
+<p>색상과 함께 선 종류·기호·문자를 사용한다. 수학 표시와 화면 흔들림은 각각 끌 수 있도록 제안한다. 학습 일시정지에서도 값을 읽을 수 있게 한다. 키보드·마우스 외 입력 지원 여부는 미정이다.</p>
+<p>교육용 코스는 다음 순서로 재구성한다는 제안이다. 현재 있는 네 구역이 이 학습 순서로 완성되었다는 뜻은 아니다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>배치와 행동</th>
+<th>확인할 개념</th>
+<th>통과 기준</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>거리 연습</td>
+<td>서로 다른 거리에 놓인 고정점을 조준하고 연결</td>
+<td>거리 공식, 최대 사거리</td>
+<td>닿는 점을 선택하고 도착 지점으로 이동</td>
+</tr>
+<tr>
+<td>각도 연습</td>
+<td>같은 고정점에서 여러 각도로 스윙하며 표시를 관찰</td>
+<td>Sin·Cos와 좌표</td>
+<td>각도 변화에 따른 가로·세로 변화 설명</td>
+</tr>
+<tr>
+<td>방향 연습</td>
+<td>고정점의 위·아래·옆에서 A/D와 대시 사용</td>
+<td>몸체 기준 좌우, 접선</td>
+<td>대시 시작 방향을 예측하고 목표 통과</td>
+</tr>
+<tr>
+<td>종합 구간</td>
+<td>사슬 길이 조절, 여러 고정점, 장애물 통과</td>
+<td>거리·각도·방향의 결합</td>
+<td>연결·스윙·대시·해제로 목적지 도달</td>
+</tr>
+</tbody></table></div>
+<p>수학 이해는 별도 설명 과제로 확인한다. 새로운 배치의 그림에서 연결 가능 여부와 대시 시작 방향을 먼저 예측하게 하고, 플레이 후 사용한 공식을 설명하게 한다. 조작 숙련과 수학 이해를 구분해 관찰하며 점수 기준과 참여 인원은 실제 학습 대상이 정해진 뒤 정한다.</p>
+<h2 id="section-5">6. 구현 구조와 처리 순서</h2>
+<p>기존 단일 HTML 안에서 물리 계산과 수학 표시가 같은 상태를 읽도록 만든다. 학습 화면만 별도의 위치·방향을 계산하면 실제 동작과 설명이 달라질 수 있다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>데이터</th>
+<th>역할</th>
+<th>현재 코드와 연결</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>플레이어 위치·속도·회전·시선</td>
+<td>이동과 그리기의 기준</td>
+<td>player</td>
+</tr>
+<tr>
+<td>연결 여부·고정점·허용 길이</td>
+<td>사슬 상태의 기준</td>
+<td>grapple</td>
+</tr>
+<tr>
+<td>조준 교차점·표면·거리</td>
+<td>연결 가능 판정</td>
+<td>aimResult</td>
+</tr>
+<tr>
+<td>거리·각도·단위 방향</td>
+<td>위 상태에서 파생되는 계산값</td>
+<td>getGrappleFrame()을 확장하거나 공유</td>
+</tr>
+<tr>
+<td>입력과 마지막 좌우 입력</td>
+<td>충돌하는 입력의 우선순위</td>
+<td>getMoveAxis(), syncKeys()</td>
+</tr>
+<tr>
+<td>학습 표시 여부·표시용 값</td>
+<td>수학 설명과 일시정지 화면</td>
+<td>추가 제작</td>
+</tr>
+</tbody></table></div>
+<p>오프라인 게임 내부 상태를 기준으로 처리한다. 데이터베이스나 계정은 사용하지 않는다. 학습 구간을 데이터로 분리할 때에는 <code>lessonId</code>를 고유 식별자로, 해당 코스의 <code>sectorId</code>를 참조값으로 사용한다는 제안이다. 구간을 바꾸면 이전 학습 표시 상태를 초기화한다.</p>
+<p>처리 순서는 입력 수집, 연결·해제·점프·대시 이벤트, 중력과 접선 속도 조절, 위치 이동, 사슬 길이 제약, 충돌·착지 판정, 최종 회전과 시선 확정, 화면 표시다. 연결과 좌우 시선 변경은 입력 이벤트에서도 즉시 반영한다. 리스폰은 진행 중인 사슬과 대시 상태를 초기화하고, 일시정지·창 이탈은 눌린 입력을 지운다.</p>
+<p>동시에 발생한 해제와 대시는 먼저 전달된 이벤트 순서로 처리한다. 대시가 먼저면 대시 후 해제되고, 해제가 먼저면 대시 조건이 없어져 실행하지 않는다. 같은 대시 충전으로 여러 번 가속하지 않도록 사용 즉시 소모 처리한다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>시작 상태</th>
+<th>입력·조건</th>
+<th>결과 상태</th>
+<th>상태 변화와 확인 방법</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>지상·공중</td>
+<td>연결 가능한 표면에 훅 적중</td>
+<td>사슬 연결</td>
+<td>고정점 기록, 즉시 회전 정렬, 연결선 표시</td>
+</tr>
+<tr>
+<td>사슬 연결</td>
+<td>A/D 변경</td>
+<td>사슬 연결</td>
+<td>즉시 시선 변경, 접선 속도 조절, 화살표 갱신</td>
+</tr>
+<tr>
+<td>사슬 연결</td>
+<td>충전된 대시 입력</td>
+<td>사슬 연결</td>
+<td>충전 소모, 시선 방향 속도 적용, 고정점·길이 유지</td>
+</tr>
+<tr>
+<td>사슬 연결</td>
+<td>좌클릭 해제·Space</td>
+<td>공중</td>
+<td>사슬 해제. Space에는 기존 도약 보정 적용</td>
+</tr>
+<tr>
+<td>공중</td>
+<td>발판에 착지</td>
+<td>지상</td>
+<td>사슬이 없으면 몸체를 세우고 불필요한 수평 관성 제거</td>
+</tr>
+<tr>
+<td>모든 플레이 상태</td>
+<td>위험물 접촉·R</td>
+<td>체크포인트</td>
+<td>사슬·효과·입력·카메라 초기화</td>
+</tr>
+</tbody></table></div>
+<p>거리 0에 가까운 상황, 사거리 경계, 수평 사슬, 고정점 위쪽, 각도의 한 바퀴 경계, 빠른 대시 중 얇은 장애물, 사슬과 지면이 동시에 닿는 상황을 검증한다. 현재 물리 갱신 간격은 <code>1/240초</code>다. 이 값이 모든 기기에서 같은 실행 성능을 보장한다는 뜻은 아니다.</p>
+<h2 id="section-6">7. 제작 범위와 순서</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>우선순위</th>
+<th>제작 항목</th>
+<th>핵심 플레이에 필요한 이유</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Must</td>
+<td>현재 사슬팔 조작 보존, 공통 거리·방향 계산, 수학 표시, 기본 학습 구간, 설명서</td>
+<td>행동과 공식이 일치하는 실행본 완성</td>
+</tr>
+<tr>
+<td>Should</td>
+<td>각도별 연습, 사슬 길이 비교, 일시정지 풀이, 흔들림 끄기</td>
+<td>관찰·예측·비교를 돕는 학습 환경</td>
+</tr>
+<tr>
+<td>Could</td>
+<td>Sin 그래프에 현재 각도 표시, 플레이 장면 기록, 설명용 자동 시연</td>
+<td>발표와 반복 관찰 지원</td>
+</tr>
+<tr>
+<td>Won&#39;t</td>
+<td>온라인 대전, 계정, 결제, 대규모 스토리, 새 전투 시스템</td>
+<td>이번 사슬팔 수학 주제의 제작 범위 밖</td>
+</tr>
+</tbody></table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>작업 단위·의존성</th>
+<th>완료 조건</th>
+<th>담당 역할</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>기초 정리</td>
+<td>기존 조작과 함수 확인, 기호·좌표 기준 확정</td>
+<td>몸체·화살표·대시의 방향과 설명식 일치</td>
+<td>기획·개발</td>
+</tr>
+<tr>
+<td>수학 표시</td>
+<td>기초 정리 후 삼각형, d·L·θ, Sin·Cos, 속도 성분 표시</td>
+<td>실시간 값과 일시정지 값이 실제 게임 상태와 일치</td>
+<td>개발·화면 구성</td>
+</tr>
+<tr>
+<td>학습 코스</td>
+<td>수학 표시 후 거리·각도·방향·종합 구간 배치</td>
+<td>설명한 개념을 해당 구간에서 직접 확인</td>
+<td>기획·레벨 제작</td>
+</tr>
+<tr>
+<td>학습 확인</td>
+<td>코스 완성 후 새 배치 예측과 조작 관찰</td>
+<td>오답 이유와 조작 혼란을 기록하고 수정 항목 결정</td>
+<td>학습 검토·테스트</td>
+</tr>
+<tr>
+<td>마감</td>
+<td>검증 후 단일 HTML과 설명 자료 정리</td>
+<td>외부 파일 없이 실행되고 수식·조작 설명이 일치</td>
+<td>개발·제작 책임자</td>
+</tr>
+</tbody></table></div>
+<p>날짜와 공수는 아직 확정하지 않는다. 제작 인원·가능 시간·측정된 작업 속도가 없기 때문이다. 먼저 수학 표시 한 장면을 완성하는 데 걸린 시간과 수정 작업을 기록한 뒤, 남은 화면·코스·검증 작업을 나누어 일정 범위를 잡는다. 역할별 실제 담당자는 미정이다.</p>
+<p>기술 의존성은 기존 HTML과 브라우저다. 수학 표시는 공통 계산 함수에 의존하고, 코스 제작은 표시 검증 뒤에 진행한다. 조작 체계가 바뀌면 학습 설명과 방향 예제를 함께 재검증한다. 외부 서버·외주·유료 라이브러리는 이번 제안에 포함하지 않는다.</p>
+<h2 id="section-7">8. 검증과 완료 기준</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>검증 항목</th>
+<th>확인 방법</th>
+<th>완료 기준</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>거리 계산</td>
+<td>rx = 240, ry = 180 대입</td>
+<td>d = 300</td>
+</tr>
+<tr>
+<td>Sin·Cos 위치</td>
+<td>L = 300, sin(θ) = 0.8, cos(θ) = 0.6 대입</td>
+<td>고정점 기준 위치 차이 (240, 180)</td>
+</tr>
+<tr>
+<td>몸체 기준 방향</td>
+<td>아래·오른쪽·위·왼쪽 고정점 배치</td>
+<td>방향 표와 시선·화살표·대시 시작 방향 일치</td>
+</tr>
+<tr>
+<td>사슬 유지</td>
+<td>연결 중 Shift 사용</td>
+<td>연결 상태·고정점·설정 길이 유지</td>
+</tr>
+<tr>
+<td>길이 제한</td>
+<td>원 밖 이동과 원 안 이동을 각각 시험</td>
+<td>팽팽하면 길이 제한, 느슨하면 강제 원 배치 없음</td>
+</tr>
+<tr>
+<td>즉각적인 시선</td>
+<td>A/D 전환 직후 확인</td>
+<td>속도 반전 전에 시선 변경</td>
+</tr>
+<tr>
+<td>지상 정지</td>
+<td>이동 키 해제와 착지 확인</td>
+<td>의도하지 않은 수평 미끄러짐 없음</td>
+</tr>
+<tr>
+<td>경계 상황</td>
+<td>거리 0 근처, 사거리 끝, 한 바퀴 회전, 고속 충돌</td>
+<td>잘못된 수치·각도 튐·반복 충전 없음</td>
+</tr>
+<tr>
+<td>학습 화면</td>
+<td>실제 상태와 표시값 대조</td>
+<td>같은 좌표 기준과 단위 사용, 표시 반올림과 계산 분리</td>
+</tr>
+<tr>
+<td>학습 이해</td>
+<td>새 배치 예측 후 공식 설명</td>
+<td>사거리·좌표·대시 방향의 관계를 설명했는지 기록</td>
+</tr>
+<tr>
+<td>실행본</td>
+<td>단일 HTML을 복사해 오프라인 실행</td>
+<td>외부 자원 없이 플레이 가능</td>
+</tr>
+</tbody></table></div>
+<p>이전 구현 작업에서는 35개 동작 검사와 대시 방향 72가지 조합을 통과했다. 스윙 반전 56가지 조합에서는 반대 접선 속도에 도달하기까지 최대 83ms가 기록되었다. 이는 기존 코드 검사 결과이며 교육용 화면·코스의 완성이나 학습 효과를 뜻하지 않는다. 이번 기획 작성에서는 게임 코드를 변경하지 않았다.</p>
+<p>가장 먼저 확인할 가설은 사슬 각도와 접선 화살표를 함께 보면 새 배치에서도 대시 방향을 예측하는 데 도움이 된다는 것이다. 최소 검증은 한 고정점의 위·아래·옆 배치에서 설명을 본 뒤 다른 배치를 예측하게 하는 방식으로 진행한다. 이해가 어려우면 코스 확장을 보류하고 각도 기준·기호·시선 표시부터 수정한다. 수식과 실제 방향이 다르면 해당 기능의 완료 판정을 보류한다.</p>
+<h2 id="section-8">9. 현재 상태, 수치, 남은 결정</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>현재 상태</th>
+<th>근거·확인할 일</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>사슬 연결·회전·시선·대시</td>
+<td>구현됨</td>
+<td>기존 HTML의 연결·방향·회전 함수</td>
+</tr>
+<tr>
+<td>지상 즉시 정지·스윙 반전</td>
+<td>구현됨</td>
+<td>이전 구현 검사 기록</td>
+</tr>
+<tr>
+<td>속도·사슬 길이 등 기존 계기</td>
+<td>구현됨</td>
+<td>기존 HUD</td>
+</tr>
+<tr>
+<td>좌표 삼각형·Sin·Cos·각도 표시</td>
+<td>추가 제작 제안</td>
+<td>수학 표시 단계에서 검증</td>
+</tr>
+<tr>
+<td>교육용 구간과 학습 효과</td>
+<td>미검증</td>
+<td>코스 제작과 학습 관찰 필요</td>
+</tr>
+<tr>
+<td>학년·제출 규격·인원·일정</td>
+<td>미정</td>
+<td>실제 과제 조건으로 확정</td>
+</tr>
+</tbody></table></div>
+<p>현재 기본 사거리 <code>480 px</code>, 중력 <code>1480 px/s²</code>, 대시 기준값 <code>1080 px/s</code>, 사슬 감기·풀기 속도 <code>280 px/s</code>는 코드에서 읽은 초기 설정이다. 플레이 수치로 기록하며 학습 난이도에 맞는 최종값으로 승인된 것은 아니다. 실제 대시 속력은 기존 접선 속도와 상한도 반영하므로 매번 1080으로 고정되지 않는다. 수치 조정 담당은 개발 역할이며, 코스 도달 여부와 의도하지 않은 이탈을 보고 조정한다.</p>
+<p>기획 검토에서는 조작 규칙과 수학 식의 방향 기준을 맞췄고, 제작 검토에서는 기존 구현과 추가 제안을 구분했다. 일정·학습 성과·공개 권한은 확인된 사실로 간주하지 않는다. 담당 역할과 마감일이 정해지면 단계별 일정만 추가하면 된다.</p>
+<details class="appendix"><summary>부록 · 제작 관리와 검토 기록</summary><h2 id="section-9">부록. 제작 관리 기록</h2>
+<p>계획 식별자는 <code>production-scope-risk</code>다. 작업량은 수학 표시 화면, 학습 코스, 설명 자료, 검증 장면 단위로 관리한다. 현재는 처리량 자료가 없어 공수 범위와 확정 일정의 신뢰도를 산정하지 않았다. 제작 책임자는 미정이며 사용자가 이 초안의 적용 범위와 최종 결과물을 결정한다.</p>
+<p>기존 파일은 산나비를 참고한 팬 프로토타입이다. 학습용 명칭 CHAIN MATH와 직접 그린 도형을 사용하는 안을 제안한다. 새 외부 이미지·음원·인물·생성형 NPC는 제작 범위에 넣지 않았다. 공개·제출에 사용할 기존 자료의 출처와 사용 범위는 최종 자료 목록이 정해질 때 기록한다. 외주가 생기면 결과물·인수 조건·수정 범위·사용 조건을 별도로 정하며 현재는 외주 의존성이 없다.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>검토 구분</th>
+<th>상태</th>
+<th>근거·남은 기록</th>
+<th>결정 역할</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ai-rights-human-approval</td>
+<td>pending</td>
+<td>기존 참고 자료의 최종 사용 목록·사용 범위·검토자·검토일 미정</td>
+<td>rights-and-legal-owner</td>
+</tr>
+<tr>
+<td>accessibility</td>
+<td>pending</td>
+<td>키보드·마우스·시각 정보 사용. 색상 외 기호·문자와 일시정지 제안. 목표 기준·사용성 결과 미정</td>
+<td>accessibility-owner</td>
+</tr>
+<tr>
+<td>economy-transparency</td>
+<td>not-applicable</td>
+<td>결제·재화·확률형 보상 없음</td>
+<td>economy-and-monetization-owner</td>
+</tr>
+<tr>
+<td>liveops-experiment</td>
+<td>not-applicable</td>
+<td>온라인 운영·개인화·서비스 실험 없음. 학습 확인은 로컬 시연 범위</td>
+<td>live-operations-owner</td>
+</tr>
+<tr>
+<td>ugc-safety</td>
+<td>not-applicable</td>
+<td>업로드·채팅·공유 콘텐츠 기능 없음</td>
+<td>trust-and-safety-owner</td>
+</tr>
+<tr>
+<td>ai-npc-safety</td>
+<td>not-applicable</td>
+<td>생성형 NPC 없음</td>
+<td>ai-safety-owner</td>
+</tr>
+<tr>
+<td>scope-control</td>
+<td>pending</td>
+<td>기획 작성은 요청 범위. 학습 표시·코스의 추가 구현 범위와 일정은 미확정</td>
+<td>product-owner</td>
+</tr>
+</tbody></table></div>
+<p>이 상태는 추가 제작과 최종 공개를 관리하는 기록이다. 기획서 초안을 작성하고 검토하는 작업은 완료 범위에 포함한다.</p>
+<p>근거 자료는 현재 <code>sanabi-chain-arm.html</code>, <code>README.md</code>, <code>implementation-plan.md</code>, <code>verify.cjs</code>다. 수학 예제의 좌표와 설명용 속력은 본 문서에서 정한 예제이며 플레이 데이터가 아니다. HTML 기획서의 조절 도식도 수학 관계를 보여 주는 설명 자료다.</p>
+</details></article><footer class="footer">2026-10-27 · 로컬 프로토타입과 사용자 조작 요구를 바탕으로 작성 · 오프라인 열람 가능</footer></main></div><script>(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const fmt = (value, digits = 2) => (Math.abs(value) < 0.0000001 ? 0 : value).toFixed(digits);
+  function calculate(degrees, length, facing) {
+    const theta = degrees * Math.PI / 180;
+    const sin = Math.sin(theta), cos = Math.cos(theta);
+    const rx = length * sin, ry = length * cos;
+    return { degrees, length, facing, theta, sin, cos, rx, ry,
+      px: 100 + rx, py: 100 + ry, distance: Math.hypot(rx, ry),
+      rotation: -theta, dx: facing * cos, dy: -facing * sin,
+      vx: facing * 1000 * cos, vy: -facing * 1000 * sin };
+  }
+  function render() {
+    const state = calculate(Number(byId('angle').value), Number(byId('length').value), Number(byId('facing').value));
+    const {degrees,length,facing,sin,cos,rx,ry,dx,dy} = state;
+    byId('angleLabel').textContent = fmt(degrees) + '°';
+    byId('lengthLabel').textContent = fmt(length,0) + ' px';
+    byId('angle').setAttribute('aria-valuetext', fmt(degrees) + '도');
+    byId('length').setAttribute('aria-valuetext', fmt(length,0) + '픽셀');
+    const hx=360, hy=280, scale=.5, px=hx+rx*scale, py=hy+ry*scale;
+    const arrowStartX=px+dx*24, arrowStartY=py+dy*24;
+    const arrowX=px+dx*95, arrowY=py+dy*95;
+    const arcEndX=hx+48*sin, arcEndY=hy+48*cos;
+    const angleArc=Math.abs(degrees)>.1 ? `<path d="M ${hx} ${hy+48} A 48 48 0 0 ${degrees>=0?0:1} ${arcEndX} ${arcEndY}" fill="none" stroke="#f9d47f" stroke-width="2"/>` : '';
+    byId('chainStage').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 600" role="img" aria-label="고정점과 플레이어의 거리, 사슬 각도, 시선 방향을 나타내는 도식">
+      <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 H 0 V 40" fill="none" stroke="#243340" stroke-width="1"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ff78ad"/></marker></defs>
+      <rect width="720" height="600" rx="18" fill="#101e2b"/><rect width="720" height="600" fill="url(#grid)"/>
+      <g font-family="Malgun Gothic, sans-serif" font-size="14" fill="#d8e7ed">
+      <text x="24" y="32" fill="#95adbd">화면 좌표  ·  오른쪽 +x  /  아래쪽 +y</text>
+      <circle cx="${hx}" cy="${hy}" r="${length*scale}" fill="none" stroke="#476273" stroke-dasharray="5 8"/>
+      <path d="M ${hx} ${hy} L ${px} ${hy} L ${px} ${py}" fill="none" stroke="#b7c9d3" stroke-width="2" stroke-dasharray="6 5"/>
+      <path d="M ${hx} ${hy} V ${hy+70}" stroke="#f9d47f" stroke-dasharray="4 5"/>
+      ${angleArc}<text x="${hx+56}" y="${hy+67}" fill="#f9d47f">θ = ${fmt(degrees)}°</text>
+      <line x1="${hx}" y1="${hy}" x2="${px}" y2="${py}" stroke="#71e4d0" stroke-width="4"/>
+      <circle cx="${hx}" cy="${hy}" r="7" fill="#71e4d0"/>
+      <text x="${hx-20}" y="${hy+25}" text-anchor="end" fill="#71e4d0">H (100, 100)</text>
+      <text x="${(hx+px)/2}" y="${hy-13}" text-anchor="middle">rx</text>
+      <text x="${px+(rx>=0?20:-20)}" y="${(hy+py)/2+(Math.abs(ry)<32?-25:0)}" text-anchor="${rx>=0?'start':'end'}">ry</text>
+      <line x1="${arrowStartX}" y1="${arrowStartY}" x2="${arrowX-dx*12}" y2="${arrowY-dy*12}" stroke="#ff78ad" stroke-width="4"/>
+      <polygon points="${arrowX},${arrowY} ${arrowX-16*dx-7*dy},${arrowY-16*dy+7*dx} ${arrowX-16*dx+7*dy},${arrowY-16*dy-7*dx}" fill="#ff78ad"/>
+      <g transform="translate(${px} ${py}) rotate(${-degrees})"><g transform="scale(${facing} 1)">
+        <path d="M -8 -5 Q -28 -1 -24 20" fill="none" stroke="#ff78ad" stroke-width="5"/>
+        <rect x="-12" y="-19" width="24" height="38" rx="9" fill="#18374b" stroke="#71e4d0" stroke-width="3"/>
+        <path d="M 2 -10 H 12 V -5 H 2 Z" fill="#71e4d0"/>
+        <circle cx="-5" cy="5" r="4" fill="#ff78ad"/>
+      </g></g>
+      <text x="${px-dx*34}" y="${py-dy*34+5}" text-anchor="middle" stroke="#101e2b" stroke-width="3" paint-order="stroke">P</text>
+      <text x="24" y="555" fill="#71e4d0">청록 선: 사슬 길이 ${fmt(length,0)} px</text>
+      <text x="24" y="579" fill="#ff78ad">분홍 화살표: ${facing===1?'D · 몸체 오른쪽':'A · 몸체 왼쪽'} 대시의 시작 방향</text>
+      </g></svg>`;
+    byId('liveMath').innerHTML = `<div><span>좌표 차이 (rx, ry)</span><strong>(${fmt(rx)}, ${fmt(ry)}) px</strong></div><div><span>Sin θ / Cos θ</span><strong>${fmt(sin,3)} / ${fmt(cos,3)}</strong></div><div><span>실제 거리 d / 길이 L</span><strong>${fmt(state.distance)} / ${fmt(length,0)} px</strong></div><div><span>몸체 회전 φ</span><strong>${fmt(-degrees)}°</strong></div><div><span>대시 방향 (x, y)</span><strong>(${fmt(dx,3)}, ${fmt(dy,3)})</strong></div><div><span>설명용 속도 · V = 1000 px/s</span><strong>(${fmt(state.vx,0)}, ${fmt(state.vy,0)}) px/s</strong></div>`;
+    const points=[];
+    for(let a=-180;a<=180;a+=2) points.push(`${40+(a+180)/360*520},${70-Math.sin(a*Math.PI/180)*42}`);
+    byId('sinGraph').innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" role="img" aria-label="Sin 그래프와 현재 각도의 값"><path d="M 40 70 H 560 M 300 17 V 116" stroke="#8b9eab" fill="none"/><polyline points="${points.join(' ')}" fill="none" stroke="#16786d" stroke-width="3"/><circle cx="${40+(degrees+180)/360*520}" cy="${70-sin*42}" r="6" fill="#c13770"/><g font-family="Malgun Gothic, sans-serif" font-size="12" fill="#40556a">${[-180,-90,0,90,180].map(a=>`<text x="${40+(a+180)/360*520}" y="138" text-anchor="middle">${a}°</text>`).join('')}<text x="15" y="31">1</text><text x="10" y="115">−1</text><text x="335" y="22">sin(θ) = ${fmt(sin,3)}</text></g></svg>`;
+    return state;
+  }
+  ['angle','length','facing'].forEach(id=>byId(id).addEventListener('input',render));
+  document.querySelectorAll('[data-angle]').forEach(button=>button.addEventListener('click',()=>{byId('angle').value=button.dataset.angle;render();}));
+  byId('printButton').addEventListener('click',()=>window.print());
+  window.chainMathDiagram={calculate,render};
+  render();
+})();
+</script></body></html>

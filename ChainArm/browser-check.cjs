@@ -1,0 +1,50 @@
+const { chromium } = require('C:/Users/TAEHYEON/AppData/Local/OpenAI/Codex/runtimes/cua_node/1fb7137c46617d50/bin/node_modules/playwright');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+(async()=>{
+  const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,args:['--allow-file-access-from-files']});
+  try {
+    const page=await browser.newPage({viewport:{width:1440,height:900}});
+    const errors=[];page.on('pageerror',err=>errors.push(String(err)));
+    const requests=[];await page.route('https://**/*',route=>{requests.push(route.request().url());return route.abort();});
+    await page.goto(pathToFileURL(path.join(__dirname,'sanabi-chain-arm.html')).href);
+    await page.waitForTimeout(600);
+    assert.equal(await page.locator('#gameCanvas').count(),1);
+    assert.equal(await page.evaluate(()=>player.state),'GROUNDED');
+    await page.screenshot({path:path.join(__dirname,'preview.png')});
+    const start=await page.evaluate(()=>player.x);
+    await page.keyboard.down('d');await page.waitForTimeout(200);await page.keyboard.up('d');
+    assert(await page.evaluate(()=>player.x)>start+20);
+    await page.waitForTimeout(120);
+    assert(Math.abs(await page.evaluate(()=>player.vx))<1);
+    const anchor=await page.evaluate(()=>({x:440-camera.x+canvas.width/2,y:527-camera.y+canvas.height/2}));
+    await page.mouse.move(anchor.x,anchor.y);await page.mouse.down();
+    await page.waitForTimeout(220);
+    assert.equal(await page.evaluate(()=>grapple.active),true);
+    await page.keyboard.down('d');
+    await page.waitForFunction(()=>grapple.active && player.vy < -180,{},{timeout:4000});
+    await page.screenshot({path:path.join(__dirname,'swing-preview.png')});
+    await page.keyboard.press('Shift');
+    const dash=await page.evaluate(()=>({vx:player.vx,vy:player.vy,active:grapple.active,ready:player.swingDashReady}));
+    assert(dash.vx>0);assert(dash.vy<0);assert.equal(dash.active,true);assert.equal(dash.ready,false);
+    await page.keyboard.up('d');
+    await page.waitForTimeout(70);await page.screenshot({path:path.join(__dirname,'dash-preview.png')});
+    assert.equal(await page.evaluate(()=>grapple.active),true);
+    await page.mouse.up();assert.equal(await page.evaluate(()=>grapple.active),false);
+    await page.keyboard.press('Escape');assert(await page.locator('#pauseOverlay').isVisible());
+    await page.locator('#btnResume').click();assert(!(await page.locator('#pauseOverlay').isVisible()));
+    await page.locator('#btnToggleInspector').click();assert(await page.locator('#sliderDashPower').isVisible());
+    await page.locator('#sliderDashPower').fill('1200');assert.equal(await page.evaluate(()=>params.swingDashImpulse),1200);
+    await page.locator('#btnResetParams').click();assert.equal(await page.evaluate(()=>params.swingDashImpulse),1080);
+    await page.locator('#btnToggleInspector').click();
+    for(let i=0;i<4;i++){await page.locator(`[data-sector="${i}"]`).click();assert.equal(await page.evaluate(()=>player.checkpointIndex),i);}
+    await page.locator('#btnResetCourse').click();
+    await page.setViewportSize({width:1000,height:650});await page.waitForTimeout(200);await page.screenshot({path:path.join(__dirname,'compact-preview.png')});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+    assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
+    const report={offlineFileOpened:true,keyboardMovement:true,mouseGrapple:true,directionalDash:dash,settings:true,checkpoints:4,pauseResume:true,compactViewport:'1000x650',pageErrors:errors,externalRequests:requests};
+    fs.writeFileSync(path.join(__dirname,'browser-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+  } finally {await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

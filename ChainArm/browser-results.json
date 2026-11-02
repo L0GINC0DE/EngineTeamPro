@@ -1,0 +1,17 @@
+{
+  "offlineFileOpened": true,
+  "keyboardMovement": true,
+  "mouseGrapple": true,
+  "directionalDash": {
+    "vx": 1320.6717543891366,
+    "vy": -618.2265511234032,
+    "active": false,
+    "ready": false
+  },
+  "settings": true,
+  "checkpoints": 4,
+  "pauseResume": true,
+  "compactViewport": "1000x650",
+  "pageErrors": [],
+  "externalRequests": []
+}
