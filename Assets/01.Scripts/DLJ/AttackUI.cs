@@ -6,8 +6,14 @@ public class AttackUI : PlayableUI
 
     public override void Select()
     {
-        base.Select();
-        PlayerUIManager.Instance.SelectAction(action);
+        if (PlayerUIManager.Instance.CurrentStep == SelectionStep.Action)
+        {
+            PlayerUIManager.Instance.SelectAction(action);
+        }
+        else
+        {
+            base.Select();
+        }
     }
 
     private void ExecuteAction(Player player, PlayableUI playerUI, PlayableUI weaponUI)
