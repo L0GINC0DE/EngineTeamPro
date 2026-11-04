@@ -1,4 +1,5 @@
 using System;
+using _01.Scripts.TAE.Data;
 using _01.Scripts.TAE.Managers;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ namespace _01.Scripts.TAE.Test
 {
     public class InteractTest : MonoBehaviour, Interactable
     {
+        [SerializeField] private TestPlayerData data;
+
+        public TestPlayerData Data => data;
         private void Start()
         {
             StageManager.Instance.AddInteractable(this);

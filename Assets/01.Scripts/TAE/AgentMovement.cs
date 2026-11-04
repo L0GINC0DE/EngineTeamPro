@@ -31,6 +31,11 @@ namespace _01.Scripts.KTH
             this.moveDir = moveDir;
         }
 
+        public void SetSpeed(float speed)
+        {
+            moveSpeed = speed;
+        }
+
         public void Jump()
         {
             if (!CheckGround()) return;

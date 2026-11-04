@@ -103,6 +103,12 @@ namespace _01.Scripts.TAE.Managers
             {
                 EnemyTurn(enemy);
                 yield return new WaitForSeconds(turnDelay);
+
+                if (!CheckBattleEnd() || IsAlive(enemy))
+                {
+                    new AttackCommand(CurrentUnit, player).Execute();
+                    Debug.Log($"적 공격");
+                }
             }
 
             isProcessing = false;
@@ -113,9 +119,7 @@ namespace _01.Scripts.TAE.Managers
         {
             if (CheckBattleEnd() || !IsAlive(enemy)) return;
             CurrentUnit = enemy;
-            Debug.Log($"적 턴: {enemy.name}", enemy);
-            new AttackCommand(enemy, player).Execute();
-            Debug.Log($"적 공격");
+            Debug.Log($"적 턴: {CurrentUnit.name}", enemy);
         }
 
 
