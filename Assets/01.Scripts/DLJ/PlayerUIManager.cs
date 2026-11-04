@@ -18,6 +18,8 @@ public class PlayerUIManager : MonoBehaviour
     public static PlayerUIManager Instance { get; private set; }
 
     private SelectionStep selectionStep = SelectionStep.Player;
+    public SelectionStep CurrentStep => selectionStep;
+    
     private PlayableUI selectedPlayer;
     private PlayableUI selectedWeapon;
     private PlayerAction selectedAction;
@@ -35,6 +37,7 @@ public class PlayerUIManager : MonoBehaviour
         if (selectionStep != SelectionStep.Execute) return;
         
         selectionStep = SelectionStep.Player;
+        Debug.Log("Enemy");
         
         selectedAction.PlayAction(player, selectedPlayer, selectedWeapon);
 
