@@ -34,11 +34,11 @@ namespace _01.Scripts.TAE
                 switch (type)
                 {
                     case UITypes.Player:
-                        if (player.data == player.WeaponCompo.data) return;
+                        if (interact.Data == player.WeaponCompo.data) return;
                         player.SetData(interact.Data);
                         break;
                     case UITypes.Weapon:
-                        if (player.data == player.WeaponCompo.data) return;
+                        if (interact.Data == player.data) return;
                         player.WeaponCompo.SetWeapon(interact.Data);
                         break;
                         
