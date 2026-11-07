@@ -15,6 +15,7 @@ namespace Agents
 
         [SerializeField] private int maxHealth = 50;
         [SerializeField] private int currentHealth;
+        [SerializeField] private KTH_HitEffectSO hitEffect; // 비워두면 피격 연출 없음
         private bool initialized;
 
         public int MaxHealth => maxHealth;
@@ -45,10 +46,22 @@ namespace Agents
             if (!initialized) ResetHealth();
         }
 
+        // 방향을 모르면 오른쪽에서 맞은 걸로 처리
         public void TakeDamage(int damage)
         {
+            TakeDamage(damage, transform.position + Vector3.right);
+        }
+
+        // hitFrom: 공격이 날아온 위치 (넉백 방향 계산용)
+        public void TakeDamage(int damage, Vector3 hitFrom)
+        {
             if (damage <= 0 || IsDead) return;
+
+            int previous = currentHealth;
             SetHealth(currentHealth - damage, true);
+
+            if (currentHealth != previous && hitEffect != null && KTH_DamageEffectManager.instance != null)
+                KTH_DamageEffectManager.instance.PlayHit(hitEffect, transform, hitFrom);
         }
 
         private void SetHealth(int value, bool isHit = false)
