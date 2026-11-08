@@ -1,16 +1,13 @@
-using Agents;
-using UnityEngine;
+using _01.Scripts.TAE.Managers;
 
 public class AttackAction : PlayerAction
 {
-    public override void PlayAction(Player owner, PlayableUI playerUI, PlayableUI weaponUI)
+    public override bool PlayAction(Player owner, PlayableUI playerUI, PlayableUI weaponUI)
     {
-        if (owner == null || owner.Enemy == null || playerUI == null || weaponUI == null) return;
-        
-        HealthModule enemyHealth = owner.Enemy.GetComponent<HealthModule>();
+        TurnManager manager = TurnManager.Instance;
+        if (owner == null || owner.AttackCompo == null || manager.CurrentUnit != owner.BattleUnit) return false;
 
-        if (enemyHealth == null || enemyHealth.IsDead) return;
-        
-        enemyHealth.TakeDamage(weaponUI.Damage);
+        owner.AttackCompo.Attack();
+        return !manager.IsPlayerTurn;
     }
 }

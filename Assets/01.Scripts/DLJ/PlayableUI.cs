@@ -20,6 +20,6 @@ public abstract class PlayableUI : MonoBehaviour
 
     public virtual void Select()
     {
-        PlayerUIManager.Instance.SelectPlayableUI(this);
+        PlayerUIManager.Instance?.SelectPlayableUI(this);
     }
 }
