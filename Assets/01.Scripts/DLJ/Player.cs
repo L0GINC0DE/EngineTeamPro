@@ -1,18 +1,15 @@
-using System;
-using _01.Scripts.TAE.Data;
-using Agents;
+using _01.Scripts.TAE;
 using UnityEngine;
 
+[RequireComponent(typeof(BattleUnit))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private KTH_Enemy enemy;
-
-    public KTH_Enemy Enemy => enemy;
-    
-    public HealthModule HealthModule { get; private set; }
+    public BattleUnit BattleUnit { get; private set; }
+    public PlayerAttack AttackCompo { get; private set; }
 
     private void Awake()
     {
-        HealthModule = GetComponent<HealthModule>();
+        BattleUnit = GetComponent<BattleUnit>();
+        AttackCompo = GetComponentInChildren<PlayerAttack>(true);
     }
 }

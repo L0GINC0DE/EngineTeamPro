@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackUI
   UISo: {fileID: 11400000, guid: 8b037d5f06af6e64a897aea217b5779b, type: 2}
-  target: {fileID: 794967393}
+  target: {fileID: 1355662934}
 --- !u!4 &287794952
 Transform:
   m_ObjectHideFlags: 0
@@ -407,6 +407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 436986676}
   - component: {fileID: 436986675}
+  - component: {fileID: 810000000000000004}
   m_Layer: 0
   m_Name: TurnManager
   m_TagString: Untagged
@@ -427,6 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Managers.TurnManager
   player: {fileID: 794967393}
+  turnDelay: 0.8
 --- !u!4 &436986676
 Transform:
   m_ObjectHideFlags: 0
@@ -471,8 +473,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7161fe1b198dc042904fd136fd10c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUIManager
-  uiList: []
-  player: {fileID: 0}
+  player: {fileID: 810000000000000005}
+  turnManager: {fileID: 436986675}
+  buttonGroup: {fileID: 241714061}
+  firstSelectedButton: {fileID: 1283588019}
 --- !u!4 &475741487
 Transform:
   m_ObjectHideFlags: 0
@@ -488,71 +492,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &593560182
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 434311640386608342, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_Name
-      value: Test
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242248875091135768, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: enemies.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242248875091135768, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: 'enemies.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1355662934}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168398886961370374, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7f62dc098e9569445b0f43b90e1396e5, type: 3}
 --- !u!1 &723489941
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +580,7 @@ GameObject:
   - component: {fileID: 810000000000000001}
   - component: {fileID: 810000000000000002}
   - component: {fileID: 810000000000000003}
+  - component: {fileID: 810000000000000005}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -937,6 +877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackUI
   UISo: {fileID: 11400000, guid: 8b037d5f06af6e64a897aea217b5779b, type: 2}
+  target: {fileID: 0}
 --- !u!1 &1355662931
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,6 +889,8 @@ GameObject:
   - component: {fileID: 1355662933}
   - component: {fileID: 1355662932}
   - component: {fileID: 1355662934}
+  - component: {fileID: 810000000000000006}
+  - component: {fileID: 810000000000000007}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -992,10 +935,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1355662931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbf38a760e946a2afba5bdf87a6ac0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e392dd9d7995a4faa54fe941606c0d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.EnemyTurn
-  canExecute: 0
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.BattleUnit
+  type: 2
 --- !u!1 &1361962257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1724,12 +1667,69 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794967391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d2f8333caf246efb82eaabcb65831a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.PlayerAttack
-  target: {fileID: 794967393}
+  target: {fileID: 1355662934}
+--- !u!114 &810000000000000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436986674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f981329e5b424833ac67dd0731280433, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DLJ_BattleSetup
+  turnManager: {fileID: 436986675}
+  enemies:
+  - {fileID: 1355662934}
+--- !u!114 &810000000000000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794967391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050d47f50ec91b8438beed8dea663097, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+--- !u!114 &810000000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355662931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52c9c8a87ecb1b41afad9f2d88936b0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Attacker
+  damage: 10
+--- !u!114 &810000000000000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355662931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7626dd9537446392cd1288ec731d63, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Agents.HealthModule
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 50
+  currentHealth: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1742,4 +1742,3 @@ SceneRoots:
   - {fileID: 985669283}
   - {fileID: 475741487}
   - {fileID: 1355662933}
-  - {fileID: 593560182}
