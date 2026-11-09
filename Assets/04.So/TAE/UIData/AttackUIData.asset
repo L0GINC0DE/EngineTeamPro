@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e50c2c82af4210a8d25516b5b509cc, type: 3}
   m_Name: AttackUIData
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIData
-  uiName: 공격
-  icon: {fileID: 0}
+  uiName: "\uACF5\uACA9"
+  icon: {fileID: 5733509246446667393, guid: f23ee027a245e544383e93519883722f, type: 3}
   moveSpeed: 4
   defendPower: 1
   attackRange: 5

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e50c2c82af4210a8d25516b5b509cc, type: 3}
   m_Name: RestUIData
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIData
-  uiName: 휴식
-  icon: {fileID: 0}
+  uiName: "\uD734\uC2DD"
+  icon: {fileID: 245424568071818661, guid: c88eb7fd51e06e64fb32bc40c1c0e598, type: 3}
   moveSpeed: 7
   defendPower: 12
   attackRange: 5

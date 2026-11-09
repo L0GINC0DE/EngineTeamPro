@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e50c2c82af4210a8d25516b5b509cc, type: 3}
   m_Name: DefenseUIData
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIData
-  uiName: 방어
-  icon: {fileID: 0}
+  uiName: "\uBC29\uC5B4"
+  icon: {fileID: -871308001940766433, guid: 782245a7935e6914aba9739766016c92, type: 3}
   moveSpeed: 5
   defendPower: 16
   attackRange: 5
