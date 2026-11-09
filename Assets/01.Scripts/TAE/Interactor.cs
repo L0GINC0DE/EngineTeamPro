@@ -16,34 +16,23 @@ namespace _01.Scripts.TAE
         [SerializeField] private float range;
         [SerializeField] private LayerMask whatIsInteractable;
 
-        private PlatformPlayer player;
-
-        private void Awake()
+        public void Interact(PlatformPlayer player)
         {
-            player = GetComponent<PlatformPlayer>();
+            foreach (var hit in Physics2D.OverlapCircleAll(transform.position, range, whatIsInteractable))
+            {
+                var target = hit.GetComponentInParent<Interactable>();
+                if (target == null) continue;
+                target.Interact(player);
+                return;
+            }
         }
 
-        public void Interact(UITypes type)
+        public bool IsInRange(Interactable target)
         {
-            var hit = Physics2D.OverlapCircle(transform.position, range, whatIsInteractable);
-
-            if (hit != null)
-            {
-                InteractTest interact = hit.GetComponent<InteractTest>();
-
-                switch (type)
-                {
-                    case UITypes.Player:
-                        if (interact.Data == player.WeaponCompo.data) return;
-                        player.SetData(interact.Data);
-                        break;
-                    case UITypes.Weapon:
-                        if (interact.Data == player.data) return;
-                        player.WeaponCompo.SetWeapon(interact.Data);
-                        break;
-                        
-                }
-            }
+            if (target == null) return false;
+            foreach (var hit in Physics2D.OverlapCircleAll(transform.position, range, whatIsInteractable))
+                if (hit.GetComponentInParent<Interactable>() == target) return true;
+            return false;
         }
         
         

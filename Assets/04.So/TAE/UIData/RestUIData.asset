@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f80f97c45a84b7583bd89606cee7de0, type: 3}
-  m_Name: RestPlayerData
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.TestPlayerData
+  m_Script: {fileID: 11500000, guid: d9e50c2c82af4210a8d25516b5b509cc, type: 3}
+  m_Name: RestUIData
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIData
   uiName: 휴식
-  uiSprite: {fileID: 0}
-  attackRange: 5
-  damage: 6
-  rate: 5
-  defendPower: 12
+  icon: {fileID: 0}
   moveSpeed: 7
+  defendPower: 12
+  attackRange: 5
+  attackInterval: 5
+  damage: 6
