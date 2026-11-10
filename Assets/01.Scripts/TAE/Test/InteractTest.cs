@@ -1,5 +1,6 @@
 using System;
 using _01.Scripts.TAE.Data;
+using _01.Scripts.KTH;
 using _01.Scripts.TAE.Managers;
 using UnityEngine;
 
@@ -7,17 +8,14 @@ namespace _01.Scripts.TAE.Test
 {
     public class InteractTest : MonoBehaviour, Interactable
     {
-        [SerializeField] private TestPlayerData data;
+        [SerializeField] private UIData data;
 
-        public TestPlayerData Data => data;
-        private void Start()
-        {
-            StageManager.Instance.AddInteractable(this);
-        }
+        public UIData Data => data;
 
-        public void Interact()
+        public void Interact(PlatformPlayer player)
         {
-            Debug.Log("상호작용이 되었습니다");
+            if (isActiveAndEnabled && player != null)
+                UIManager.Instance.ShowUI(player, this);
         }
     }
 }

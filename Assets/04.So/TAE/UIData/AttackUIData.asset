@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f80f97c45a84b7583bd89606cee7de0, type: 3}
-  m_Name: AttackPlayerData
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.TestPlayerData
+  m_Script: {fileID: 11500000, guid: d9e50c2c82af4210a8d25516b5b509cc, type: 3}
+  m_Name: AttackUIData
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIData
   uiName: "\uACF5\uACA9"
-  uiSprite: {fileID: 5733509246446667393, guid: f23ee027a245e544383e93519883722f, type: 3}
-  attackRange: 5
-  damage: 18
-  rate: 7
-  defendPower: 1
+  icon: {fileID: 5733509246446667393, guid: f23ee027a245e544383e93519883722f, type: 3}
   moveSpeed: 4
+  defendPower: 1
+  attackRange: 5
+  attackInterval: 7
+  damage: 18

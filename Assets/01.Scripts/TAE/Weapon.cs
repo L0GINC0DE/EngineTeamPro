@@ -10,17 +10,19 @@ namespace _01.Scripts.TAE
         public float attackInterval;
         public float damage;
 
-        public TestPlayerData data;
+        public UIData data { get; private set; }
 
         private void Awake()
         {
             weaponSprite = GetComponent<SpriteRenderer>();
         }
 
-        public void SetWeapon(TestPlayerData data)
+        public void SetWeapon(UIData data)
         {
+            if (data == null) return;
             this.data = data;
-            weaponSprite.sprite = data.uiSprite;
+            if (weaponSprite == null) weaponSprite = GetComponent<SpriteRenderer>();
+            if (weaponSprite != null) weaponSprite.sprite = data.icon;
             attackInterval = data.attackInterval;
             damage = data.damage;
         }
