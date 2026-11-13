@@ -26,7 +26,7 @@ namespace _01.Scripts.TAE.Combat
             CurrentWeapon.OnValueChanged += HandleWeaponChange;
             
             MakeWeaponList();
-            TryChangeWeapon(weaponDataList.uiDataList.First());
+            TryChangeWeapon(weaponDataList.uiDataList[1]);
         }
 
         private void OnDisable()
