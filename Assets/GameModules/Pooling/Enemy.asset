@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f2fcaaf33a4ae4845b53a90befdc0b, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.PoolItemSO
+  ItemName: Enemy
+  Prefab: {fileID: 3921197656677006285, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+  Count: 30
