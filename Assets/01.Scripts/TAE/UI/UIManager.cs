@@ -3,9 +3,11 @@ using _01.Scripts.KTH;
 using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.Data;
+using _01.Scripts.TAE.Managers;
 using CoreLib;
 using Systems;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _01.Scripts.TAE.UI
 {
@@ -21,6 +23,8 @@ namespace _01.Scripts.TAE.UI
         public SlotGroup slotGroup;
 
         private PlatformPlayer _p;
+
+        [SerializeField] private Button bodyBtn;
         
         public void ShowDamageTMP(Transform trm, int damage)
         {
@@ -30,15 +34,32 @@ namespace _01.Scripts.TAE.UI
 
         public void ShowClothUI()
         {
+            GameManager.Instance.TimeStop(true);
             clothUI.gameObject.SetActive(true);
-            selectUI.gameObject.SetActive(true);
+            selectUI.SetActive(true);
+            bodyBtn.Select();
             slotGroup.weaponSlot.gameObject.SetActive(false);
             slotGroup.bodySlot.gameObject.SetActive(false);
+        }
+        public void OpenBodyList()
+        {
+            selectUI.SetActive(false);
+            slotGroup.bodySlot.gameObject.SetActive(true);
+            slotGroup.bodySlot.FocusFirstBtn();
+        }
+        public void OpenWeaponList()
+        {
+            selectUI.SetActive(false);
+            slotGroup.weaponSlot.gameObject.SetActive(true);
+            slotGroup.weaponSlot.FocusFirstBtn();
         }
 
         public void CloseClothUI()
         {
             clothUI.gameObject.SetActive(false);
+            slotGroup.bodySlot.gameObject.SetActive(false);
+            slotGroup.weaponSlot.gameObject.SetActive(false);
+            GameManager.Instance.TimeStop(false);
         }
 
         public void Initialize(PlatformPlayer player)
