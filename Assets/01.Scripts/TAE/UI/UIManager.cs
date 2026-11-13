@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _01.Scripts.KTH;
 using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Combat;
@@ -7,6 +8,8 @@ using _01.Scripts.TAE.Managers;
 using CoreLib;
 using Systems;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace _01.Scripts.TAE.UI
@@ -26,6 +29,12 @@ namespace _01.Scripts.TAE.UI
 
         [SerializeField] private Button bodyBtn;
         
+        private void Update()
+        {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+                OnEscape();
+        }
+        
         public void ShowDamageTMP(Transform trm, int damage)
         {
             var damageFont = PoolManager.Instance.Pop(damagePrefab.Item.ItemName) as DamageTMP;
@@ -44,21 +53,20 @@ namespace _01.Scripts.TAE.UI
         public void OpenBodyList()
         {
             selectUI.SetActive(false);
-            slotGroup.bodySlot.gameObject.SetActive(true);
+            clothUI.Push(slotGroup.bodySlot.gameObject);
             slotGroup.bodySlot.FocusFirstBtn();
         }
         public void OpenWeaponList()
         {
             selectUI.SetActive(false);
-            slotGroup.weaponSlot.gameObject.SetActive(true);
+            clothUI.Push(slotGroup.weaponSlot.gameObject);
             slotGroup.weaponSlot.FocusFirstBtn();
         }
 
         public void CloseClothUI()
         {
             clothUI.gameObject.SetActive(false);
-            slotGroup.bodySlot.gameObject.SetActive(false);
-            slotGroup.weaponSlot.gameObject.SetActive(false);
+            clothUI.Push(slotGroup.weaponSlot.gameObject);
             GameManager.Instance.TimeStop(false);
         }
 
@@ -73,21 +81,64 @@ namespace _01.Scripts.TAE.UI
 
         private void Initialize(WeaponHolder holder, AgentRenderer render)
         {
+            void RefreshSelection()
+            {
+                selectGroup.bodySelectUI.SetUp(render.UIData);
+                selectGroup.weaponSelectUI.SetUp(holder.CurrentWeapon.Value.UIData);
+            }
+            
             slotGroup.weaponSlot.Initialize(holder.WeaponDataList, data =>
             {
-                if (holder.TryChangeWeapon(data)) CloseClothUI();
-                selectGroup.weaponSelectUI.SetUp(data);
+                var prevWeaponData = holder.CurrentWeapon.Value.UIData;
+                bool swap = data == render.UIData;
+                if (!holder.TryChangeWeapon(data)) return;
+                
+                if (swap)
+                {
+                    render.Change(prevWeaponData);
+                    _p.ApplyStats(prevWeaponData);
+                }
+                
+                RefreshSelection();
+                OnEscape();
             });
             
             slotGroup.bodySlot.Initialize(render.UIList, data =>
             {
+                bool swap = data == holder.CurrentWeapon.Value.UIData;
+
+                if (swap && !holder.TryChangeWeapon(render.UIData))
+                    return;
+
                 render.Change(data);
                 _p.ApplyStats(data);
-                selectGroup.bodySelectUI.SetUp(data);
-                CloseClothUI();
+
+                RefreshSelection();
+                OnEscape();
             });
         }
-    }
+
+        #region Escape
+
+        private GameObject previousFocus;
+
+        public void OnEscape()
+        {
+            if (!clothUI.gameObject.activeInHierarchy) return;
+
+            if (clothUI.panels.Count == 0)
+            {
+                CloseClothUI();
+                return;
+            }
+
+            clothUI.Pop();
+            selectUI.SetActive(true);
+            bodyBtn.Select();
+        }
+
+        #endregion
+    }   
 
     [Serializable]
     public struct SlotGroup

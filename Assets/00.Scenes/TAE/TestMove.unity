@@ -876,6 +876,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1060773720}
+        m_TargetAssemblyTypeName: _01.Scripts.TAE.Managers.GameManager, Assembly-CSharp
+        m_MethodName: TimeStop
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &525324224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,8 +1182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c239c8fdb0a4a63826f2e1cc4fb4761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.WeaponSlot
-  content: {fileID: 1244312219}
-  BtnTemplate: {fileID: 3433462243456193749, guid: 7806305988671bc4cb3d20b16c57c6ff, type: 3}
 --- !u!114 &587181969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,7 +1775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eac2af941ea40258b8a4f895d626e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.SelectSlotUI
-  image: {fileID: 973726635}
 --- !u!114 &970827039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1778,7 +1787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03018e0c9fae40279a3c5e8cb109a687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.BodySelectUI
-  image: {fileID: 2009923642}
 --- !u!114 &973726635 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4256343766005438800, guid: c75c53baec5955247b29f5df0a9082a2, type: 3}
@@ -1973,17 +1981,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -2047,6 +2055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdf14503f7a442ba876622221ea5fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Managers.GameManager
+  player: {fileID: 4220314032550501989}
 --- !u!4 &1060773721
 Transform:
   m_ObjectHideFlags: 0
@@ -2641,6 +2650,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1060773720}
+        m_TargetAssemblyTypeName: _01.Scripts.TAE.Managers.GameManager, Assembly-CSharp
+        m_MethodName: TimeStop
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1110613917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2999,6 +3020,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1900417136}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1060773720}
+        m_TargetAssemblyTypeName: _01.Scripts.TAE.Managers.GameManager, Assembly-CSharp
+        m_MethodName: TimeStop
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3812,8 +3845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68eae6dd14be47edb5e5b4d6b7607adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.BodySlot
-  content: {fileID: 210427231}
-  BtnTemplate: {fileID: 3433462243456193749, guid: 7806305988671bc4cb3d20b16c57c6ff, type: 3}
 --- !u!114 &1879879281
 MonoBehaviour:
   m_ObjectHideFlags: 0

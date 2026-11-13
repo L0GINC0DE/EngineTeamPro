@@ -53,9 +53,18 @@ namespace _01.Scripts.KTH
 
         private void Update()
         {
-            MoveCompo.SetMoveDir(InputCompo.MoveInput);
-            if (Keyboard.current.tKey.wasPressedThisFrame) HealthCompo.TakeDamage(1);
-            RendererCompo.FlipController(InputCompo.MoveInput.x);
+            if (!MoveCompo.CanManualMove)
+            {
+                MoveCompo.SetMoveDir(Vector2.zero);
+                return;
+            }
+
+            Vector2 moveInput = InputCompo.MoveInput;
+            MoveCompo.SetMoveDir(moveInput);
+            RendererCompo.FlipController(moveInput.x);
+
+            if (Keyboard.current.tKey.wasPressedThisFrame)
+                HealthCompo.TakeDamage(1);
         }
 
         private void HandleJumpKeyPressed()
