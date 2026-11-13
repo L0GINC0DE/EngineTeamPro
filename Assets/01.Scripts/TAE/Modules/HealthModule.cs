@@ -87,5 +87,14 @@ namespace Agents
             if (previous > 0 && next == 0)
                 OnDead?.Invoke();
         }
+
+        public void SetMaxHealth(int value)
+        {
+            maxHealth = value;
+            float healthRatio = currentHealth / (float)maxHealth;
+            int newMaxHealth = Mathf.RoundToInt(maxHealth * (1f / 100f));
+            int newCurrentHealth = (int)(newMaxHealth * healthRatio);
+            currentHealth = newCurrentHealth;
+        }
     }
 }

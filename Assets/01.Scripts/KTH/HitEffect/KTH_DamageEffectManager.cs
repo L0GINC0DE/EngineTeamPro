@@ -46,8 +46,7 @@ public class KTH_DamageEffectManager : MonoBehaviour
         float dir = target.position.x >= hitFrom.x ? 1 : -1;
 
         HitStop(data.hitStopTime);
-        // 임펄스 모양(Explosion)이 -1.4에서 시작하므로 부호를 뒤집어야 첫 흔들림이 넉백 방향으로 나간다
-        CameraShake(new Vector3(-dir * data.shakeForce, 0, 0));
+        CameraShake(data.shakeForce); // 위아래 흔들림 (KTH_CameraShake)
         KTH_Knockback.Knockback(target, dir, data);
     }
 

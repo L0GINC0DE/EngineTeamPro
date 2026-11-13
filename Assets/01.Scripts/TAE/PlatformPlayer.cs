@@ -1,30 +1,28 @@
 using System;
-using _01.Scripts.TAE;
+using _01.Scripts.TAE.Agents;
+using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.Data;
+using _01.Scripts.TAE.Interface;
+using _01.Scripts.TAE.UI;
 using Agents;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace _01.Scripts.KTH
 {
-    public class PlatformPlayer : MonoBehaviour
+    public class PlatformPlayer : MonoBehaviour, IDamageable
     {
         public PlayerInputReader InputCompo { get; private set; }
         public AgentMovement MoveCompo { get; private set; }
+        public AgentRenderer RendererCompo { get; private set; }
         public HealthModule HealthCompo { get; private set; }
-        public Interactor Interactor { get; private set; }
-        public PlayerAttack AttackCompo { get; private set; }
-        public Weapon WeaponCompo { get; private set; }
+        public WeaponHolder WeaponCompo { get; private set; }
+        public Interactor InteractCompo { get; private set; }
 
-        public float defendPower;
-
-        public TestPlayerData data;
-
-        private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
         public float attackRange;
 
-        public LayerMask _whatIsEnemy;
 
         private int num;
 
@@ -32,83 +30,55 @@ namespace _01.Scripts.KTH
         {
             InputCompo = GetComponent<PlayerInputReader>();
             MoveCompo = GetComponentInChildren<AgentMovement>();
+            RendererCompo = GetComponentInChildren<AgentRenderer>();
             HealthCompo = GetComponent<HealthModule>();
-            Interactor = GetComponent<Interactor>();
-            AttackCompo = GetComponentInChildren<PlayerAttack>();
-            WeaponCompo = GetComponentInChildren<Weapon>();
+            WeaponCompo = GetComponentInChildren<WeaponHolder>();
+            InteractCompo = GetComponentInChildren<Interactor>();
+        }
 
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        private void Start()
+        {
+            RendererCompo.Init();
+            WeaponCompo.InitializeWeapons(this);
+            InteractCompo.Initialize(this);
+            UIManager.Instance.weaponSlotUI.Initialize(WeaponCompo);
+            UIManager.Instance.bodySlotUI.Initialize(RendererCompo);
         }
 
         private void OnEnable()
         {
             InputCompo.OnJumpKeyPressed += HandleJumpKeyPressed;
-            InputCompo.OnInteractKeyPressed += HandleInteractKeyPressed;
-            InputCompo.OnAttackKeyPressed += HandleAttackKeyPressed;
         }
-        
+
         private void OnDisable()
         {
             InputCompo.OnJumpKeyPressed -= HandleJumpKeyPressed;
-            InputCompo.OnInteractKeyPressed -= HandleInteractKeyPressed;
-            InputCompo.OnAttackKeyPressed -= HandleAttackKeyPressed;
         }
 
         private void Update()
         {
             MoveCompo.SetMoveDir(InputCompo.MoveInput);
-
-            if (Keyboard.current.digit1Key.wasPressedThisFrame) num = 1;
-            if (Keyboard.current.digit2Key.wasPressedThisFrame) num = 2;
-
-            if (Keyboard.current.tKey.wasPressedThisFrame)
-            {
-                HealthCompo.TakeDamage(1);
-            }
-
-            Physics2D.OverlapCircle(transform.position, attackRange, _whatIsEnemy);
-            
-            FlipController(InputCompo.MoveInput.x);
+            if (Keyboard.current.tKey.wasPressedThisFrame) HealthCompo.TakeDamage(1);
+            RendererCompo.FlipController(InputCompo.MoveInput.x);
         }
 
-        private void HandleJumpKeyPressed() => MoveCompo.Jump();
-
-        private void HandleInteractKeyPressed()
+        private void HandleJumpKeyPressed()
         {
-            Debug.Log("상호작용");
-
-            switch (num)
-            {
-                case 1:
-                    Interactor.Interact(UITypes.Player);
-                    break;
-                case 2:
-                    Interactor.Interact(UITypes.Weapon);
-                    break;
-            }
-            
+            MoveCompo.Jump();
         }
 
-        private void HandleAttackKeyPressed() => Debug.Log("공격");
-        
-        public void SetData(TestPlayerData data)
+        public void ApplyDamage(int dmg, Vector2 kbPower)
         {
-            this.data = data;
-            SetUp();
+            if (HealthCompo.IsDead) return;
+
+            HealthCompo.TakeDamage(dmg);
+            MoveCompo.KnockbackPower(kbPower);
         }
 
-        private void SetUp()
+        public void ApplyStats(UIDataSO data)
         {
-            spriteRenderer.sprite = data.uiSprite;
             MoveCompo.SetSpeed(data.moveSpeed);
-            defendPower = data.defendPower;
-            attackRange = data.attackRange;
-        }
-
-        private void FlipController(float value)
-        {
-            if (value != 0)
-                transform.eulerAngles = value > 0f ? Vector3.zero : new Vector3(0, 180, 0);
+            HealthCompo.SetMaxHealth(data.health);
         }
 
         private void OnDrawGizmos()

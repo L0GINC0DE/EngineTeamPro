@@ -1,6 +1,6 @@
 namespace _01.Scripts.TAE
 {
-    public sealed class AttackCommand : ICommand
+    public class AttackCommand : ICommand
     {
         private readonly BattleUnit attacker;
         private readonly BattleUnit target;

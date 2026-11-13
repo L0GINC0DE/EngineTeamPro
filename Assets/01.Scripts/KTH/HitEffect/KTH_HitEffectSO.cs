@@ -7,7 +7,7 @@ public class KTH_HitEffectSO : ScriptableObject
     [Header("히트스탑")]
     public float hitStopTime = 0.08f;
 
-    [Header("카메라 쉐이크 (넉백 방향으로 흔들림)")]
+    [Header("카메라 쉐이크 (위아래로 흔들림)")]
     public float shakeForce = 1f;
 
     [Header("넉백")]

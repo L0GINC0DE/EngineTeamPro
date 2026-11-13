@@ -7,6 +7,7 @@ public class KTH_Boss : KTH_Enemy
     [SerializeReference, KTH_SubclassSelector]
     private List<KTH_BossAction> patterns = new();
     [SerializeField]private Transform _target;
+    
     public Transform target => _target;
     int index;
     public KTH_BossAction NextAction => patterns.Count == 0 ? null : patterns[index % patterns.Count];
@@ -27,8 +28,7 @@ public class KTH_Boss : KTH_Enemy
         patterns[index]?.Execute(this); // 타입을 아직 안 고른 빈 칸은 건너뛴다
         index = (index + 1) % patterns.Count;
     }
-
-#if UNITY_EDITOR
+    
     // 리스트의 + 버튼은 마지막 칸을 복제하는데, SerializeReference는 같은 인스턴스를 가리키게 될 수 있다
     // 그러면 한 칸을 고칠 때 다른 칸도 같이 바뀌므로 겹치는 칸은 복사본으로 바꿔준다
     private void OnValidate()
@@ -42,5 +42,4 @@ public class KTH_Boss : KTH_Enemy
                 patterns[i] = (KTH_BossAction)JsonUtility.FromJson(JsonUtility.ToJson(p), p.GetType());
         }
     }
-#endif
 }
