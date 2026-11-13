@@ -132,5 +132,11 @@ namespace _01.Scripts.KTH
             rb.linearVelocity = Vector2.zero;
             CanManualMove = true;
         }
+
+        public void StopInput(bool isStop)
+        {
+            rb.linearVelocity = Vector2.zero;
+            CanManualMove = !isStop;
+        }
     }
 }

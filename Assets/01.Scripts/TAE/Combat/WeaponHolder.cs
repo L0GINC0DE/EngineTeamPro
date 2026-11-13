@@ -4,14 +4,11 @@ using _01.Scripts.KTH;
 using _01.Scripts.TAE.Data;
 using CoreLib;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace _01.Scripts.TAE.Combat
 {
     public class WeaponHolder : MonoBehaviour
     {
-        public UnityEvent<UIWeapon> OnChangeWeaponEvent;
-        
         [SerializeField] private UIWeapon weaponPrefab;
         [SerializeField] private UIDataListSO weaponDataList;
 
@@ -19,10 +16,9 @@ namespace _01.Scripts.TAE.Combat
 
         private PlayerInputReader _playerInput;
 
-        private List<UIWeapon> uiWeaponList = new();
-        private Dictionary<UIDataSO, int> weaponDict = new();
+        private Dictionary<UIDataSO, UIWeapon> weaponDict = new();
         
-        public IReadOnlyList<UIDataSO> WeaponDataList => weaponDataList.uiDataList;
+        public UIDataListSO WeaponDataList => weaponDataList;
 
         private void Awake()
         {
@@ -30,8 +26,7 @@ namespace _01.Scripts.TAE.Combat
             CurrentWeapon.OnValueChanged += HandleWeaponChange;
             
             MakeWeaponList();
-            if(uiWeaponList.Count > 0)
-                CurrentWeapon.Value = uiWeaponList.First();
+            TryChangeWeapon(weaponDataList.uiDataList[1]);
         }
 
         private void OnDisable()
@@ -55,34 +50,23 @@ namespace _01.Scripts.TAE.Combat
         {
             prev?.gameObject.SetActive(false);
             next?.gameObject.SetActive(true);
-            
-            OnChangeWeaponEvent?.Invoke(CurrentWeapon.Value);
         }
 
-        public void TryChangeWeapon(UIDataSO data)
+        public bool TryChangeWeapon(UIDataSO data)
         {
-            ChangeWeapon(weaponDict[data]);
-        }
-
-        private void ChangeWeapon(int weaponIndex)
-        {
-            if (weaponIndex < uiWeaponList.Count && weaponIndex >= 0)
-            {
-                CurrentWeapon.Value = uiWeaponList[weaponIndex];
-            }
+            if (data == null) return false;
+            CurrentWeapon.Value = weaponDict[data];
+            return true;
         }
 
         public void MakeWeaponList()
         {
-            int i = 0;
             foreach (var weaponData in weaponDataList.uiDataList)
             {
                 UIWeapon ui = Instantiate(weaponPrefab, transform);
                 ui.InitWeapon(weaponData);
                 ui.gameObject.SetActive(false);
-                uiWeaponList.Add(ui);
-                weaponDict.Add(ui.UIData, i);
-                i++;
+                weaponDict.Add(ui.UIData, ui);
             }
         }
         

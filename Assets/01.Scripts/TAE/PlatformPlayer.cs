@@ -23,9 +23,6 @@ namespace _01.Scripts.KTH
 
         public float attackRange;
 
-
-        private int num;
-
         private void Awake()
         {
             InputCompo = GetComponent<PlayerInputReader>();
@@ -41,8 +38,7 @@ namespace _01.Scripts.KTH
             RendererCompo.Init();
             WeaponCompo.InitializeWeapons(this);
             InteractCompo.Initialize(this);
-            UIManager.Instance.weaponSlotUI.Initialize(WeaponCompo);
-            UIManager.Instance.bodySlotUI.Initialize(RendererCompo);
+            UIManager.Instance.Initialize(this);
         }
 
         private void OnEnable()
@@ -57,9 +53,18 @@ namespace _01.Scripts.KTH
 
         private void Update()
         {
-            MoveCompo.SetMoveDir(InputCompo.MoveInput);
-            if (Keyboard.current.tKey.wasPressedThisFrame) HealthCompo.TakeDamage(1);
-            RendererCompo.FlipController(InputCompo.MoveInput.x);
+            if (!MoveCompo.CanManualMove)
+            {
+                MoveCompo.SetMoveDir(Vector2.zero);
+                return;
+            }
+
+            Vector2 moveInput = InputCompo.MoveInput;
+            MoveCompo.SetMoveDir(moveInput);
+            RendererCompo.FlipController(moveInput.x);
+
+            if (Keyboard.current.tKey.wasPressedThisFrame)
+                HealthCompo.TakeDamage(1);
         }
 
         private void HandleJumpKeyPressed()
