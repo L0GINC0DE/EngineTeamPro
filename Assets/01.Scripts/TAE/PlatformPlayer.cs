@@ -23,9 +23,6 @@ namespace _01.Scripts.KTH
 
         public float attackRange;
 
-
-        private int num;
-
         private void Awake()
         {
             InputCompo = GetComponent<PlayerInputReader>();
@@ -41,8 +38,7 @@ namespace _01.Scripts.KTH
             RendererCompo.Init();
             WeaponCompo.InitializeWeapons(this);
             InteractCompo.Initialize(this);
-            UIManager.Instance.weaponSlotUI.Initialize(WeaponCompo);
-            UIManager.Instance.bodySlotUI.Initialize(RendererCompo);
+            UIManager.Instance.Initialize(this);
         }
 
         private void OnEnable()

@@ -373,21 +373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf4af6077bb40d68c8cf97ec1224002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.WeaponHolder
-  OnChangeWeaponEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 497096308}
-        m_TargetAssemblyTypeName: _01.Scripts.TAE.UI.UIManager, Assembly-CSharp
-        m_MethodName: Set
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   weaponPrefab: {fileID: 6258212577607112350, guid: 95b3136f9fc249144b078a572a79bfee, type: 3}
   weaponDataList: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
 --- !u!1 &442554152
@@ -683,10 +668,13 @@ MonoBehaviour:
   holderLayer: {fileID: 1504074013}
   damagePrefab: {fileID: 8152546922684193035, guid: a6a3c677841efca41bc66b70f24a7c4f, type: 3}
   clothUI: {fileID: 1900417140}
-  weaponSelectUI: {fileID: 970827038}
-  bodySelectUI: {fileID: 970827039}
-  weaponSlotUI: {fileID: 587181968}
-  bodySlotUI: {fileID: 1879879280}
+  selectUI: {fileID: 970827034}
+  selectGroup:
+    weaponSelectUI: {fileID: 1427652879}
+    bodySelectUI: {fileID: 1000563501}
+  slotGroup:
+    weaponSlot: {fileID: 587181969}
+    bodySlot: {fileID: 1879879281}
 --- !u!114 &497096309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,13 +1090,14 @@ GameObject:
   - component: {fileID: 587181967}
   - component: {fileID: 587181966}
   - component: {fileID: 587181968}
+  - component: {fileID: 587181969}
   m_Layer: 5
   m_Name: WeaponSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &587181964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1180,6 +1169,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c239c8fdb0a4a63826f2e1cc4fb4761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.WeaponSlot
+  content: {fileID: 1244312219}
+  BtnTemplate: {fileID: 3433462243456193749, guid: 7806305988671bc4cb3d20b16c57c6ff, type: 3}
+--- !u!114 &587181969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587181963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877c7de90d754d468ba23ac9bcac7fd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.Slot
   content: {fileID: 1244312219}
   BtnTemplate: {fileID: 3433462243456193749, guid: 7806305988671bc4cb3d20b16c57c6ff, type: 3}
 --- !u!1 &645496975
@@ -1688,7 +1691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &970827035
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1798,6 +1801,7 @@ GameObject:
   - component: {fileID: 1000563500}
   - component: {fileID: 1000563499}
   - component: {fileID: 1000563498}
+  - component: {fileID: 1000563501}
   m_Layer: 5
   m_Name: BodyBtn
   m_TagString: Untagged
@@ -1933,6 +1937,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000563496}
   m_CullTransparentMesh: 1
+--- !u!114 &1000563501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000563496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c944ef89eb3e43219ad6e4e368081dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.SelectUI
+  image: {fileID: 2009923642}
 --- !u!1 &1051701823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2996,6 +3013,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308430615}
   m_CullTransparentMesh: 1
+--- !u!1 &1427652875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1503575382672265176, guid: c75c53baec5955247b29f5df0a9082a2, type: 3}
+  m_PrefabInstance: {fileID: 3864598745234971690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1427652879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427652875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c944ef89eb3e43219ad6e4e368081dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.SelectUI
+  image: {fileID: 973726635}
 --- !u!1 &1431116372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3654,6 +3689,7 @@ GameObject:
   - component: {fileID: 1879879279}
   - component: {fileID: 1879879278}
   - component: {fileID: 1879879280}
+  - component: {fileID: 1879879281}
   m_Layer: 5
   m_Name: BodySlot
   m_TagString: Untagged
@@ -3732,6 +3768,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68eae6dd14be47edb5e5b4d6b7607adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.BodySlot
+  content: {fileID: 210427231}
+  BtnTemplate: {fileID: 3433462243456193749, guid: 7806305988671bc4cb3d20b16c57c6ff, type: 3}
+--- !u!114 &1879879281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879879274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877c7de90d754d468ba23ac9bcac7fd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.Slot
   content: {fileID: 210427231}
   BtnTemplate: {fileID: 3433462243456193749, guid: 7806305988671bc4cb3d20b16c57c6ff, type: 3}
 --- !u!1 &1898313154
@@ -4408,33 +4458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c54ea72a7f48f7b7747d82288e6798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Agents.AgentRenderer
-  OnUIBodyChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 497096308}
-        m_TargetAssemblyTypeName: _01.Scripts.TAE.UI.UIManager, Assembly-CSharp
-        m_MethodName: SetBody
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4220314032550501989}
-        m_TargetAssemblyTypeName: _01.Scripts.KTH.PlatformPlayer, Assembly-CSharp
-        m_MethodName: ApplyStats
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   _spriteRenderer: {fileID: 3769806486123245304}
   <UIData>k__BackingField: {fileID: 11400000, guid: 2895fac2b721f31499aa5deb5cb30212, type: 2}
   uiList: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
@@ -4541,7 +4564,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1503575382672265176, guid: c75c53baec5955247b29f5df0a9082a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1427652879}
   m_SourcePrefab: {fileID: 100100000, guid: c75c53baec5955247b29f5df0a9082a2, type: 3}
 --- !u!1001 &3919434476076299046
 PrefabInstance:

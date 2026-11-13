@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace _01.Scripts.TAE.UI
 {
-    public abstract class AbstractSlotUI : MonoBehaviour
+    public class SelectUI : MonoBehaviour
     {
         public Image image;
         
