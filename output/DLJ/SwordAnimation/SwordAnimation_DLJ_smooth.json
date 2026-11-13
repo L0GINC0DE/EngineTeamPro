@@ -1,0 +1,227 @@
+{ "frames": [
+   {
+    "filename": "SwordAnimation_DLJ_smooth 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 1.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 2.aseprite",
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 3.aseprite",
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 4.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 65
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 5.aseprite",
+    "frame": { "x": 320, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 6.aseprite",
+    "frame": { "x": 0, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 30
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 7.aseprite",
+    "frame": { "x": 64, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 30
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 8.aseprite",
+    "frame": { "x": 128, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 30
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 9.aseprite",
+    "frame": { "x": 192, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 30
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 10.aseprite",
+    "frame": { "x": 256, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 30
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 11.aseprite",
+    "frame": { "x": 320, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 35
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 12.aseprite",
+    "frame": { "x": 0, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 13.aseprite",
+    "frame": { "x": 64, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 55
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 14.aseprite",
+    "frame": { "x": 128, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 60
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 15.aseprite",
+    "frame": { "x": 192, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 65
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 16.aseprite",
+    "frame": { "x": 256, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 17.aseprite",
+    "frame": { "x": 320, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 18.aseprite",
+    "frame": { "x": 0, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 19.aseprite",
+    "frame": { "x": 64, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 20.aseprite",
+    "frame": { "x": 128, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 21.aseprite",
+    "frame": { "x": 192, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 45
+   },
+   {
+    "filename": "SwordAnimation_DLJ_smooth 22.aseprite",
+    "frame": { "x": 256, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 75
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.18.6-x64",
+  "image": "SwordAnimation_DLJ_smooth_sheet.png",
+  "format": "RGBA8888",
+  "size": { "w": 384, "h": 256 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Windup", "from": 0, "to": 5, "direction": "forward", "color": "#a04141ff" },
+   { "name": "Slash", "from": 6, "to": 15, "direction": "forward", "color": "#a04141ff" },
+   { "name": "Recovery", "from": 16, "to": 22, "direction": "forward", "color": "#a04141ff" }
+  ],
+  "layers": [
+   { "name": "DLJ - Slash Trail", "opacity": 255, "blendMode": "normal" },
+   { "name": "DLJ - Sword", "opacity": 255, "blendMode": "normal" }
+  ]
+ }
+}

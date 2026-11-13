@@ -13,6 +13,29 @@ MonoBehaviour:
   m_Name: TextBarUI
   m_EditorClassIdentifier: Assembly-CSharp::PlayableUISO
   uiType: 6
-  damage: 0
-  defend: 0
-  utility: 0
+  displayName: "대사창"
+  originalFunction: "상황 대사 및 강한 공격 예고. 적 말풍선과 대사 전용 장면 구분. 실제 보스 공격 기믹은 별도."
+  platformData: {fileID: 11400000, guid: 781df8ef27024dca9852b91741f85f76, type: 2}
+  damage: 3
+  defend: 3
+  utility: 1
+  weaponName: "망치"
+  weaponColor: {r: 1, g: 1, b: 1, a: 1}
+  weaponSecondaryColor: {r: 0, g: 0, b: 0, a: 1}
+  attackMotion: "망치 휘두르기"
+  defendMotion: "망치를 앞으로 내밀기"
+  commandCue: "망치 차지 시작 이후 3번 키 입력"
+  weaponAttack:
+    baseDamage: -1
+    baseCoefficient: -1
+    maxDamageIncrease: -1
+    goodCoefficient: -1
+    inputMode: 3
+    inputCount: 3
+    timingPattern: []
+    groupCount: -1
+  defendModifier: 0
+  recoveryRatio: 0
+  destructionStackCost: 0
+  protectFromDestruction: 0
+  platformInteraction: ""

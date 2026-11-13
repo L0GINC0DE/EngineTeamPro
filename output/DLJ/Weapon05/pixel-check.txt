@@ -1,0 +1,5 @@
+Canvas: 64x64
+Opaque palette colors: 4
+Occupied pixels: 248
+Alpha: 0 or 255 only
+Method: Built-in image generation followed by Aseprite pixel refinement

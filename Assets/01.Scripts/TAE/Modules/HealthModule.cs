@@ -46,9 +46,17 @@ namespace Agents
             if (!initialized) ResetHealth();
         }
 
+        public void Heal(int amount)
+        {
+            if (amount <= 0 || IsDead) return;
+            SetHealth(currentHealth + Mathf.Min(amount, maxHealth - currentHealth));
+        }
+
         // 방향을 모르면 오른쪽에서 맞은 걸로 처리
         public void TakeDamage(int damage)
         {
+            if (TryGetComponent(out KTH_DefenseStats defense))
+                damage = Mathf.RoundToInt(damage * defense.TakenCoefficient);
             TakeDamage(damage, transform.position + Vector3.right);
         }
 

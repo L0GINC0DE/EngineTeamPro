@@ -13,6 +13,29 @@ MonoBehaviour:
   m_Name: ActUI
   m_EditorClassIdentifier: Assembly-CSharp::PlayableUISO
   uiType: 2
-  damage: 0
-  defend: 0
-  utility: 0
+  displayName: "행동"
+  originalFunction: "적 정보 확인·기타 행동 메뉴. 선택지·효과·개별 행동의 턴 소비 조건 미정."
+  platformData: {fileID: 11400000, guid: 2ec2e2f409af4dddb0def963bd8ccc22, type: 2}
+  damage: 2
+  defend: 3
+  utility: 1
+  weaponName: "확성기"
+  weaponColor: {r: 1, g: 0.5, b: 0, a: 1}
+  weaponSecondaryColor: {r: 1, g: 0.5, b: 0, a: 1}
+  attackMotion: "음파 발사"
+  defendMotion: "음파 파장 준비"
+  commandCue: "버튼 연타"
+  weaponAttack:
+    baseDamage: -1
+    baseCoefficient: -1
+    maxDamageIncrease: -1
+    goodCoefficient: -1
+    inputMode: 1
+    inputCount: -1
+    timingPattern: []
+    groupCount: -1
+  defendModifier: 0
+  recoveryRatio: 0
+  destructionStackCost: 0
+  protectFromDestruction: 1
+  platformInteraction: ""

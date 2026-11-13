@@ -13,6 +13,29 @@ MonoBehaviour:
   m_Name: DefendUI
   m_EditorClassIdentifier: Assembly-CSharp::PlayableUISO
   uiType: 1
-  damage: 0
-  defend: 0
-  utility: 0
+  displayName: "방어"
+  originalFunction: "방어 행동 선택. 그 턴의 플레이어 피격 계수 -50%. 방어 타이밍 입력과 별개."
+  platformData: {fileID: 11400000, guid: 0af5a69d8dac475d85bf6c6200d63786, type: 2}
+  damage: 1
+  defend: 5
+  utility: 1
+  weaponName: "방패"
+  weaponColor: {r: 0, g: 0, b: 1, a: 1}
+  weaponSecondaryColor: {r: 0, g: 0, b: 1, a: 1}
+  attackMotion: "방패 밀치기"
+  defendMotion: "방패를 앞으로 내밀기"
+  commandCue: "몸이 적과 닿을 때"
+  weaponAttack:
+    baseDamage: -1
+    baseCoefficient: -1
+    maxDamageIncrease: -1
+    goodCoefficient: -1
+    inputMode: 0
+    inputCount: -1
+    timingPattern: []
+    groupCount: -1
+  defendModifier: -0.5
+  recoveryRatio: 0
+  destructionStackCost: 0
+  protectFromDestruction: 0
+  platformInteraction: "방패를 던져 버튼 작동. 사용 조건·회수·반복 사용 규칙 미정."

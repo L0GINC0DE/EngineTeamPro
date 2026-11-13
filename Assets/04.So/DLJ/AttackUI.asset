@@ -13,6 +13,29 @@ MonoBehaviour:
   m_Name: AttackUI
   m_EditorClassIdentifier: Assembly-CSharp::PlayableUISO
   uiType: 0
-  damage: 10
-  defend: 0
-  utility: 0
+  displayName: "공격"
+  originalFunction: "공격 행동 선택. 다른 UI를 무기로 들어도 공격 가능."
+  platformData: {fileID: 11400000, guid: 0bc9b38bee9040c0ab5d7bb93780afba, type: 2}
+  damage: 5
+  defend: 1
+  utility: 1
+  weaponName: "검"
+  weaponColor: {r: 1, g: 0, b: 0, a: 1}
+  weaponSecondaryColor: {r: 1, g: 0, b: 0, a: 1}
+  attackMotion: "검 휘두르기"
+  defendMotion: "검을 앞으로 내밀기"
+  commandCue: "검을 들어서 휘두르려는 타이밍"
+  weaponAttack:
+    baseDamage: -1
+    baseCoefficient: -1
+    maxDamageIncrease: -1
+    goodCoefficient: -1
+    inputMode: 0
+    inputCount: -1
+    timingPattern: []
+    groupCount: -1
+  defendModifier: 0
+  recoveryRatio: 0
+  destructionStackCost: 0
+  protectFromDestruction: 1
+  platformInteraction: ""

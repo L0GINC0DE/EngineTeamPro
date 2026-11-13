@@ -149,7 +149,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1581993805}
+  m_Father: {fileID: 1581993811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -249,52 +249,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!1 &287794950
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 287794952}
-  - component: {fileID: 287794951}
-  m_Layer: 0
-  m_Name: AttackUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &287794951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287794950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc98f08a76eb1614d9c59bad6985b0e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AttackUI
-  UISo: {fileID: 11400000, guid: 8b037d5f06af6e64a897aea217b5779b, type: 2}
-  target: {fileID: 1355662934}
---- !u!4 &287794952
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287794950}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.29719, y: -0.42148, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430314274
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +362,7 @@ GameObject:
   - component: {fileID: 436986676}
   - component: {fileID: 436986675}
   - component: {fileID: 810000000000000004}
+  - component: {fileID: 810000000000000009}
   m_Layer: 0
   m_Name: TurnManager
   m_TagString: Untagged
@@ -474,7 +429,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUIManager
   player: {fileID: 810000000000000005}
-  turnManager: {fileID: 436986675}
   buttonGroup: {fileID: 241714061}
   firstSelectedButton: {fileID: 1283588019}
 --- !u!4 &475741487
@@ -503,6 +457,8 @@ GameObject:
   - component: {fileID: 723489942}
   - component: {fileID: 723489944}
   - component: {fileID: 723489943}
+  - component: {fileID: 723489946}
+  - component: {fileID: 723489945}
   m_Layer: 5
   m_Name: Setting
   m_TagString: Untagged
@@ -567,6 +523,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723489941}
   m_CullTransparentMesh: 1
+--- !u!114 &723489945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723489941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5841018aff44dca45649f85576f8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingUI
+  UISo: {fileID: 11400000, guid: 5cf6a582a54c00d4fbd39ef645bd6d6c, type: 2}
+  settingsPanel: {fileID: 0}
+  destroyedPanel: {fileID: 0}
+--- !u!114 &723489946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723489941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 723489943}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 723489945}
+        m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &794967391
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,10 +608,11 @@ GameObject:
   - component: {fileID: 810000000000000002}
   - component: {fileID: 810000000000000003}
   - component: {fileID: 810000000000000005}
+  - component: {fileID: 810000000000000008}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -597,7 +625,7 @@ Transform:
   m_GameObject: {fileID: 794967391}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.29719, y: -0.42148, z: 0}
+  m_LocalPosition: {x: -5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -645,7 +673,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1635090766}
-  m_Father: {fileID: 1581993805}
+  m_Father: {fileID: 1581993811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
@@ -877,7 +905,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackUI
   UISo: {fileID: 11400000, guid: 8b037d5f06af6e64a897aea217b5779b, type: 2}
-  target: {fileID: 0}
 --- !u!1 &1355662931
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +921,7 @@ GameObject:
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -910,7 +937,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6341fe838c84f744b65236e0a481d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
-  ps: {fileID: 11400000, guid: 438065e255f1a0b40a85eb428618c694, type: 2}
+  patterns: []
+  _target: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1355662933
 Transform:
   m_ObjectHideFlags: 0
@@ -920,7 +951,7 @@ Transform:
   m_GameObject: {fileID: 1355662931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.02005, y: -0.5401, z: 0}
+  m_LocalPosition: {x: 5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -950,6 +981,8 @@ GameObject:
   - component: {fileID: 1361962258}
   - component: {fileID: 1361962260}
   - component: {fileID: 1361962259}
+  - component: {fileID: 1361962261}
+  - component: {fileID: 1361962262}
   m_Layer: 5
   m_Name: Chat
   m_TagString: Untagged
@@ -973,8 +1006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -388}
-  m_SizeDelta: {x: 1920, y: 350}
+  m_AnchoredPosition: {x: 0, y: -702.1}
+  m_SizeDelta: {x: 1920, y: 292.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1361962259
 MonoBehaviour:
@@ -1014,6 +1047,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361962257}
   m_CullTransparentMesh: 1
+--- !u!114 &1361962261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361962257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2e6aa9312894b8fb62a2d1d9c034d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBarUI
+  UISo: {fileID: 11400000, guid: 9032bb86141a8ba459d77b963962173c, type: 2}
+  content: {fileID: 0}
+  dialogueText: {fileID: 0}
+  strongAttackWarning: {fileID: 0}
+--- !u!114 &1361962262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361962257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.61635214, g: 0.61635214, b: 0.61635214, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.47798735, g: 0.47798735, b: 0.47798735, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1361962259}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1361962261}
+        m_TargetAssemblyTypeName: TextBarUI, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1441787417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,6 +1131,7 @@ GameObject:
   - component: {fileID: 1441787421}
   - component: {fileID: 1441787420}
   - component: {fileID: 1441787419}
+  - component: {fileID: 1441787422}
   m_Layer: 5
   m_Name: Act
   m_TagString: Untagged
@@ -1095,7 +1201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1441787420}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1441787422}
+        m_TargetAssemblyTypeName: ActUI, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1441787420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,6 +1252,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441787417}
   m_CullTransparentMesh: 1
+--- !u!114 &1441787422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441787417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f37c5ffd954a1c9177664eb780ffe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActUI
+  UISo: {fileID: 11400000, guid: 832165f0d0fa29847aa68220baebcc4a, type: 2}
+  actionMenu: {fileID: 0}
 --- !u!1 &1536422190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1278,7 @@ GameObject:
   - component: {fileID: 1536422194}
   - component: {fileID: 1536422193}
   - component: {fileID: 1536422192}
+  - component: {fileID: 1536422195}
   m_Layer: 5
   m_Name: Defend
   m_TagString: Untagged
@@ -1215,7 +1348,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1536422193}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1536422195}
+        m_TargetAssemblyTypeName: DefendUI, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1536422193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,6 +1399,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536422190}
   m_CullTransparentMesh: 1
+--- !u!114 &1536422195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536422190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b119f29dc3b474d82093403fc64063d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefendUI
+  UISo: {fileID: 11400000, guid: befc422694a17d34aab642530bd0f1f6, type: 2}
 --- !u!1 &1581993804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1422,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1581993805}
   - component: {fileID: 1581993806}
+  - component: {fileID: 1581993807}
+  - component: {fileID: 1581993808}
+  - component: {fileID: 1581993809}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1283,8 +1444,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 161991122}
-  - {fileID: 933013343}
+  - {fileID: 1581993811}
   m_Father: {fileID: 241714060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1301,9 +1461,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581993804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -1316,7 +1476,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.48427665, g: 0.48427665, b: 0.48427665, a: 1}
     m_DisabledColor: {r: 0.74213827, g: 0.74213827, b: 0.74213827, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1332,6 +1492,153 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
+  m_TargetGraphic: {fileID: 161991123}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1581993807}
+        m_TargetAssemblyTypeName: HealthBarUI, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1581993807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581993804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4632865ff2514c34804f7cd8027b82f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarUI
+  UISo: {fileID: 11400000, guid: 25dc064a85d9fac4c873bb385949ce45, type: 2}
+  health: {fileID: 810000000000000002}
+  content: {fileID: 933013342}
+--- !u!222 &1581993808
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581993804}
+  m_CullTransparentMesh: 1
+--- !u!114 &1581993809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581993804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1581993810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1581993811}
+  - component: {fileID: 1581993812}
+  m_Layer: 5
+  m_Name: HealthSlider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1581993811
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581993810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 161991122}
+  - {fileID: 933013343}
+  m_Father: {fileID: 1581993805}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1581993812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581993810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1635090766}
   m_HandleRect: {fileID: 0}
@@ -1394,7 +1701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1430,6 +1737,7 @@ GameObject:
   - component: {fileID: 1852660991}
   - component: {fileID: 1852660990}
   - component: {fileID: 1852660989}
+  - component: {fileID: 1852660992}
   m_Layer: 5
   m_Name: Heal
   m_TagString: Untagged
@@ -1499,7 +1807,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1852660990}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1852660992}
+        m_TargetAssemblyTypeName: HealUI, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1852660990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1538,6 +1858,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852660987}
   m_CullTransparentMesh: 1
+--- !u!114 &1852660992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852660987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57181063cf7a4e2cbfb7c1a01121167b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealUI
+  UISo: {fileID: 11400000, guid: 57f9e3d2df399014a953d26d9179a920, type: 2}
 --- !u!1 &1853343013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,6 +1993,7 @@ MonoBehaviour:
       m_Calls: []
   maxHealth: 50
   currentHealth: 0
+  hitEffect: {fileID: 0}
 --- !u!114 &810000000000000003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,7 +2017,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f981329e5b424833ac67dd0731280433, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DLJ_BattleSetup
   turnManager: {fileID: 436986675}
   enemies:
@@ -1698,7 +2032,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 050d47f50ec91b8438beed8dea663097, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
 --- !u!114 &810000000000000006
 MonoBehaviour:
@@ -1710,7 +2044,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b52c9c8a87ecb1b41afad9f2d88936b0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Attacker
   damage: 10
 --- !u!114 &810000000000000007
@@ -1723,13 +2057,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb7626dd9537446392cd1288ec731d63, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Agents.HealthModule
   OnHitEvent:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 50
   currentHealth: 0
+  hitEffect: {fileID: 0}
+--- !u!114 &810000000000000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794967391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594db865569d59a449a1ea456f9fdfeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_DefenseStats
+  maxReduction: 0.5
+  bodyDefense: 0
+  weaponDefense: 0
+  defenseConversion: 1
+  isDefending: 0
+  defendModifier: -0.5
+  takenModifier: 0
+  timingWindowScale: 1
+  minDamage: 0
+--- !u!114 &810000000000000009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436986674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd6e2b4d79d4803b9269af7cb26c17e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTurnPresentation
+  textBar: {fileID: 1361962258}
+  textBarTargetPosition: {x: 0, y: -405}
+  battleUnits:
+  - {fileID: 794967392}
+  - {fileID: 1355662933}
+  unitRise: 0.6
+  transitionDuration: 0.3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1737,7 +2112,6 @@ SceneRoots:
   - {fileID: 1853343016}
   - {fileID: 794967392}
   - {fileID: 436986676}
-  - {fileID: 287794952}
   - {fileID: 430314278}
   - {fileID: 985669283}
   - {fileID: 475741487}

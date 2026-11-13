@@ -13,6 +13,29 @@ MonoBehaviour:
   m_Name: HealthBar
   m_EditorClassIdentifier: Assembly-CSharp::PlayableUISO
   uiType: 4
-  damage: 0
-  defend: 0
-  utility: 0
+  displayName: "체력바"
+  originalFunction: "현재 체력 표시. 몸·무기 실체화 시 남은 체력 비율만큼 색상 표시. 파괴 시 정보 열람 불가."
+  platformData: {fileID: 11400000, guid: 4d2d900706f64483b4b5a9dbaa9001c9, type: 2}
+  damage: 3
+  defend: 2
+  utility: 2
+  weaponName: "봉"
+  weaponColor: {r: 1, g: 1, b: 0, a: 1}
+  weaponSecondaryColor: {r: 1, g: 1, b: 0, a: 1}
+  attackMotion: "봉을 돌려 휘두르기"
+  defendMotion: "봉을 앞으로 내밀어 돌리기"
+  commandCue: "타이밍에 맞춰 커맨드 입력"
+  weaponAttack:
+    baseDamage: -1
+    baseCoefficient: -1
+    maxDamageIncrease: -1
+    goodCoefficient: -1
+    inputMode: 3
+    inputCount: -1
+    timingPattern: []
+    groupCount: -1
+  defendModifier: 0
+  recoveryRatio: 0
+  destructionStackCost: 0
+  protectFromDestruction: 0
+  platformInteraction: "발판 생성. 배치·회수·유지 시간·사용 횟수 미정."

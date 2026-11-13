@@ -1,4 +1,3 @@
-using _01.Scripts.TAE.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,12 +23,9 @@ public class PlayerUIManager : MonoBehaviour
     private PlayableUI selectedPlayer;
     private PlayableUI selectedWeapon;
     private bool inputEnabled;
-    private TurnManager turnManager;
 
     //간단히하면 그냥 현재턴이 플레이어 턴이면 참
-    private bool CanSelect => isActiveAndEnabled && turnManager != null && turnManager.isActiveAndEnabled
-        && !turnManager.BattleEnded && player != null && player.BattleUnit != null && player.BattleUnit.IsAlive
-        && turnManager.CurrentUnit == player.BattleUnit;
+    private bool CanSelect => isActiveAndEnabled && player != null && player.CanAct;
 
     private void Awake()
     {
@@ -40,8 +36,6 @@ public class PlayerUIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        turnManager = TurnManager.Instance;
     }
 
     private void OnEnable() => SetInputEnabled(false);
@@ -72,7 +66,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void SelectPlayableUI(PlayableUI ui)
     {
-        if (!CanSelect || ui == null) return;
+        if (!CanSelect || ui == null || !ui.CanEquip) return;
 
         switch (selectionStep)
         {
@@ -93,7 +87,20 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (!CanSelect || selectionStep != SelectionStep.Action || action == null) return;
 
-        if (action.PlayAction(player, selectedPlayer, selectedWeapon)) ResetSelection();
+        if (selectedPlayer == null || !selectedPlayer.CanEquip || selectedWeapon == null || !selectedWeapon.CanEquip)
+        {
+            ResetSelection();
+            return;
+        }
+        player.Equip(selectedPlayer, selectedWeapon);
+        UseAction(action);
+    }
+
+    public void UseAction(PlayerAction action)
+    {
+        if (action == null || player == null) return;
+        if (player.CanAct) player.DefenseStats.isDefending = false;
+        if (action.PlayAction(player, player.BodyUI, player.WeaponUI)) ResetSelection();
         SetInputEnabled(CanSelect);
     }
 

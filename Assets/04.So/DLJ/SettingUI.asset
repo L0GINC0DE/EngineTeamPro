@@ -13,6 +13,29 @@ MonoBehaviour:
   m_Name: SettingUI
   m_EditorClassIdentifier: Assembly-CSharp::PlayableUISO
   uiType: 5
-  damage: 0
-  defend: 0
-  utility: 0
+  displayName: "설정"
+  originalFunction: "설정 창 열기. 파괴 시 파괴된 설정 UI 화면을 표시. 파괴 화면의 조작 범위 미정."
+  platformData: {fileID: 11400000, guid: 8ed7176fb33248b0a8b29b09690cdb78, type: 2}
+  damage: 4
+  defend: 2
+  utility: 3
+  weaponName: "차크람"
+  weaponColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  weaponSecondaryColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  attackMotion: "차크람 던지기"
+  defendMotion: "차크람을 앞으로 내밀기"
+  commandCue: "적이 차크람을 되돌려 플레이어에게 다시 닿을 때"
+  weaponAttack:
+    baseDamage: -1
+    baseCoefficient: -1
+    maxDamageIncrease: -1
+    goodCoefficient: -1
+    inputMode: 0
+    inputCount: -1
+    timingPattern: []
+    groupCount: -1
+  defendModifier: 0
+  recoveryRatio: 0
+  destructionStackCost: 0
+  protectFromDestruction: 0
+  platformInteraction: ""
