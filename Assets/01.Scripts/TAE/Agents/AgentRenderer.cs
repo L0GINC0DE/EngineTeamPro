@@ -10,18 +10,12 @@ namespace _01.Scripts.TAE.Agents
 {
     public class AgentRenderer : MonoBehaviour
     {
-        public UnityEvent<UIDataSO> OnUIBodyChanged;
         public SpriteRenderer _spriteRenderer;
 
         [field: SerializeField] public UIDataSO UIData { get; private set; }
 
         [SerializeField] private UIDataListSO uiList;
-        public IReadOnlyList<UIDataSO> UIList => uiList.uiDataList;
-
-        private void Start()
-        {
-            
-        }
+        public UIDataListSO UIList => uiList;
 
         public void FlipController(float value)
         {
@@ -31,8 +25,8 @@ namespace _01.Scripts.TAE.Agents
         
         public void Init()
         {
-            if (UIList.Count == 0) return;
-            UIData = UIList.First();
+            if (UIList.uiDataList.Count == 0) return;
+            UIData = UIList.uiDataList.First();
             SetUp();
         }
         
@@ -46,7 +40,6 @@ namespace _01.Scripts.TAE.Agents
             if (_spriteRenderer == null) return;
             Debug.Log("변경");
             _spriteRenderer.sprite = UIData.uiSprite;
-            OnUIBodyChanged?.Invoke(UIData);
         }
 
         public void Change(UIDataSO data)
