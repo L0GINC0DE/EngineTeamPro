@@ -1,0 +1,36 @@
+{
+  "frames": 37,
+  "size": [
+    320,
+    144
+  ],
+  "fps": 30,
+  "direction": "left",
+  "deterministic": true,
+  "lastFrameTransparent": true,
+  "oldCoreThickness": 9.133333333333333,
+  "newCoreThickness": 21.133333333333333,
+  "thicknessRatio": 2.3138686131386863,
+  "launchAdvanceRatio": 2.7096774193548385,
+  "sustainedNozzlePixels": 281,
+  "front": [
+    {
+      "frame": 3,
+      "minX": 200,
+      "maxX": 292,
+      "centroidX": 243.2724865339231
+    },
+    {
+      "frame": 6,
+      "minX": 114,
+      "maxX": 294,
+      "centroidX": 196.64448649984277
+    },
+    {
+      "frame": 9,
+      "minX": 31,
+      "maxX": 291,
+      "centroidX": 163.71984433685765
+    }
+  ]
+}

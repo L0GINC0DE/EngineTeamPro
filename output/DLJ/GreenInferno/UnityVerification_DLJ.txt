@@ -1,0 +1,1 @@
+DLJ_GREEN_INFERNO_SUCCESS 97 sprites, 97 animation samples, 384x320, 30 fps, point, uncompressed, non-looping
