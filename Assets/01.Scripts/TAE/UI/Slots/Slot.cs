@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _01.Scripts.TAE.Data;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ namespace _01.Scripts.TAE.UI
             foreach (var data in list.uiDataList)
             {
                 var btnTemplate = Instantiate(BtnTemplate, content);
+                btnTemplate.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = data.uiName;
                 btnTemplate.transform.GetChild(1).GetComponent<Image>().sprite = data.uiSprite;
                 Button button = btnTemplate.GetComponent<Button>();
                 button.onClick.AddListener(() => onSelected?.Invoke(data));

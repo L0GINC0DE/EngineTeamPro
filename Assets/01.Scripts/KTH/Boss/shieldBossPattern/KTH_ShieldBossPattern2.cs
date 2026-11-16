@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 // 방패 던지기
-[Serializable]
 public class KTH_ShieldBossPattern2 : KTH_BossAction
 {
     [SerializeField, FormerlySerializedAs("cast")] private KTH_ShieldCast shield;
