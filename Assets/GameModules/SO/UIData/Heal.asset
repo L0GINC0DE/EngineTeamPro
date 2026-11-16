@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95debfe773ab4519aa1f245023593f8f, type: 3}
-  m_Name: Defend
+  m_Name: Heal
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
-  uiName: DefendUI
-  uiSprite: {fileID: -871308001940766433, guid: 782245a7935e6914aba9739766016c92, type: 3}
-  moveSpeed: 5
+  uiName: HealUI
+  uiSprite: {fileID: 8575766360801496173, guid: 2af1a8d3c4f6d414496f579500508a15, type: 3}
+  moveSpeed: 10
   health: 50
+  spriteLibrary: {fileID: 7108339969198208228, guid: ee6731eebabb8fd4191bbcdcfbfa93f0, type: 3}
   weaponSpritePos: {x: 0.7, y: 0.0461, z: 0}
   damage: 15
   swingCoolTime: 0.5

@@ -73,29 +73,29 @@ namespace _01.Scripts.TAE.UI
         public void Initialize(PlatformPlayer player)
         {
             _p = player;
-            Initialize(_p.WeaponCompo, _p.RendererCompo);
+            Initialize(_p.WeaponCompo, _p.AnimCompo);
 
             selectGroup.weaponSelectUI.SetUp(_p.WeaponCompo.CurrentWeapon.Value.UIData);
-            selectGroup.bodySelectUI.SetUp(_p.RendererCompo.UIData);
+            selectGroup.bodySelectUI.SetUp(_p.CurrentBodyData);
         }
 
-        private void Initialize(WeaponHolder holder, AgentRenderer render)
+        private void Initialize(WeaponHolder holder, PlayerAnimator anim)
         {
             void RefreshSelection()
             {
-                selectGroup.bodySelectUI.SetUp(render.UIData);
+                selectGroup.bodySelectUI.SetUp(_p.CurrentBodyData);
                 selectGroup.weaponSelectUI.SetUp(holder.CurrentWeapon.Value.UIData);
             }
             
             slotGroup.weaponSlot.Initialize(holder.WeaponDataList, data =>
             {
                 var prevWeaponData = holder.CurrentWeapon.Value.UIData;
-                bool swap = data == render.UIData;
+                bool swap = data == _p.CurrentBodyData;
                 if (!holder.TryChangeWeapon(data)) return;
                 
                 if (swap)
                 {
-                    render.Change(prevWeaponData);
+                    anim.ChangeAgent(prevWeaponData);
                     _p.ApplyStats(prevWeaponData);
                 }
                 
@@ -103,14 +103,14 @@ namespace _01.Scripts.TAE.UI
                 OnEscape();
             });
             
-            slotGroup.bodySlot.Initialize(render.UIList, data =>
+            slotGroup.bodySlot.Initialize(_p.BodyDataList, data =>
             {
                 bool swap = data == holder.CurrentWeapon.Value.UIData;
 
-                if (swap && !holder.TryChangeWeapon(render.UIData))
+                if (swap && !holder.TryChangeWeapon(_p.CurrentBodyData))
                     return;
 
-                render.Change(data);
+                anim.ChangeAgent(data);
                 _p.ApplyStats(data);
 
                 RefreshSelection();

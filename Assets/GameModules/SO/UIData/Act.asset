@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95debfe773ab4519aa1f245023593f8f, type: 3}
-  m_Name: Attack
+  m_Name: Act
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
-  uiName: AttackUI
-  uiSprite: {fileID: 5733509246446667393, guid: f23ee027a245e544383e93519883722f, type: 3}
-  moveSpeed: 20
-  health: 20
+  uiName: ActUI
+  uiSprite: {fileID: -2322697686200378494, guid: 31d979cbf789a354a86680fa78ba8d42, type: 3}
+  moveSpeed: 10
+  health: 50
+  spriteLibrary: {fileID: 7108339969198208228, guid: e5178ae4296d6d943b231a340920e3ee, type: 3}
   weaponSpritePos: {x: 0.7, y: 0.0461, z: 0}
   damage: 15
-  swingCoolTime: 0.2
-  knockbackPower: 15
+  swingCoolTime: 0.5
+  knockbackPower: 5

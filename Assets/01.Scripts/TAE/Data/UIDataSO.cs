@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 namespace _01.Scripts.TAE.Data
 {
@@ -12,6 +13,7 @@ namespace _01.Scripts.TAE.Data
         [Header("Body Settings")]
         public float moveSpeed;
         public int health;
+        public SpriteLibraryAsset spriteLibrary;
         
         [Header("Weapon Settings")]
         public Vector3 weaponSpritePos;
