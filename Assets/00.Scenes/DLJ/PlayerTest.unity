@@ -939,9 +939,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
   patterns: []
   _target: {fileID: 0}
-  references:
-    version: 2
-    RefIds: []
 --- !u!4 &1355662933
 Transform:
   m_ObjectHideFlags: 0

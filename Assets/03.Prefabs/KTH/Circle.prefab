@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5410965498571914575}
   - component: {fileID: 1100392967835456524}
   - component: {fileID: 1056229758221303873}
+  - component: {fileID: 3083778433368719433}
+  - component: {fileID: 3083778433368719434}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -107,87 +109,102 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
   patterns:
-  - rid: 3083778433368719433
-  - rid: 3083778433368719434
+  - {fileID: 3083778433368719433}
+  - {fileID: 3083778433368719434}
   _target: {fileID: 0}
-  references:
-    version: 2
-    RefIds:
-    - rid: 3083778433368719433
-      type: {class: KTH_ShieldBossPattern1, ns: , asm: Assembly-CSharp}
-      data:
-        windupTime: 0.5
-        dashDuration: 1
-        returnDuration: 0.5
-        yEasing: 6
-        xEasing:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 0.58922744
-            value: 0.18454696
-            inSlope: 1.1424452
-            outSlope: 1.1424452
-            tangentMode: 0
-            weightedMode: 3
-            inWeight: 0.33333334
-            outWeight: 0.516581
-          - serializedVersion: 3
-            time: 0.7445119
-            value: 0.9758533
-            inSlope: 0.19637091
-            outSlope: 0.19637091
-            tangentMode: 0
-            weightedMode: 3
-            inWeight: 0.33333334
-            outWeight: 0.3087318
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        returnXEasing: 6
-        bundle:
-          baseDamage: 10
-          damageCoefficient: 1
-          parryable: 1
-          inputCount: 1
-          goodCoefficient: 0.5
-          perfectWindow: 0.08
-          goodWindow: 0.2
-        parryOvershoot: 3
-        overshootDuration: 0.3
-    - rid: 3083778433368719434
-      type: {class: KTH_ShieldBossPattern2, ns: , asm: Assembly-CSharp}
-      data:
-        shield: {fileID: 4984189455267997556}
-        flyDuration: 0.6
-        returnDuration: 0.5
-        bundle:
-          baseDamage: 10
-          damageCoefficient: 1
-          parryable: 1
-          inputCount: 1
-          goodCoefficient: 0.5
-          perfectWindow: 0.08
-          goodWindow: 0.2
-        count: 5
+--- !u!114 &3083778433368719433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2943675990633634669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf955364403c2f4e8182aee1695f32b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_ShieldBossPattern1
+  windupTime: 0.5
+  dashDuration: 1
+  returnDuration: 0.5
+  yEasing: 6
+  xEasing:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.58922744
+      value: 0.18454696
+      inSlope: 1.1424452
+      outSlope: 1.1424452
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0.516581
+    - serializedVersion: 3
+      time: 0.7445119
+      value: 0.9758533
+      inSlope: 0.19637091
+      outSlope: 0.19637091
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0.3087318
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  returnXEasing: 6
+  bundle:
+    baseDamage: 10
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+  parryOvershoot: 3
+  overshootDuration: 0.3
+--- !u!114 &3083778433368719434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2943675990633634669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2de0b0a4ea1d546b4d88bfe553b686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_ShieldBossPattern2
+  shield: {fileID: 4984189455267997556}
+  flyDuration: 0.6
+  returnDuration: 0.5
+  bundle:
+    baseDamage: 10
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+  count: 5
 --- !u!114 &1056229758221303873
 MonoBehaviour:
   m_ObjectHideFlags: 0

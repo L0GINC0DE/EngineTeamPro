@@ -1,9 +1,7 @@
-using System;
 using Agents;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[Serializable]
 public class KTH_ATPattern1 : KTH_BossAction
 {
     [SerializeField] private KTH_TalkUI ui;
