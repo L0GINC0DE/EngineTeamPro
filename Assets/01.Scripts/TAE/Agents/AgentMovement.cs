@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using CoreLib;
 using UnityEngine;
 
 namespace _01.Scripts.KTH
@@ -29,11 +30,14 @@ namespace _01.Scripts.KTH
         
         public bool CanManualMove { get; private set; } = true;
         
+        public NotifyValue<bool> IsGrounded = new();
+        public NotifyValue<bool> IsMove = new();
+        
         private void Awake()
         {
             rb = transform.root.GetComponent<Rigidbody2D>();
         }
-        
+
         private void OnDisable()
         {
             if (_kbCoroutine != null)
@@ -48,6 +52,7 @@ namespace _01.Scripts.KTH
         public void SetMoveDir(Vector2 moveDir)
         {
             this.moveDir = moveDir;
+            IsMove.Value = moveDir != Vector2.zero;
         }
 
         public void SetSpeed(float speed)

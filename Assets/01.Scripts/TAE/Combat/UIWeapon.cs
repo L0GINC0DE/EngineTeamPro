@@ -32,7 +32,7 @@ namespace _01.Scripts.TAE.Combat
 
         private void SetUpWeaponData()
         {
-            if (uiWeaponSpriteRenderer == null) return;
+            if (uiWeaponSpriteRenderer == null || UIData == null) return;
             uiWeaponSpriteRenderer.sprite = UIData.uiSprite;
             uiWeaponSpriteRenderer.transform.localPosition = UIData.weaponSpritePos;
             gameObject.name = UIData.uiName;
