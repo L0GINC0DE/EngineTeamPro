@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.Data;
 using _01.Scripts.TAE.Interface;
+using _01.Scripts.TAE.Managers;
 using _01.Scripts.TAE.UI;
 using Agents;
 using CoreLib;
@@ -72,6 +74,30 @@ namespace _01.Scripts.KTH
 
             if (Keyboard.current.tKey.wasPressedThisFrame)
                 HealthCompo.TakeDamage(1);
+
+            if (Keyboard.current.cKey.wasPressedThisFrame)
+            {
+                StartCoroutine(StartSelect());
+            }
+        }
+
+        private IEnumerator StartSelect()
+        {
+            GameManager.Instance.TimeStop(true);
+            
+            GimmickManager.Instance.StartSelect();
+            
+            InputCompo.OnPrevKeyPressed += GimmickManager.Instance.Prev;
+            InputCompo.OnNextKeyPressed += GimmickManager.Instance.Next;
+
+            while (!Keyboard.current.enterKey.wasPressedThisFrame)
+            {
+                yield return null;
+            }
+            
+            InputCompo.OnPrevKeyPressed -= GimmickManager.Instance.Prev;
+            InputCompo.OnNextKeyPressed -= GimmickManager.Instance.Next;
+            GameManager.Instance.TimeStop(false);
         }
 
         private void HandleJumpKeyPressed()

@@ -9,6 +9,8 @@ namespace _01.Scripts.KTH
         public event Action OnJumpKeyPressed;
         public event Action OnInteractKeyPressed;
         public event Action OnAttackKeyPressed;
+        public event Action OnPrevKeyPressed;
+        public event Action OnNextKeyPressed;
         public Vector2 MoveInput { get; private set; }
 
         private InputSystem_Actions _controls;
@@ -62,10 +64,14 @@ namespace _01.Scripts.KTH
 
         public void OnPrevious(InputAction.CallbackContext context)
         {
+            if (context.performed)
+                OnPrevKeyPressed?.Invoke();
         }
 
         public void OnNext(InputAction.CallbackContext context)
         {
+            if (context.performed)
+                OnNextKeyPressed?.Invoke();
         }
 
         public void OnSprint(InputAction.CallbackContext context)
