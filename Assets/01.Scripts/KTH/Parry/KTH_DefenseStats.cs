@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 플레이어 쪽 방어 수치. 몸 UI, 무기 UI, 행동 선택 시스템이 값을 채워 넣는다
 public class KTH_DefenseStats : MonoBehaviour
 {
     [Tooltip("판정 달성률 1일 때 줄어드는 피해 비율")]

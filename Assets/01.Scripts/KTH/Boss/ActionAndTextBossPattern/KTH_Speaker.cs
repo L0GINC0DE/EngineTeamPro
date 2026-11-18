@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Agents;
 using DG.Tweening;
 using Unity.Cinemachine;
@@ -12,6 +13,7 @@ public class KTH_ShoutStyle
     public float extraRadius = 4f;   
     public float width = 0.12f;
     public Color color = Color.white;
+    public Color parriedColor = new(1f, 0.85f, 0.1f);
     public float shakeForce;
 }
 
@@ -58,9 +60,25 @@ public class KTH_Speaker : MonoBehaviour
         if (target.TryGetComponent(out KTH_ParryModule parry))
             defense = parry.BeginBundle(bundle, count, mouth);
 
-        Action hit = () =>
+        var touched = new Queue<KTH_SonicRing>();
+        if (defense != null)
         {
-            if (defense != null) defense.Hit();
+            defense.OnJudged += grade =>
+            {
+                if (touched.Count == 0) return;
+                KTH_SonicRing ring = touched.Dequeue();
+                if (grade != KTH_DefenseGrade.Fail && ring != null)
+                    ring.Return(style.parriedColor);
+            };
+        }
+
+        Action<KTH_SonicRing> hit = ring =>
+        {
+            if (defense != null)
+            {
+                touched.Enqueue(ring);
+                defense.Hit();
+            }
             else if (target.TryGetComponent(out HealthModule hm))
                 hm.TakeDamage((int)(bundle.baseDamage * bundle.damageCoefficient));
         };
@@ -76,7 +94,7 @@ public class KTH_Speaker : MonoBehaviour
             {
                 KTH_SonicRing ring = new GameObject("SonicRing").AddComponent<KTH_SonicRing>();
                 ring.transform.position = mouth;
-                ring.Launch(target.position, style, hit);
+                ring.Launch(target.position, style, () => hit(ring));
             });
         }
     }

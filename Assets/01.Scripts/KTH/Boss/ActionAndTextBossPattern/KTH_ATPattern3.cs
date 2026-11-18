@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 큰 외침. 두꺼운 링 하나가 화면 끝까지 퍼진다
 public class KTH_ATPattern3 : KTH_BossAction
 {
     [SerializeField] private KTH_Speaker sp;

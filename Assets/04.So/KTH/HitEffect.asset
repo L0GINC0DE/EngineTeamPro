@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30342f868cab5f148b2b9f326859ed43, type: 3}
   m_Name: HitEffect
   m_EditorClassIdentifier: Assembly-CSharp::KTH_HitEffectSO
-  hitStopTime: 0.08
+  hitStopTime: 0.03
   shakeForce: 1
   knockbackDistance: 0.7
   pushTime: 0.1

@@ -9,6 +9,7 @@ public class KTH_Boss : KTH_Enemy
     public Transform target => _target;
     int index;
     private KTH_BossAction reserved;
+    private bool reservedEnhanced;
 
     public KTH_BossAction NextAction
     {
@@ -19,9 +20,10 @@ public class KTH_Boss : KTH_Enemy
         }
     }
 
-    public void Reserve(KTH_BossAction action)
+    public void Reserve(KTH_BossAction action, bool enhanced = false)
     {
         reserved = action;
+        reservedEnhanced = enhanced;
     }
 
     private void Update()
@@ -37,8 +39,11 @@ public class KTH_Boss : KTH_Enemy
         if (reserved != null)
         {
             KTH_BossAction action = reserved;
+            bool enhanced = reservedEnhanced;
             reserved = null;
-            action.Execute(this);
+            reservedEnhanced = false;
+            if (enhanced) action.ExecuteEnhanced(this);
+            else action.Execute(this);
             return;
         }
 

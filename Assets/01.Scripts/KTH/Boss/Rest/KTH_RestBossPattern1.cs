@@ -1,40 +1,52 @@
 using System;
-using DG.Tweening;
 using UnityEngine;
 
 public class KTH_RestBossPattern1 : KTH_BossAction
 {
-    [SerializeField]private GameObject fireBallPrefab;
+    [SerializeField]private KTH_Fire fireBallPrefab;
     [SerializeField]private Transform fireTransform;
     [SerializeField]private float windupTime = 0.4f;
     [SerializeField]private float flyDuration = 0.6f;
     [SerializeField]private KTH_AttackBundle bundle = new();
-    [SerializeField]private float reflectAngle = 30f;
-    [SerializeField]private float reflectDistance = 6f;
-    [SerializeField]private float reflectDuration = 0.4f;
+
+    [Header("강화: 큰 불꽃")]
+    [SerializeField]private KTH_Fire enhancedPrefab;
+    [SerializeField]private float enhancedWindupTime = 0.6f;
+    [SerializeField]private float enhancedFlyDuration = 0.8f;
+    [SerializeField]private KTH_AttackBundle enhancedBundle = new() { baseDamage = 20f };
+
+    private Animator animator;
+    
+    private readonly int FireHash = Animator.StringToHash("IsFire");
+
+
+    private void Awake()
+    {
+        animator = transform.GetChild(0).GetComponentInChildren<Animator>();
+    }
 
     public override void Execute(KTH_Boss kthBoss)
     {
-        KTH_Throw.Windup(kthBoss, bundle, windupTime, () => FireBallSpawn(kthBoss));
+        Fire(kthBoss, fireBallPrefab, windupTime, flyDuration, bundle);
+        animator.SetTrigger(FireHash);
     }
 
-    private void FireBallSpawn(KTH_Boss boss)
+    public override void ExecuteEnhanced(KTH_Boss kthBoss)
     {
-        Transform fireBall = GameObject.Instantiate(fireBallPrefab, fireTransform.position, Quaternion.identity).transform;
+        Fire(kthBoss, enhancedPrefab,
+            enhancedWindupTime, enhancedFlyDuration, enhancedBundle);
+        animator.SetTrigger(FireHash);
+    }
 
-        Action hit = KTH_Throw.Judge(boss.target, bundle, fireTransform.position, 1, r =>
-        {
-            if (!r.parried)
-            {
-                GameObject.Destroy(fireBall.gameObject);
-                return;
-            }
+    private void Fire(KTH_Boss boss, KTH_Fire prefab, float windup, float fly, KTH_AttackBundle data)
+    {
+        KTH_Throw.Windup(boss, data, windup, () => FireBallSpawn(boss, prefab, fly, data));
+    }
 
-            float back = KTH_Throw.Direction(boss.target, boss.transform);
-            KTH_Throw.Return(fireBall, reflectAngle, back, reflectDistance, reflectDuration)
-                .OnComplete(() => GameObject.Destroy(fireBall.gameObject));
-        });
-
-        KTH_Throw.Throw(fireBall, boss.target, flyDuration, hit);
+    private void FireBallSpawn(KTH_Boss boss, KTH_Fire prefab, float fly, KTH_AttackBundle data)
+    {
+        KTH_Fire fireBall = Instantiate(prefab, fireTransform.position, Quaternion.identity);
+        Action hit = KTH_Throw.Judge(boss.target, data, fireTransform.position, 1, _ => fireBall.Explode());
+        fireBall.Launch(boss.target, fly, hit);
     }
 }

@@ -2,7 +2,6 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-// 보스 자식으로 두는 방패. 날아가다 닿으면 판정하고 돌아온다
 public class KTH_ShieldCast : MonoBehaviour
 {
     private Vector3 restLocalPosition;
@@ -22,21 +21,20 @@ public class KTH_ShieldCast : MonoBehaviour
         restLocalPosition = transform.localPosition;
     }
     
-    // count번 던지고 돌아오기를 반복한다
     public void Throw(KTH_Boss boss, KTH_AttackBundle bundle, float flyDuration, float returnDuration, int count)
     {
-        animator.ResetTrigger(HitEnd); // 지난 패턴에서 남은 트리거가 있으면 바로 Idle로 빠지지 않게
-        animator.SetTrigger(ThrowHash); // 던지는 동안은 Throw_Loop에 머무니 시작할 때 한 번만
+        animator.ResetTrigger(HitEnd);
+        animator.SetTrigger(ThrowHash);
         ThrowOnce(boss, bundle, flyDuration, returnDuration, count, count);
     }
 
     private void ThrowOnce(KTH_Boss boss, KTH_AttackBundle bundle, float flyDuration, float returnDuration,
         int total, int remaining)
     {
-        sr.flipX = false; // 날아갈 땐 정방향. 마지막에 돌아온 뒤에도 여기서 꺼진다
+        sr.flipX = false;
         if (remaining <= 0)
         {
-            animator.SetTrigger(HitEnd); // 모든 던지기가 끝나면 Idle로
+            animator.SetTrigger(HitEnd);
             return;
         }
         void Back() => Return(returnDuration, () =>
@@ -53,7 +51,6 @@ public class KTH_ShieldCast : MonoBehaviour
         });
     }
 
-    // 돌아온 뒤 onArrived로 다음 던지기를 이어간다
     private void Return(float duration, TweenCallback onArrived)
     {
         tween?.Kill();

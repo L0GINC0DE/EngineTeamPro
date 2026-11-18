@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-// 스피커에서 퍼져나가는 원형 음파. 반지름이 플레이어까지 닿으면 판정
 public class KTH_SonicRing : MonoBehaviour
 {
     private const int Segments = 64;
@@ -15,6 +14,7 @@ public class KTH_SonicRing : MonoBehaviour
     private float width;
     private Color color;
     private Action onHit;
+    private bool returning;
 
     private void Awake()
     {
@@ -34,15 +34,37 @@ public class KTH_SonicRing : MonoBehaviour
         target.z = transform.position.z;
         hitRadius = Vector3.Distance(transform.position, target);
         maxRadius = hitRadius + style.extraRadius;
-        speed = Mathf.Max(hitRadius, 1) / style.travelTime; // 거리랑 상관없이 travelTime 뒤에 닿는다
+        speed = Mathf.Max(hitRadius, 1) / style.travelTime;
         width = style.width;
         color = style.color;
         this.onHit = onHit;
         Draw();
     }
 
+    public void Return(Color color, float speedMultiplier = 1.5f)
+    {
+        onHit = null;
+        returning = true;
+        this.color = color;
+        speed *= speedMultiplier;
+        if (radius > hitRadius) radius = hitRadius;
+        Draw();
+    }
+
     private void Update()
     {
+        if (returning)
+        {
+            radius -= speed * Time.deltaTime;
+            if (radius <= 0)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Draw();
+            return;
+        }
+
         radius += speed * Time.deltaTime;
 
         if (onHit != null && radius >= hitRadius)
@@ -56,7 +78,7 @@ public class KTH_SonicRing : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (onHit != null) Hit(); // 중간에 사라져도 판정은 한다
+        if (onHit != null) Hit();
     }
 
     private void Hit()
@@ -68,7 +90,6 @@ public class KTH_SonicRing : MonoBehaviour
 
     private void Draw()
     {
-        // 플레이어를 지나면 점점 옅고 가늘어진다
         float fade = 1 - Mathf.InverseLerp(hitRadius, maxRadius, radius);
         Color c = color;
         c.a *= fade;

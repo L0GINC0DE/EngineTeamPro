@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 작은 외침. 링 여러 개가 연달아 나간다
 public class KTH_ATPattern2 : KTH_BossAction
 {
     [SerializeField] private KTH_Speaker sp;

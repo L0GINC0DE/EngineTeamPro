@@ -3,12 +3,11 @@ using UnityEngine;
 
 public enum KTH_DefenseGrade
 {
-    Perfect, // 대성공 (1.0)
-    Good,    // 일반 성공 (공격별 계수)
-    Fail,    // 실패, 미입력 (0)
+    Perfect,
+    Good,
+    Fail,
 }
 
-// 적 공격 한 묶음. 다단 공격은 묶음마다 따로 판정하고 따로 체력을 깎는다
 [Serializable]
 public class KTH_AttackBundle
 {

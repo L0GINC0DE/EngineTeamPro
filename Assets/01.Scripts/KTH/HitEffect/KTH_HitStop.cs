@@ -10,8 +10,6 @@ public static class KTH_HitStop
 
     public static bool IsRunning => _isRunning;
 
-    // 프로젝트가 Domain Reload를 끈 상태라 static 값이 이전 플레이에서 그대로 남는다
-    // 이전 판의 _endTime(큰 값)이 남아 있으면 다음 판 첫 히트스탑이 몇십 초씩 멈추므로 플레이 시작 때 초기화
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics()
     {

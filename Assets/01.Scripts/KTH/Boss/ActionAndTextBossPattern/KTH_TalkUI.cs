@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// 선택지는 이벤트 시스템으로 고른다. 화살표로 이동, 엔터로 선택
 public class KTH_TalkUI : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
@@ -18,7 +17,6 @@ public class KTH_TalkUI : MonoBehaviour
 
     private void Update()
     {
-        // 빈 곳을 클릭해서 선택이 풀려도 화살표가 계속 먹히게 첫 버튼을 다시 잡는다
         if (panel.activeSelf && EventSystem.current.currentSelectedGameObject == null)
             Select(buttons[0]);
     }
@@ -49,7 +47,6 @@ public class KTH_TalkUI : MonoBehaviour
 
     private void Select(Button button)
     {
-        // 이미 선택된 버튼을 다시 잡으면 하이라이트가 안 바뀌므로 한 번 비운다
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(button.gameObject);
     }

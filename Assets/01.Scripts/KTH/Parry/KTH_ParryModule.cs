@@ -4,7 +4,6 @@ using Agents;
 using UnityEngine;
 using UnityEngine.Events;
 
-// 적 공격 묶음 하나의 진행 상황. 공격자가 BeginBundle로 받아서 접촉할 때마다 Hit()을 부른다
 public class KTH_DefenseBundle
 {
     public readonly KTH_AttackBundle data;
@@ -28,22 +27,21 @@ public class KTH_DefenseBundle
 
     public int Judged => perfect + good + fail;
 
-    // 공격이 실제로 닿은 순간(애니메이션 이벤트, 트윈 접촉 프레임 등)에 호출
+    public event Action<KTH_DefenseGrade> OnJudged;
+    internal void NotifyJudged(KTH_DefenseGrade grade) => OnJudged?.Invoke(grade);
+
     public void Hit() => owner.RegisterHit(this);
 }
 
-// 방어 타이밍 판정기. HealthModule과 같은 오브젝트(플레이어)에 붙인다
-// 키 입력 시각과 공격 접촉 시각의 차이로 대성공 / 일반 성공 / 실패를 가르고
-// 묶음 입력이 다 판정되면 피해를 계산해서 바로 체력에 반영한다
 public class KTH_ParryModule : MonoBehaviour
 {
-    public UnityEvent OnParryEvent = new(); // 이펙트, 사운드 등 인스펙터 연결용
+    public UnityEvent OnParryEvent = new();
 
-    public event Action<KTH_DefenseGrade> OnJudged;            // 입력 하나 판정될 때 (대성공! 같은 UI용)
-    public event Action<KTH_DefenseResult> OnBundleResolved;   // 묶음 하나 정산될 때
+    public event Action<KTH_DefenseGrade> OnJudged;
+    public event Action<KTH_DefenseResult> OnBundleResolved;
     public event Action<KTH_DefenseResult> OnParried;
 
-    [SerializeField] private KeyCode parryKey = KeyCode.F; // None이면 키 입력 없이 Press()로만 입력
+    [SerializeField] private KeyCode parryKey = KeyCode.F;
     [Header("헛친 입력 잠금")]
     [Tooltip("헛친 입력(어떤 공격에도 안 쓰인 입력)이 나오면 이 시간 동안 입력을 받지 않는다")]
     [SerializeField] private float whiffLockout = 0.3f;
@@ -51,9 +49,7 @@ public class KTH_ParryModule : MonoBehaviour
     [SerializeField] private float whiffWindow = 0.2f;
 
     [Header("패링 성공 연출")]
-    [SerializeField]private float cameraShakeForce = 0.5f;
-
-    [SerializeField] private float hitStopTime;
+    [SerializeField] private KTH_ParryEffectSO parryEffect;
 
     private struct PendingHit
     {
@@ -63,14 +59,17 @@ public class KTH_ParryModule : MonoBehaviour
 
     private const float NoPress = float.NegativeInfinity;
 
-    private float storedPress = NoPress;                // 접촉 전에 미리 누른, 아직 판정에 안 쓰인 입력 시각
-    private readonly List<PendingHit> pending = new();  // 접촉은 했는데 늦은 입력을 기다리는 중
+    private float storedPress = NoPress;
+    private readonly List<PendingHit> pending = new();
     private HealthModule health;
     private KTH_DefenseStats stats;
     private float lockedUntil;
-    private float lastGoodWindow;                       // 마지막으로 시작된 묶음의 일반 성공 시간
+    private float lastGoodWindow;
+
+    private int mashDepth;
 
     public bool IsLocked => Time.time < lockedUntil;
+    public bool IsMashing => mashDepth > 0;
     private bool HasStoredPress => !float.IsNegativeInfinity(storedPress);
     private float StoredPressExpire => Mathf.Max(whiffWindow, lastGoodWindow);
 
@@ -85,7 +84,6 @@ public class KTH_ParryModule : MonoBehaviour
         if (parryKey != KeyCode.None && Input.GetKeyDown(parryKey))
             Press();
 
-        // 늦은 입력 허용 시간까지 안 눌렀으면 실패
         for (int i = pending.Count - 1; i >= 0; i--)
         {
             PendingHit hit = pending[i];
@@ -95,18 +93,17 @@ public class KTH_ParryModule : MonoBehaviour
             Judge(hit.bundle, KTH_DefenseGrade.Fail);
         }
 
-        // 미리 눌렀는데 기다려도 공격이 안 닿았으면 헛친 입력
         if (HasStoredPress && Time.time - storedPress > StoredPressExpire)
-            Whiff();
+        {
+            if (IsMashing) storedPress = NoPress;
+            else Whiff();
+        }
     }
 
-    // 다단 공격을 빠르게 받을 수 있도록 공격에 쓰인 입력에는 쿨타임이 없다
-    // 대신 헛친 입력(공격 없이 누름, 공격 하나에 두 번 누름)이 나오면 잠시 입력을 막아 연타를 막는다
     public void Press()
     {
         if (IsLocked) return;
 
-        // 이미 닿은 공격이 기다리고 있으면 가장 먼저 닿은 것부터 늦은 입력으로 판정
         if (pending.Count > 0)
         {
             PendingHit hit = pending[0];
@@ -115,8 +112,7 @@ public class KTH_ParryModule : MonoBehaviour
             return;
         }
 
-        // 아직 안 쓰인 입력이 남아 있는데 또 눌렀으면 연타
-        if (HasStoredPress)
+        if (HasStoredPress && !IsMashing)
         {
             Whiff();
             return;
@@ -131,7 +127,6 @@ public class KTH_ParryModule : MonoBehaviour
         lockedUntil = Time.time + whiffLockout;
     }
 
-    // 공격자가 묶음 공격을 시작할 때 호출. bundleCount: 이 공격 전체의 정산 묶음 수 (방어력 1/N 분할용)
     public KTH_DefenseBundle BeginBundle(KTH_AttackBundle data, int bundleCount, Vector3 hitFrom,
         Action<KTH_DefenseResult> onResolved = null)
     {
@@ -144,7 +139,6 @@ public class KTH_ParryModule : MonoBehaviour
     {
         if (bundle.resolved) return;
 
-        // 접촉 전에 미리 눌렀으면 그 입력으로 판정한다
         if (HasStoredPress)
         {
             float early = Time.time - storedPress;
@@ -157,6 +151,17 @@ public class KTH_ParryModule : MonoBehaviour
         }
 
         pending.Add(new PendingHit { bundle = bundle, contactTime = Time.time });
+    }
+
+    public void BeginMash()
+    {
+        mashDepth++;
+        lockedUntil = 0;
+    }
+
+    public void EndMash()
+    {
+        mashDepth = Mathf.Max(0, mashDepth - 1);
     }
 
     private KTH_DefenseGrade Grade(KTH_DefenseBundle bundle, float offset)
@@ -180,12 +185,12 @@ public class KTH_ParryModule : MonoBehaviour
             default: bundle.fail++; break;
         }
         OnJudged?.Invoke(grade);
+        bundle.NotifyJudged(grade);
 
         if (bundle.Judged >= bundle.data.inputCount)
             Resolve(bundle);
     }
 
-    // 묶음 정산: 패리면 피해 0, 아니면 공식대로 계산한 피해를 바로 체력에 반영
     private void Resolve(KTH_DefenseBundle bundle)
     {
         bundle.resolved = true;
@@ -210,8 +215,8 @@ public class KTH_ParryModule : MonoBehaviour
 
     private void OnParrySuccess()
     {
-        if (KTH_DamageEffectManager.instance == null) return;
-        KTH_DamageEffectManager.instance.CameraShake(cameraShakeForce);
-        KTH_DamageEffectManager.instance.HitStop(hitStopTime);
+        if (KTH_DamageEffectManager.instance == null || parryEffect == null) return;
+        KTH_DamageEffectManager.instance.CameraShake(parryEffect.shakeForce);
+        KTH_DamageEffectManager.instance.HitStop(parryEffect.hitStopTime);
     }
 }
