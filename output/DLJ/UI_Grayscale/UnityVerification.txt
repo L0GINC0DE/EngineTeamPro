@@ -1,0 +1,9 @@
+Unity 6000.3.20f1 / uGUI 2.0.0
+Validated saved PlayerTest scene in an isolated Unity project.
+Full game Play Mode was not run.
+
+DLJ_UI_GRAY_VERIFIED Attack
+DLJ_UI_GRAY_VERIFIED Act
+DLJ_UI_GRAY_VERIFIED Defend
+DLJ_UI_GRAY_VERIFIED Heal
+DLJ_UI_GRAY_SUCCESS: 4 buttons, 20 visual transitions, 8 PNG sprite imports

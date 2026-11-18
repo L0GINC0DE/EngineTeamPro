@@ -5,6 +5,7 @@ using _01.Scripts.TAE.Data;
 using _01.Scripts.TAE.Interface;
 using _01.Scripts.TAE.UI;
 using Agents;
+using CoreLib;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,31 +15,36 @@ namespace _01.Scripts.KTH
     {
         public PlayerInputReader InputCompo { get; private set; }
         public AgentMovement MoveCompo { get; private set; }
-        public AgentRenderer RendererCompo { get; private set; }
         public HealthModule HealthCompo { get; private set; }
         public WeaponHolder WeaponCompo { get; private set; }
         public Interactor InteractCompo { get; private set; }
+        public PlayerAnimator AnimCompo { get; private set; }
 
         [SerializeField] private SpriteRenderer spriteRenderer;
 
         public float attackRange;
+        
+        [field: SerializeField] public UIDataListSO BodyDataList { get; private set; }
+        public UIDataSO CurrentBodyData { get; private set; }
 
         private void Awake()
         {
             InputCompo = GetComponent<PlayerInputReader>();
             MoveCompo = GetComponentInChildren<AgentMovement>();
-            RendererCompo = GetComponentInChildren<AgentRenderer>();
             HealthCompo = GetComponent<HealthModule>();
             WeaponCompo = GetComponentInChildren<WeaponHolder>();
             InteractCompo = GetComponentInChildren<Interactor>();
+            AnimCompo = GetComponentInChildren<PlayerAnimator>();
         }
 
         private void Start()
         {
-            RendererCompo.Init();
             WeaponCompo.InitializeWeapons(this);
             InteractCompo.Initialize(this);
+            AnimCompo.Initialize(this);
+            ApplyStats(BodyDataList.uiDataList[0]);
             UIManager.Instance.Initialize(this);
+            BindMoveAndAnimator(true);
         }
 
         private void OnEnable()
@@ -49,6 +55,7 @@ namespace _01.Scripts.KTH
         private void OnDisable()
         {
             InputCompo.OnJumpKeyPressed -= HandleJumpKeyPressed;
+            BindMoveAndAnimator(false);
         }
 
         private void Update()
@@ -61,7 +68,7 @@ namespace _01.Scripts.KTH
 
             Vector2 moveInput = InputCompo.MoveInput;
             MoveCompo.SetMoveDir(moveInput);
-            RendererCompo.FlipController(moveInput.x);
+            FlipController(moveInput.x);
 
             if (Keyboard.current.tKey.wasPressedThisFrame)
                 HealthCompo.TakeDamage(1);
@@ -82,8 +89,13 @@ namespace _01.Scripts.KTH
 
         public void ApplyStats(UIDataSO data)
         {
-            MoveCompo.SetSpeed(data.moveSpeed);
-            HealthCompo.SetMaxHealth(data.health);
+            if (CurrentBodyData != data)
+            {
+                CurrentBodyData = data;
+                AnimCompo.ChangeAgent(CurrentBodyData);
+                MoveCompo.SetSpeed(CurrentBodyData.moveSpeed);
+                HealthCompo.SetMaxHealth(CurrentBodyData.health);
+            }
         }
 
         private void OnDrawGizmos()
@@ -91,5 +103,44 @@ namespace _01.Scripts.KTH
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRange);
         }
+        
+        public void FlipController(float value)
+        {
+            if (value != 0)
+                transform.root.eulerAngles = value > 0f ? Vector3.zero : new Vector3(0, 180, 0);
+        }
+
+        #region Animations
+
+        private readonly int IsMoveHash = Animator.StringToHash("IsMove");
+        private readonly int IsGround = Animator.StringToHash("IsGround");
+        
+        private void BindMoveAndAnimator(bool isBinding)
+        {
+            if (MoveCompo == null || AnimCompo == null) return;
+            if (isBinding)
+            {
+                MoveCompo.IsGrounded.OnValueChanged += HandleGroundChange;
+                MoveCompo.IsMove.OnValueChanged += HandleIsMoveChange;
+            }
+            else
+            {
+                MoveCompo.IsGrounded.OnValueChanged -= HandleGroundChange;
+                MoveCompo.IsMove.OnValueChanged -= HandleIsMoveChange;
+            }
+        }
+        
+        private void HandleIsMoveChange(bool prev, bool next)
+        {
+            AnimCompo.SetBoolean(IsMoveHash, next);
+        }
+
+        private void HandleGroundChange(bool prev, bool next)
+        {
+            
+        }
+
+        #endregion
+        
     }
 }

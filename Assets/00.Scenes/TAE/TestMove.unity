@@ -4422,7 +4422,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2207082709008673575}
   - component: {fileID: 3769806486123245304}
+  - component: {fileID: 3769806486123245306}
   - component: {fileID: 3769806486123245305}
+  - component: {fileID: 3769806486123245308}
+  - component: {fileID: 3769806486123245307}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -4456,8 +4459,8 @@ Transform:
   m_GameObject: {fileID: 1002642864810890954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0011, y: 0.1163, z: 0}
-  m_LocalScale: {x: 0.72918147, y: 1.2324089, z: 1}
+  m_LocalPosition: {x: -0.0011, y: -0.678, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8505299703218985533}
@@ -4511,7 +4514,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -871308001940766433, guid: 782245a7935e6914aba9739766016c92, type: 3}
+  m_Sprite: {fileID: 2394286508236363688, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4530,12 +4533,61 @@ MonoBehaviour:
   m_GameObject: {fileID: 1002642864810890954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c54ea72a7f48f7b7747d82288e6798, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a4d837913ba4d7385ebfbddda6ddd61, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Agents.AgentRenderer
-  _spriteRenderer: {fileID: 3769806486123245304}
-  <UIData>k__BackingField: {fileID: 11400000, guid: 2895fac2b721f31499aa5deb5cb30212, type: 2}
-  uiList: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.KTH.PlayerAnimator
+--- !u!114 &3769806486123245306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002642864810890954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: ad2be68b959cf9a459971e9830fb95fd, type: 3}
+--- !u!95 &3769806486123245307
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002642864810890954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6d948460e07ae7b45aec2f2f75070a97, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3769806486123245308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002642864810890954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
+  m_CategoryHash: 0.009161512
+  m_labelHash: 3.0438857e-13
+  m_SpriteKey: 0
+  m_SpriteHash: 285010865
 --- !u!1001 &3864598745234971690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4803,6 +4855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.KTH.Player
   spriteRenderer: {fileID: 3769806486123245304}
   attackRange: 1.81
+  <BodyDataList>k__BackingField: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
 --- !u!61 &4492103042838082730
 BoxCollider2D:
   m_ObjectHideFlags: 0

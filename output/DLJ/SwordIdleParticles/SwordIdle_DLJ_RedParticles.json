@@ -1,0 +1,1303 @@
+{
+  "frames": {
+    "SwordIdle_DLJ_RedParticles_000": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_001": {
+      "frame": {
+        "x": 80,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_002": {
+      "frame": {
+        "x": 160,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_003": {
+      "frame": {
+        "x": 240,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_004": {
+      "frame": {
+        "x": 320,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_005": {
+      "frame": {
+        "x": 400,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_006": {
+      "frame": {
+        "x": 480,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_007": {
+      "frame": {
+        "x": 560,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_008": {
+      "frame": {
+        "x": 640,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_009": {
+      "frame": {
+        "x": 720,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_010": {
+      "frame": {
+        "x": 0,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_011": {
+      "frame": {
+        "x": 80,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_012": {
+      "frame": {
+        "x": 160,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_013": {
+      "frame": {
+        "x": 240,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_014": {
+      "frame": {
+        "x": 320,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_015": {
+      "frame": {
+        "x": 400,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_016": {
+      "frame": {
+        "x": 480,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_017": {
+      "frame": {
+        "x": 560,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_018": {
+      "frame": {
+        "x": 640,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_019": {
+      "frame": {
+        "x": 720,
+        "y": 88,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_020": {
+      "frame": {
+        "x": 0,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_021": {
+      "frame": {
+        "x": 80,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_022": {
+      "frame": {
+        "x": 160,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_023": {
+      "frame": {
+        "x": 240,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_024": {
+      "frame": {
+        "x": 320,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_025": {
+      "frame": {
+        "x": 400,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_026": {
+      "frame": {
+        "x": 480,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_027": {
+      "frame": {
+        "x": 560,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_028": {
+      "frame": {
+        "x": 640,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_029": {
+      "frame": {
+        "x": 720,
+        "y": 176,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_030": {
+      "frame": {
+        "x": 0,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_031": {
+      "frame": {
+        "x": 80,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_032": {
+      "frame": {
+        "x": 160,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_033": {
+      "frame": {
+        "x": 240,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_034": {
+      "frame": {
+        "x": 320,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_035": {
+      "frame": {
+        "x": 400,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_036": {
+      "frame": {
+        "x": 480,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_037": {
+      "frame": {
+        "x": 560,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_038": {
+      "frame": {
+        "x": 640,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_039": {
+      "frame": {
+        "x": 720,
+        "y": 264,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_040": {
+      "frame": {
+        "x": 0,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_041": {
+      "frame": {
+        "x": 80,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_042": {
+      "frame": {
+        "x": 160,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_043": {
+      "frame": {
+        "x": 240,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_044": {
+      "frame": {
+        "x": 320,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_045": {
+      "frame": {
+        "x": 400,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_046": {
+      "frame": {
+        "x": 480,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_047": {
+      "frame": {
+        "x": 560,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_048": {
+      "frame": {
+        "x": 640,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_049": {
+      "frame": {
+        "x": 720,
+        "y": 352,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_050": {
+      "frame": {
+        "x": 0,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_051": {
+      "frame": {
+        "x": 80,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_052": {
+      "frame": {
+        "x": 160,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_053": {
+      "frame": {
+        "x": 240,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_054": {
+      "frame": {
+        "x": 320,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_055": {
+      "frame": {
+        "x": 400,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_056": {
+      "frame": {
+        "x": 480,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_057": {
+      "frame": {
+        "x": 560,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    },
+    "SwordIdle_DLJ_RedParticles_058": {
+      "frame": {
+        "x": 640,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 34
+    },
+    "SwordIdle_DLJ_RedParticles_059": {
+      "frame": {
+        "x": 720,
+        "y": 440,
+        "w": 80,
+        "h": 88
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 88
+      },
+      "duration": 33
+    }
+  },
+  "meta": {
+    "app": "pixelfx DLJ",
+    "image": "SwordIdle_DLJ_RedParticles_sheet.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 800,
+      "h": 528
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "IdleParticles",
+        "from": 0,
+        "to": 59,
+        "direction": "forward"
+      }
+    ],
+    "pixelfx": {
+      "fps": 30,
+      "loop": true,
+      "frameSize": [
+        80,
+        88
+      ],
+      "columns": 10,
+      "pivot": [
+        40,
+        48
+      ],
+      "originalOffset": [
+        8,
+        16
+      ],
+      "originalSize": [
+        64,
+        64
+      ]
+    }
+  }
+}

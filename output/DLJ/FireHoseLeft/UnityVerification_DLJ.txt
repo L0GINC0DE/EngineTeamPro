@@ -1,0 +1,1 @@
+DLJ_FIRE_HOSE_SUCCESS 37 sprites, 37 animation samples, 320x144, 30 fps, point, uncompressed, non-looping
