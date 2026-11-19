@@ -14,9 +14,7 @@ namespace _01.Scripts.TAE.Combat
         public bool canSelect;
         public InteractPoint point;
 
-        public void CheckSelect(bool isCheck)
-        {
-            canSelect = isCheck;
-        }
+        public void CheckSelect(bool isCheck) => canSelect = isCheck;
+        public void ResetPoint() => point.ResetPoint();
     }
 }

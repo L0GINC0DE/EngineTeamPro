@@ -1,8 +1,8 @@
 ﻿using _01.Scripts.TAE.Interface;
-using _01.Scripts.TAE.UI;
+using _01.Scripts.TAE.Managers;
 using UnityEngine;
 
-namespace _01.Scripts.TAE
+namespace _01.Scripts.TAE.UI.Slots
 {
     public class Cloth : MonoBehaviour, Interactable
     {

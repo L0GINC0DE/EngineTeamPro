@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace _01.Scripts.KTH.FeedbackSystem
+namespace _01.Scripts.TAE.Systems.FeedbackSystem
 {
     public class BlinkFeedback : AbstractFeedback
     {

@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using CoreLib;
+using _01.Scripts.TAE.CoreLib;
 using UnityEngine;
 
-namespace Systems
+namespace _01.Scripts.TAE.Systems
 {
     
     public class PoolManager : MonoSingleton<PoolManager>

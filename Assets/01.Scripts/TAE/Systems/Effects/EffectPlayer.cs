@@ -1,8 +1,7 @@
 using System.Collections;
-using Systems;
 using UnityEngine;
 
-namespace _01.Scripts.KTH.Effects
+namespace _01.Scripts.TAE.Systems.Effects
 {
     public class EffectPlayer : MonoBehaviour, IPoolable
     {

@@ -1,6 +1,6 @@
 ﻿using System;
-using _01.Scripts.KTH;
 using _01.Scripts.TAE.Interface;
+using _01.Scripts.TAE.Players;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Combat

@@ -1,14 +1,14 @@
 ﻿using System;
-using _01.Scripts.KTH;
 using _01.Scripts.TAE.Combat;
-using _01.Scripts.TAE.Managers;
-using CoreLib;
-using Systems;
+using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Players;
+using _01.Scripts.TAE.Systems;
+using _01.Scripts.TAE.UI;
+using _01.Scripts.TAE.UI.Slots;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace _01.Scripts.TAE.UI
+namespace _01.Scripts.TAE.Managers
 {
     public class UIManager : MonoSingleton<UIManager>
     {
@@ -24,17 +24,12 @@ namespace _01.Scripts.TAE.UI
         private PlatformPlayer _p;
 
         [SerializeField] private Button bodyBtn;
-        
-        private void Update()
-        {
-            if (Keyboard.current.escapeKey.wasPressedThisFrame)
-                OnEscape();
-        }
+        [SerializeField] private GimmickSelectUI gimmickSelectUI;
         
         public void ShowDamageTMP(Transform trm, int damage)
         {
             var damageFont = PoolManager.Instance.Pop(damagePrefab.Item.ItemName) as DamageTMP;
-            damageFont.Initialize(holderLayer, trm.position, damage.ToString(), Color.yellow);
+            damageFont?.Initialize(holderLayer, trm.position, damage.ToString(), Color.yellow);
         }
 
         public void ShowClothUI()
@@ -112,6 +107,22 @@ namespace _01.Scripts.TAE.UI
                 RefreshSelection();
                 OnEscape();
             });
+        }
+
+        public void ShowGimmickUI(Vector3 pos) => gimmickSelectUI.Show(pos);
+        public void HideGimmickUI() => gimmickSelectUI.Hide();
+        public void SelectFirstBtn() => gimmickSelectUI.SelectFirstButton();
+
+        public void ApplyGimmick(InteractPointType type)
+        {
+            var manager = GimmickManager.Instance;
+            var point = manager.CurrentPoint;
+            var sprite = manager.GetSprite(type);
+
+            if (point == null || sprite == null)
+                return;
+
+            point.ApplyGimmick(type, sprite);
         }
 
         #region Escape

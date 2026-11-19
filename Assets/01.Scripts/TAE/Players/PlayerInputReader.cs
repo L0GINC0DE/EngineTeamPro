@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _01.Scripts.KTH
+namespace _01.Scripts.TAE.Players
 {
     public class PlayerInputReader : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
@@ -11,6 +11,7 @@ namespace _01.Scripts.KTH
         public event Action OnAttackKeyPressed;
         public event Action OnPrevKeyPressed;
         public event Action OnNextKeyPressed;
+        public event Action OnExitKeyPressed;
         public Vector2 MoveInput { get; private set; }
 
         private InputSystem_Actions _controls;
@@ -76,6 +77,12 @@ namespace _01.Scripts.KTH
 
         public void OnSprint(InputAction.CallbackContext context)
         {
+        }
+
+        public void OnExit(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnExitKeyPressed?.Invoke();
         }
     }
 }

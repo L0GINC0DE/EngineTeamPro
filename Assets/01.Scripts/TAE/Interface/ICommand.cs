@@ -1,4 +1,4 @@
-namespace _01.Scripts.TAE
+namespace _01.Scripts.TAE.Interface
 {
     public interface ICommand
     {

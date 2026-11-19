@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Data;
-using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-namespace _01.Scripts.KTH
+namespace _01.Scripts.TAE.Players
 {
     public class PlayerAnimator : AgentAnimator
     {

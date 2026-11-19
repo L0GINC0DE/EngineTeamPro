@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using CoreLib;
+using _01.Scripts.TAE.CoreLib;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Managers

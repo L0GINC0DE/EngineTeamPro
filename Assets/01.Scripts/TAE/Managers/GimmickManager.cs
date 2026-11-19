@@ -1,81 +1,48 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using _01.Scripts.TAE.Combat;
- using CoreLib;
- using UnityEngine;
+using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Utils;
+using UnityEngine;
 
  namespace _01.Scripts.TAE.Managers
  {
-     public class GimmickManager : CSILib.SoundManager.RunTime.MonoSingleton<GimmickManager>
+     public class GimmickManager : MonoSingleton<GimmickManager>
      {
          public GimmickList list;
+         [SerializeField] private Sprite[] sprites;
 
-         // 현재 파일 전체에 걸린 블록 주석을 해제한 뒤 아래 멤버를 적용하세요.
-         private readonly NotifyValue<int> CurrentIndex = new(-1);
+         private readonly List<InteractPoint> _points = new();
+         private int _currentIndex = -1;
 
-         private Camera mainCam;
-
-         private void Awake()
-         {
-             mainCam = Camera.main; 
-         }
-
-         private void OnEnable() => CurrentIndex.OnValueChanged += HandleGimmickSelectChanged;
-         private void OnDisable() => CurrentIndex.OnValueChanged -= HandleGimmickSelectChanged;
-
+         public InteractPoint CurrentPoint => _currentIndex >= 0 && _currentIndex < _points.Count
+             ? _points[_currentIndex] : null;
+         
          public void StartSelect()
          {
-             int index = 0;
-             int firstIndex = -1;
-             
+             ClearSelection();
+
+             if (list.gimmickList.Count <= 0) return;
+
+             // 화면에 보이는 포인트만 모으기
              foreach (var gimmick in list.gimmickList)
              {
-                 gimmick.CheckSelect(false);
+                 if (gimmick == null) continue;
+                 gimmick.ResetPoint();
 
-                 bool canSelect = false;
+                 bool visible = IsVisible(gimmick.point);
+                 gimmick.CheckSelect(visible);
 
-                 if (gimmick.point != null && gimmick.point.isActiveAndEnabled)
-                 {
-                     var p = mainCam.WorldToViewportPoint(gimmick.point.transform.position);
-
-                     canSelect = p.x is >= 0f and <= 1f &&
-                                      p.y is >= 0f and <= 1f;
-                 }
-                 
-                 gimmick.CheckSelect(canSelect);
-                 
-                 if (firstIndex < 0 && canSelect)
-                     firstIndex = index;
-
-                 index++;
+                 if (visible) _points.Add(gimmick.point);
              }
-             Select(firstIndex);
+
+             if (_points.Count > 0) Select(0);
          }
 
          private void Select(int index)
          {
-             var gimmicks = list.gimmickList;
-             if (index < 0 || index >= gimmicks.Count || gimmicks[index].point == null)
-                 return;
-
-             CurrentIndex.Value = index;
-         }
-         private void HandleGimmickSelectChanged(int prev, int next)
-         {
-             var gimmicks = list.gimmickList;
-
-             if (prev >= 0 && prev < gimmicks.Count)
-             {
-                 var previousPoint = gimmicks[prev].point;
-                 if (previousPoint != null)
-                 {
-                     previousPoint.isSelect = false;
-                     previousPoint.Select();
-                 }
-             }
-
-             var nextPoint = gimmicks[next].point;
-             nextPoint.isSelect = true;
-             nextPoint.Select();
+             CurrentPoint?.SetSelected(false);
+             _currentIndex = index;
+             CurrentPoint?.SetSelected(true);
          }
          
          public void Next() => MoveSelection(1);
@@ -83,25 +50,43 @@ using _01.Scripts.TAE.Combat;
 
          private void MoveSelection(int direction)
          {
-             var gimmicks = list.gimmickList;
-             int index = CurrentIndex.Value;
+             if (_points.Count == 0) return;
 
-             if (index < 0 || index >= gimmicks.Count)
-                 return;
+             int nextIndex = (_currentIndex + direction + _points.Count) % _points.Count;
 
-             for (int i = 0; i < gimmicks.Count - 1; i++)
-             {
-                 index += direction;
+             Select(nextIndex);
+         }
+         
+         public void ClearSelection()
+         {
+             CurrentPoint?.SetSelected(false);
+             _currentIndex = -1;
+             _points.Clear();
+         }
+         
+         public Sprite GetSprite(InteractPointType type)
+         {
+             int index = (int)type;
 
-                 index = index >= gimmicks.Count ? 0 : 
-                         index < 0 ? gimmicks.Count - 1 : index;
+             if (sprites == null || index < 0 || index >= sprites.Length)
+                 return null;
 
-                 if (gimmicks[index].canSelect)
-                 {
-                     Select(index);
-                     return;
-                 }
-             }
+             return sprites[index];
+         }
+         
+         private bool IsVisible(InteractPoint point)
+         {
+             if (point == null ||
+                 !point.isActiveAndEnabled)
+                 return false;
+
+             Vector3 pos = Utility.GetViewPort(point.transform.position);
+             return pos is { z: > 0f, x: >= 0f and <= 1f, y: >= 0f and <= 1f };
+         }
+
+         public Vector3 CurrentPointPos()
+         {
+             return CurrentPoint.transform.position;
          }
      }
  }
