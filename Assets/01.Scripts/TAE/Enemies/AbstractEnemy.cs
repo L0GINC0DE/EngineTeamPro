@@ -1,5 +1,4 @@
-﻿using System;
-using _01.Scripts.TAE.Agents;
+﻿using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Enemies.FSM;
 using _01.Scripts.TAE.Interface;
 using _01.Scripts.TAE.Managers;
