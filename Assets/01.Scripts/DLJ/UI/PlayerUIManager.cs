@@ -24,6 +24,10 @@ public class PlayerUIManager : MonoBehaviour
     private PlayableUI selectedWeapon;
     private bool inputEnabled;
 
+    private EventSystem EventSystem => EventSystem.current;
+
+    private PlayerAppearance playerAppearance;
+
     //간단히하면 그냥 현재턴이 플레이어 턴이면 참
     private bool CanSelect => isActiveAndEnabled && player != null && player.CanAct;
 
@@ -36,6 +40,8 @@ public class PlayerUIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        playerAppearance = player.GetComponentInChildren<PlayerAppearance>();
     }
 
     private void OnEnable() => SetInputEnabled(false);
@@ -53,6 +59,12 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (CanSelect && !inputEnabled)
+        {
+            if (player.BodyUI != null) player.BodyUI.gameObject.SetActive(true);
+            if (player.WeaponUI != null) player.WeaponUI.gameObject.SetActive(true);
+            playerAppearance.HideSelection();
+        }
         if (!CanSelect) ResetSelection();
         SetInputEnabled(CanSelect);
     }
@@ -68,19 +80,29 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (!CanSelect || ui == null || !ui.CanEquip) return;
 
+        Selectable next = ui.GetComponent<Selectable>().FindSelectableOnRight();
+
         switch (selectionStep)
         {
             case SelectionStep.Player:
                 selectedPlayer = ui;
+                if (ui.UISo != null)
+                    playerAppearance.ShowBody(ui.UISo.uiType);
                 Debug.Log(selectedPlayer);
                 selectionStep = SelectionStep.Weapon;
                 break;
             case SelectionStep.Weapon:
                 selectedWeapon = ui;
+                if (ui.UISo != null)
+                    playerAppearance.ShowWeapon(ui.UISo.uiType);
                 Debug.Log(selectedWeapon);
                 selectionStep = SelectionStep.Action;
                 break;
         }
+
+        ui.gameObject.SetActive(false);
+        if (EventSystem != null)
+            EventSystem.SetSelectedGameObject(next != null ? next.gameObject : null);
     }
 
     public void SelectAction(PlayerAction action)
@@ -104,24 +126,22 @@ public class PlayerUIManager : MonoBehaviour
         SetInputEnabled(CanSelect);
     }
 
-    //인풋시스템으로 버튼 고르는거
+    //인풋시스템으로 버튼 고르는거 / 버튼 그룹 인터랙터블 껐다 켜기
     //매개변수로 받은 불 값으로 UI 선택 / 해제
     private void SetInputEnabled(bool enabled)
     {
         if (buttonGroup != null) buttonGroup.interactable = enabled;
 
-        EventSystem eventSystem = EventSystem.current;
-        
-        if (!enabled && eventSystem != null && buttonGroup != null)
+        if (!enabled && EventSystem != null && buttonGroup != null)
         {
-            GameObject selected = eventSystem.currentSelectedGameObject;
+            GameObject selected = EventSystem.currentSelectedGameObject;
             if (selected != null)
-                eventSystem.SetSelectedGameObject(null);
+                EventSystem.SetSelectedGameObject(null);
         }
-        else if (enabled && !inputEnabled && eventSystem != null && firstSelectedButton != null
+        else if (enabled && !inputEnabled && EventSystem != null && firstSelectedButton != null
             && firstSelectedButton.IsActive() && firstSelectedButton.IsInteractable())
         {
-            eventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);
+            EventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);
         }
 
         inputEnabled = enabled;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using _01.Scripts.TAE.Agents;
 using DG.Tweening;
@@ -6,7 +5,6 @@ using DG.Tweening.Core.Easing;
 using UnityEngine;
 
 // 돌진 공격. 기본값은 예전 Boss1Pattern1 에셋에서 맞춰둔 값
-[Serializable]
 public class KTH_ShieldBossPattern1 : KTH_BossAction
 {
     [SerializeField]private float windupTime = 0.5f;

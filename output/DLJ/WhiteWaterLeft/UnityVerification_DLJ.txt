@@ -1,0 +1,1 @@
+DLJ_WHITE_WATER_SUCCESS 28 sprites, 28 animation samples, 256x112, 30 fps, point, uncompressed, non-looping

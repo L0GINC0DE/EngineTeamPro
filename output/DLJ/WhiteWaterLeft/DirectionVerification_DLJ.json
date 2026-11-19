@@ -1,0 +1,49 @@
+{
+  "frames": 28,
+  "size": [
+    256,
+    112
+  ],
+  "fps": 30,
+  "direction": "left",
+  "sameSeedDeterministic": true,
+  "lastFrameTransparent": true,
+  "alphaWeightedCentroids": [
+    {
+      "frame": 3,
+      "x": 211.31244805000497,
+      "y": 55.241895800778,
+      "minX": 193,
+      "maxX": 227,
+      "minY": 50,
+      "maxY": 60
+    },
+    {
+      "frame": 9,
+      "x": 170.43422545844192,
+      "y": 55.50193604948494,
+      "minX": 127,
+      "maxX": 225,
+      "minY": 46,
+      "maxY": 64
+    },
+    {
+      "frame": 15,
+      "x": 118.36657093496726,
+      "y": 55.604592899559485,
+      "minX": 63,
+      "maxX": 159,
+      "minY": 42,
+      "maxY": 68
+    },
+    {
+      "frame": 21,
+      "x": 71.81901181525242,
+      "y": 55.935338345864665,
+      "minX": 34,
+      "maxX": 93,
+      "minY": 40,
+      "maxY": 85
+    }
+  ]
+}

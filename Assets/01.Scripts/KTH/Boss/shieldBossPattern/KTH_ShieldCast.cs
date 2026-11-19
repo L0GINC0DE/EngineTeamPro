@@ -1,4 +1,4 @@
-using _01.Scripts.TAE.Agents;
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -42,23 +42,15 @@ public class KTH_ShieldCast : MonoBehaviour
         void Back() => Return(returnDuration, () =>
             ThrowOnce(boss, bundle, flyDuration, returnDuration, total, remaining - 1));
 
-        Transform target = boss.target;
-        Collider2D myCol = GetComponent<Collider2D>();
-        Collider2D targetCol = target.GetComponent<Collider2D>();
+        Action hit = KTH_Throw.Judge(boss.target, bundle, transform.position, total);
 
-        KTH_DefenseBundle defense = null;
-        if (target.TryGetComponent(out KTH_ParryModule judge))
-            defense = judge.BeginBundle(bundle, total, transform.position); // 묶음 수 = 던지는 횟수
-        
         tween?.Kill();
-        tween = transform.DOMove(target.position, flyDuration).SetEase(Ease.Linear)
-            .OnUpdate(() =>
-            {
-                if (!myCol.bounds.Intersects(targetCol.bounds)) return;
-                Hit(target, bundle, defense);
-                Back();
-            })
-            .OnComplete(Back); // 빗나가도 돌아온다
+        tween = KTH_Throw.Throw(transform, boss.target, flyDuration, () =>
+        {
+            animator.SetTrigger(HitHash);
+            hit();
+            Back();
+        });
     }
 
     // 돌아온 뒤 onArrived로 다음 던지기를 이어간다
@@ -68,14 +60,5 @@ public class KTH_ShieldCast : MonoBehaviour
         tween = transform.DOLocalMove(restLocalPosition, duration).SetEase(Ease.OutQuad).OnComplete(onArrived);
         
         sr.flipX = true;
-    }
-
-    private void Hit(Transform target, KTH_AttackBundle bundle, KTH_DefenseBundle defense)
-    {
-        animator.SetTrigger(HitHash); // 판정기 유무와 상관없이 닿으면 재생
-
-        if (defense != null) defense.Hit();
-        else if (target.TryGetComponent(out HealthModule hm))
-            hm.TakeDamage(Mathf.RoundToInt(bundle.baseDamage * bundle.damageCoefficient), transform.position);
     }
 }
