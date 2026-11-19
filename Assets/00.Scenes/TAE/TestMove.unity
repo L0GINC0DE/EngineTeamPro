@@ -556,7 +556,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.InteractPoint
   type: 0
-  isSelect: 0
 --- !u!212 &240517273
 SpriteRenderer:
   serializedVersion: 2
@@ -1085,11 +1084,7 @@ MonoBehaviour:
     weaponSlot: {fileID: 587181969}
     bodySlot: {fileID: 1879879281}
   bodyBtn: {fileID: 1000563498}
-  gimmickUI: {fileID: 1241495081}
-  btns:
-  - {fileID: 262568396}
-  - {fileID: 1230105033}
-  - {fileID: 1820438806}
+  gimmickSelectUI: {fileID: 0}
 --- !u!114 &497096309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2896,7 +2891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdf14503f7a442ba876622221ea5fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Managers.GameManager
-  player: {fileID: 4220314032550501989}
+  player: {fileID: 0}
 --- !u!4 &1060773721
 Transform:
   m_ObjectHideFlags: 0
@@ -4168,7 +4163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.InteractPoint
   type: 0
-  isSelect: 0
 --- !u!212 &1334398851
 SpriteRenderer:
   serializedVersion: 2
@@ -4731,7 +4725,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.InteractPoint
   type: 0
-  isSelect: 0
 --- !u!212 &1742015682
 SpriteRenderer:
   serializedVersion: 2
@@ -5171,7 +5164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.InteractPoint
   type: 0
-  isSelect: 0
 --- !u!212 &1829774545
 SpriteRenderer:
   serializedVersion: 2
