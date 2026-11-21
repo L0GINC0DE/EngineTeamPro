@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Defend
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
   uiName: DefendUI
-  uiSprite: {fileID: 7805088589857554368, guid: 8855cc6b8d016af449326b5457a16306, type: 3}
+  uiSprite: {fileID: -7287125110508683139, guid: d0742e7c006826642b061391d03f8df0, type: 3}
   moveSpeed: 10
   health: 50
   spriteLibrary: {fileID: 7108339969198208228, guid: ca0527c7dfb8f284f89a293ff74dd553, type: 3}
