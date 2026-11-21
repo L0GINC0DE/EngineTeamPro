@@ -6485,6 +6485,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3921197656677006285, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6891467426446793357, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.47
@@ -6818,7 +6822,7 @@ MonoBehaviour:
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 512
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
