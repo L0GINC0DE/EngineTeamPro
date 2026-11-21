@@ -1,11 +1,13 @@
 ﻿using System;
 using _01.Scripts.TAE.Data;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace _01.Scripts.TAE.Combat
 {
     public class UIWeapon : MonoBehaviour
     {
+        public UnityEvent OnAttackEvent;
         [field: SerializeField] public UIDataSO UIData { get; private set; }
 
         [SerializeField] private SpriteRenderer uiWeaponSpriteRenderer;
@@ -52,7 +54,10 @@ namespace _01.Scripts.TAE.Combat
         {
             if (lastAttackTime + attackCoolTime > Time.time) return;
             lastAttackTime = Time.time;
-            Caster.CastDamage(damage, kbPower);
+            if (Caster.CastDamage(damage, kbPower))
+            {
+                OnAttackEvent?.Invoke();
+            }
         }
     }
 }
