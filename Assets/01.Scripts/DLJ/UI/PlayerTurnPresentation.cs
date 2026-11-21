@@ -17,10 +17,17 @@ public class PlayerTurnPresentation : MonoBehaviour
     private float[] originalUnitY;
     private bool showingPlayerTurn;
     private Sequence movementSequence;
+    private Tween textBarTween;
+    private Transform originalTextBarParent;
+    private bool textBarWasEquipped;
 
     private void Awake()
     {
-        if (textBar != null) originalTextBarPosition = textBar.anchoredPosition;
+        if (textBar != null)
+        {
+            originalTextBarPosition = textBar.anchoredPosition;
+            originalTextBarParent = textBar.parent;
+        }
 
         if (battleUnits == null) battleUnits = new Transform[0];
         originalUnitY = new float[battleUnits.Length];
@@ -34,6 +41,10 @@ public class PlayerTurnPresentation : MonoBehaviour
     {
         TurnManager turnManager = TurnManager.Instance;
         bool isPlayerTurn = turnManager.isActiveAndEnabled && !turnManager.BattleEnded && turnManager.IsPlayerTurn;
+        bool textBarIsEquipped = textBar != null && textBar.parent != originalTextBarParent;
+        if (textBarIsEquipped) textBarTween?.Kill();
+        else if (textBarWasEquipped) MoveTextBar(isPlayerTurn);
+        textBarWasEquipped = textBarIsEquipped;
         if (isPlayerTurn == showingPlayerTurn) return;
 
         showingPlayerTurn = isPlayerTurn;
@@ -43,16 +54,11 @@ public class PlayerTurnPresentation : MonoBehaviour
     private void MoveToTurnPosition(bool isPlayerTurn)
     {
         movementSequence?.Kill();
+        MoveTextBar(isPlayerTurn);
+        if (battleUnits.Length == 0) return;
         movementSequence = DOTween.Sequence()
             .SetUpdate(UpdateType.Late)
             .OnKill(() => movementSequence = null);
-
-        if (textBar != null)
-        {
-            Vector2 targetPosition = isPlayerTurn ? textBarTargetPosition : originalTextBarPosition;
-            movementSequence.Join(textBar.DOAnchorPos(targetPosition, transitionDuration)
-                .SetEase(Ease.OutQuart));
-        }
 
         for (int i = 0; i < battleUnits.Length; i++)
         {
@@ -65,12 +71,25 @@ public class PlayerTurnPresentation : MonoBehaviour
         if (transitionDuration <= 0f) movementSequence.Complete();
     }
 
+    private void MoveTextBar(bool isPlayerTurn)
+    {
+        textBarTween?.Kill();
+        if (textBar == null || textBar.parent != originalTextBarParent) return;
+        Vector2 target = isPlayerTurn ? textBarTargetPosition : originalTextBarPosition;
+        textBarTween = textBar.DOAnchorPos(target, transitionDuration)
+            .SetEase(Ease.OutQuart)
+            .SetUpdate(UpdateType.Late)
+            .OnKill(() => textBarTween = null);
+        if (transitionDuration <= 0f) textBarTween.Complete();
+    }
+
     private void OnDisable()
     {
         movementSequence?.Kill();
+        textBarTween?.Kill();
         showingPlayerTurn = false;
 
-        if (textBar != null)
+        if (textBar != null && textBar.parent == originalTextBarParent)
             textBar.anchoredPosition = originalTextBarPosition;
 
         for (int i = 0; i < battleUnits.Length; i++)

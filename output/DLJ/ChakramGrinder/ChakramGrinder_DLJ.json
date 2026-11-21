@@ -1,0 +1,793 @@
+{
+  "frames": {
+    "ChakramGrinder_DLJ_000": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_001": {
+      "frame": {
+        "x": 112,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_002": {
+      "frame": {
+        "x": 224,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_003": {
+      "frame": {
+        "x": 336,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_004": {
+      "frame": {
+        "x": 448,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_005": {
+      "frame": {
+        "x": 560,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_006": {
+      "frame": {
+        "x": 0,
+        "y": 112,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_007": {
+      "frame": {
+        "x": 112,
+        "y": 112,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_008": {
+      "frame": {
+        "x": 224,
+        "y": 112,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_009": {
+      "frame": {
+        "x": 336,
+        "y": 112,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_010": {
+      "frame": {
+        "x": 448,
+        "y": 112,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_011": {
+      "frame": {
+        "x": 560,
+        "y": 112,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_012": {
+      "frame": {
+        "x": 0,
+        "y": 224,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_013": {
+      "frame": {
+        "x": 112,
+        "y": 224,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_014": {
+      "frame": {
+        "x": 224,
+        "y": 224,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_015": {
+      "frame": {
+        "x": 336,
+        "y": 224,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_016": {
+      "frame": {
+        "x": 448,
+        "y": 224,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_017": {
+      "frame": {
+        "x": 560,
+        "y": 224,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_018": {
+      "frame": {
+        "x": 0,
+        "y": 336,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_019": {
+      "frame": {
+        "x": 112,
+        "y": 336,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_020": {
+      "frame": {
+        "x": 224,
+        "y": 336,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_021": {
+      "frame": {
+        "x": 336,
+        "y": 336,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_022": {
+      "frame": {
+        "x": 448,
+        "y": 336,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_023": {
+      "frame": {
+        "x": 560,
+        "y": 336,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_024": {
+      "frame": {
+        "x": 0,
+        "y": 448,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_025": {
+      "frame": {
+        "x": 112,
+        "y": 448,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_026": {
+      "frame": {
+        "x": 224,
+        "y": 448,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_027": {
+      "frame": {
+        "x": 336,
+        "y": 448,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_028": {
+      "frame": {
+        "x": 448,
+        "y": 448,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_029": {
+      "frame": {
+        "x": 560,
+        "y": 448,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_030": {
+      "frame": {
+        "x": 0,
+        "y": 560,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_031": {
+      "frame": {
+        "x": 112,
+        "y": 560,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_032": {
+      "frame": {
+        "x": 224,
+        "y": 560,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_033": {
+      "frame": {
+        "x": 336,
+        "y": 560,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    },
+    "ChakramGrinder_DLJ_034": {
+      "frame": {
+        "x": 448,
+        "y": 560,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 34
+    },
+    "ChakramGrinder_DLJ_035": {
+      "frame": {
+        "x": 560,
+        "y": 560,
+        "w": 112,
+        "h": 112
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 112
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 112
+      },
+      "duration": 33
+    }
+  },
+  "meta": {
+    "app": "pixelfx DLJ",
+    "image": "ChakramGrinder_DLJ_sheet.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 672,
+      "h": 672
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "GrinderLoop",
+        "from": 0,
+        "to": 35,
+        "direction": "forward"
+      }
+    ],
+    "pixelfx": {
+      "fps": 30,
+      "loop": true,
+      "frameSize": [
+        112,
+        112
+      ],
+      "columns": 6,
+      "pivot": [
+        56,
+        56
+      ],
+      "bladeScale": 2,
+      "turnsPerLoop": 4
+    }
+  }
+}

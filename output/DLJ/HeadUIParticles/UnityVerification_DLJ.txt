@@ -1,0 +1,28 @@
+2026-11-17 - Original Aseprite integration
+
+DLJ_BAKED_ASSETS_PASS
+Seven existing 64x77 Aseprite files modified directly.
+Four original body layers and their chunks preserved byte for byte.
+Original eight frames and 160ms frame durations preserved.
+Only the DLJ_Head_Particles layer was added.
+
+DLJ_BAKED_HEAD_PARTICLES_PASS (Unity 6000.3.20f1, exit 0)
+Verified seven source imports, original sprite reference IDs, eight-frame loops,
+selection changes, hidden selection, external sprite changes and single renderer.
+DLJ_SWORD_IDLE_BEHAVIOR_PASS
+
+DLJ_BAKED_SCENE_PASS
+PlayerTest references 56 frames from the original seven Aseprites at 6.25 fps.
+The previous particle component, script and PNG resources are removed.
+
+The existing open Unity window was not automated; validation used a separate
+Unity project with the real source assets and PlayerAppearance implementation.
+
+2026-11-17 visibility correction
+Fixed Aseprite layer data: normal blend at byte 10, opacity 255 at byte 12.
+Regenerated SpriteRect geometry/pivots through Unity Sprite Editor API.
+All seven asset GUIDs and all original sprite IDs remain unchanged.
+Fresh Unity validation exit 0: 527 visible particle pixels across all 56 frames.
+Visible body pixels below the head match the original imports at the same canvas coordinates.
+imported-preview.png: top row original imports, bottom row corrected imports.
+DLJ_SWORD_IDLE_BEHAVIOR_PASS
