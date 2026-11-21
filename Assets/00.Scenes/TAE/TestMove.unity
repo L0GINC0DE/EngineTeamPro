@@ -6571,7 +6571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.KTH.Player
   spriteRenderer: {fileID: 3769806486123245304}
-  attackRange: 1.81
   <BodyDataList>k__BackingField: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
 --- !u!61 &4492103042838082730
 BoxCollider2D:
@@ -6634,6 +6633,7 @@ GameObject:
   - component: {fileID: 662853910363348819}
   - component: {fileID: 4492103042838082730}
   - component: {fileID: 8541472082065349487}
+  - component: {fileID: 8541472082065349488}
   m_Layer: 8
   m_Name: Player_Platformer
   m_TagString: Untagged
@@ -6797,6 +6797,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b97185bd1ddd420f9eda152aa5e10b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Interactor
+--- !u!114 &8541472082065349488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702222821527538799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd291f95e4249149c06acc3dfb6f6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.DamageCaster
+  targetFilter:
+    useTriggers: 1
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  radius: 0
+  detectCount: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
