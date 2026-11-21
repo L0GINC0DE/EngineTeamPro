@@ -1,11 +1,9 @@
-﻿using System;
-using _01.Scripts.KTH;
-using _01.Scripts.TAE.Agents;
+﻿using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Enemies.FSM;
 using _01.Scripts.TAE.Interface;
+using _01.Scripts.TAE.Managers;
+using _01.Scripts.TAE.Systems;
 using _01.Scripts.TAE.UI;
-using Agents;
-using Systems;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Enemies

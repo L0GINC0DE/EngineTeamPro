@@ -1,7 +1,4 @@
-using _01.Scripts.TAE.Enemies;
-using _01.Scripts.TAE.Enemies.FSM;
-
-namespace _01_Scripts.Enemies.FSM
+namespace _01.Scripts.TAE.Enemies.FSM.EnemyStates
 {
     public class EnemyAttackState : EnemyState
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _01.Scripts.TAE.UI
+namespace _01.Scripts.TAE.UI.Slots
 {
     public class ClothUI : MonoBehaviour
     {

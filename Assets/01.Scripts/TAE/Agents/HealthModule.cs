@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Agents
+namespace _01.Scripts.TAE.Agents
 {
     public class HealthModule : MonoBehaviour
     {

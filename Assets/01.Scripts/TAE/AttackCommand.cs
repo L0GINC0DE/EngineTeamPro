@@ -1,3 +1,5 @@
+using _01.Scripts.TAE.Interface;
+
 namespace _01.Scripts.TAE
 {
     public class AttackCommand : ICommand

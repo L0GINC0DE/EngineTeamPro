@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Systems
+namespace _01.Scripts.TAE.Systems
 {
     public class Pool
     {

@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
-using CoreLib;
+using _01.Scripts.TAE.CoreLib;
 using UnityEngine;
 
-namespace _01.Scripts.KTH
+namespace _01.Scripts.TAE.Agents
 {
     public class AgentMovement : MonoBehaviour
     {

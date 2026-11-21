@@ -1,4 +1,4 @@
-﻿namespace CoreLib
+﻿namespace _01.Scripts.TAE.CoreLib
 {
     public class NotifyValue<T>
     {

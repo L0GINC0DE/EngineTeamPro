@@ -1,15 +1,12 @@
-using System;
 using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.Data;
 using _01.Scripts.TAE.Interface;
-using _01.Scripts.TAE.UI;
-using Agents;
-using CoreLib;
+using _01.Scripts.TAE.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _01.Scripts.KTH
+namespace _01.Scripts.TAE.Players
 {
     public class PlatformPlayer : MonoBehaviour, IDamageable
     {
@@ -19,6 +16,7 @@ namespace _01.Scripts.KTH
         public WeaponHolder WeaponCompo { get; private set; }
         public Interactor InteractCompo { get; private set; }
         public PlayerAnimator AnimCompo { get; private set; }
+        public GimmickController GimmickCompo { get; private set; }
 
         [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -35,6 +33,7 @@ namespace _01.Scripts.KTH
             WeaponCompo = GetComponentInChildren<WeaponHolder>();
             InteractCompo = GetComponentInChildren<Interactor>();
             AnimCompo = GetComponentInChildren<PlayerAnimator>();
+            GimmickCompo = GetComponentInChildren<GimmickController>();
         }
 
         private void Start()
@@ -45,16 +44,19 @@ namespace _01.Scripts.KTH
             ApplyStats(BodyDataList.uiDataList[0]);
             UIManager.Instance.Initialize(this);
             BindMoveAndAnimator(true);
+            GimmickCompo.Initialize(this);
         }
 
         private void OnEnable()
         {
             InputCompo.OnJumpKeyPressed += HandleJumpKeyPressed;
+            InputCompo.OnExitKeyPressed += HandleExitKeyPressed;
         }
 
         private void OnDisable()
         {
             InputCompo.OnJumpKeyPressed -= HandleJumpKeyPressed;
+            InputCompo.OnExitKeyPressed -= HandleExitKeyPressed;
             BindMoveAndAnimator(false);
         }
 
@@ -72,11 +74,11 @@ namespace _01.Scripts.KTH
 
             if (Keyboard.current.tKey.wasPressedThisFrame)
                 HealthCompo.TakeDamage(1);
-        }
 
-        private void HandleJumpKeyPressed()
-        {
-            MoveCompo.Jump();
+            if (Keyboard.current.cKey.wasPressedThisFrame)
+            {
+                GimmickCompo.StartSelect();
+            }
         }
 
         public void ApplyDamage(int dmg, Vector2 kbPower)
@@ -104,7 +106,7 @@ namespace _01.Scripts.KTH
             Gizmos.DrawWireSphere(transform.position, attackRange);
         }
         
-        public void FlipController(float value)
+        private void FlipController(float value)
         {
             if (value != 0)
                 transform.root.eulerAngles = value > 0f ? Vector3.zero : new Vector3(0, 180, 0);
@@ -141,6 +143,9 @@ namespace _01.Scripts.KTH
         }
 
         #endregion
+        
+        private void HandleJumpKeyPressed() => MoveCompo.Jump();
+        private void HandleExitKeyPressed() => UIManager.Instance.OnEscape();
         
     }
 }

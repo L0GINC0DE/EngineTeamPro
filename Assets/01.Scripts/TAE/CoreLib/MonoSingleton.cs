@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace CoreLib
+namespace _01.Scripts.TAE.CoreLib
 {
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {

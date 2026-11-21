@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace _01.Scripts.KTH.FeedbackSystem
+namespace _01.Scripts.TAE.Systems.FeedbackSystem
 {
     //25분까지.
     public class LightToggleFeedback : AbstractFeedback
