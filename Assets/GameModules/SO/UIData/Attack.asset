@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
   uiName: AttackUI
-  uiSprite: {fileID: 328252628779082192, guid: abd833bd0b84ec147b9449a106a456f1, type: 3}
+  uiSprite: {fileID: -558371602776143456, guid: fb2360a96ab93e14f9a8b62ad114b226, type: 3}
   moveSpeed: 20
   health: 20
   spriteLibrary: {fileID: 7108339969198208228, guid: ad2be68b959cf9a459971e9830fb95fd, type: 3}
-  weaponSpritePos: {x: 0.7, y: 0.0461, z: 0}
+  weaponSpritePos: {x: 0.165, y: 0.046, z: 0}
   damage: 30
   swingCoolTime: 0.2
   knockbackPower: 15

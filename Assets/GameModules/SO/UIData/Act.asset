@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Act
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
   uiName: ActUI
-  uiSprite: {fileID: -2322697686200378494, guid: 31d979cbf789a354a86680fa78ba8d42, type: 3}
+  uiSprite: {fileID: 8687495677938482185, guid: b5200ad00a41dfc409c02be91f4e8d4f, type: 3}
   moveSpeed: 10
   health: 50
   spriteLibrary: {fileID: 7108339969198208228, guid: e5178ae4296d6d943b231a340920e3ee, type: 3}
-  weaponSpritePos: {x: 0.7, y: 0.0461, z: 0}
+  weaponSpritePos: {x: 0.325, y: -0.231, z: 0}
   damage: 15
   swingCoolTime: 0.5
   knockbackPower: 5

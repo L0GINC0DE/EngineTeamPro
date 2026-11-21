@@ -20,8 +20,6 @@ namespace _01.Scripts.TAE.Players
 
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        public float attackRange;
-        
         [field: SerializeField] public UIDataListSO BodyDataList { get; private set; }
         public UIDataSO CurrentBodyData { get; private set; }
 
@@ -100,16 +98,13 @@ namespace _01.Scripts.TAE.Players
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
-        }
-        
         private void FlipController(float value)
         {
             if (value != 0)
+            {
                 transform.root.eulerAngles = value > 0f ? Vector3.zero : new Vector3(0, 180, 0);
+                spriteRenderer.sortingOrder = value > 0f ? 0 : 1;
+            }
         }
 
         #region Animations

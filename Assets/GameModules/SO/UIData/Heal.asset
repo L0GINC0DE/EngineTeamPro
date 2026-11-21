@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
   uiName: HealUI
-  uiSprite: {fileID: 8575766360801496173, guid: 2af1a8d3c4f6d414496f579500508a15, type: 3}
+  uiSprite: {fileID: 5088135091866009307, guid: b1762459bcd14484f90b433b14f90346, type: 3}
   moveSpeed: 10
   health: 50
   spriteLibrary: {fileID: 7108339969198208228, guid: ee6731eebabb8fd4191bbcdcfbfa93f0, type: 3}
-  weaponSpritePos: {x: 0.7, y: 0.0461, z: 0}
+  weaponSpritePos: {x: 0.121, y: 0.147, z: 0}
   damage: 15
   swingCoolTime: 0.5
   knockbackPower: 5

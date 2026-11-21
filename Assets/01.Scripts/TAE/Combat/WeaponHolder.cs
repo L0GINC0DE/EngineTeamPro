@@ -59,7 +59,7 @@ namespace _01.Scripts.TAE.Combat
             return true;
         }
 
-        public void MakeWeaponList()
+        private void MakeWeaponList()
         {
             foreach (var weaponData in weaponDataList.uiDataList)
             {
