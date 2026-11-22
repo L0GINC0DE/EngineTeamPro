@@ -21,3 +21,4 @@ MonoBehaviour:
   damage: 15
   swingCoolTime: 0.5
   knockbackPower: 5
+  attackRange: 3
