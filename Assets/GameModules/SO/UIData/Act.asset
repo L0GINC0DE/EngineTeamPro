@@ -22,3 +22,4 @@ MonoBehaviour:
   swingCoolTime: 0.5
   knockbackPower: 5
   attackRange: 5
+  duration: 1.5

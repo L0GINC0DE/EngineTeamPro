@@ -11,10 +11,10 @@ namespace _01.Scripts.TAE.Combat
     [System.Serializable]
     public class Gimmick
     {
-        public bool canSelect;
+        public bool CanSelect { get; private set; }
         public InteractPoint point;
 
-        public void CheckSelect(bool isCheck) => canSelect = isCheck;
+        public void CheckSelect(bool isCheck) => CanSelect = isCheck;
         public void ResetPoint() => point.ResetPoint();
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Players;
+using _01.Scripts.TAE.Test;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Agents
@@ -31,6 +33,10 @@ namespace _01.Scripts.TAE.Agents
         
         public NotifyValue<bool> IsGrounded = new();
         public NotifyValue<bool> IsMove = new();
+
+        private Vector2 pushDir;
+
+        private PlatformPlayer owner;
         
         private void Awake()
         {
@@ -48,10 +54,23 @@ namespace _01.Scripts.TAE.Agents
             CanManualMove = true;
         }
 
+        public void Initialize(PlatformPlayer player)
+        {
+            owner = player;
+        }
+
         public void SetMoveDir(Vector2 moveDir)
         {
             this.moveDir = moveDir;
             IsMove.Value = moveDir != Vector2.zero;
+        }
+
+        public void SetPushDir(Vector2 pushDir, PushDirType type = PushDirType.None)
+        {
+            var blockDirection = owner.IsFlipX ? PushDirType.Left : PushDirType.Right;
+            bool isBlocked = owner.WeaponCompo.IsEquipShield && type == blockDirection;
+
+            this.pushDir = isBlocked ? Vector2.zero : pushDir;
         }
 
         public void SetSpeed(float speed)
@@ -72,12 +91,9 @@ namespace _01.Scripts.TAE.Agents
         {
             if (CanManualMove)
             {
-                rb.linearVelocityX = moveDir.x * moveSpeed;
+                rb.linearVelocityX = moveDir.x * moveSpeed + pushDir.x;
             }
-        }
-
-        private void Update()
-        {
+            
             CalculateAirTime();
             ApplyExtraGravity();
         }
@@ -96,8 +112,8 @@ namespace _01.Scripts.TAE.Agents
         {
             if (!CheckGround())
             {
-                _timeInAir += Time.deltaTime;
-                _coyoteTimer -= Time.deltaTime;
+                _timeInAir += Time.fixedDeltaTime;
+                _coyoteTimer -= Time.fixedDeltaTime;
             }
             else
             {

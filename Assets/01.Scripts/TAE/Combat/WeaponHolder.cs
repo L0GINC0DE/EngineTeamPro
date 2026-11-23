@@ -19,6 +19,10 @@ namespace _01.Scripts.TAE.Combat
         private Dictionary<UIDataSO, UIWeapon> weaponDict = new();
         
         public UIDataListSO WeaponDataList => weaponDataList;
+        
+        [SerializeField] private UIDataSO shieldData;
+
+        public bool IsEquipShield => shieldData != null && CurrentWeapon?.Value?.UIData == shieldData;
 
         private void Awake()
         {

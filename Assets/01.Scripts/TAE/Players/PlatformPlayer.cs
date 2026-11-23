@@ -19,7 +19,7 @@ namespace _01.Scripts.TAE.Players
         public GimmickController GimmickCompo { get; private set; }
 
         [SerializeField] private SpriteRenderer spriteRenderer;
-
+        
         [field: SerializeField] public UIDataListSO BodyDataList { get; private set; }
         public UIDataSO CurrentBodyData { get; private set; }
 
@@ -39,6 +39,7 @@ namespace _01.Scripts.TAE.Players
             WeaponCompo.InitializeWeapons(this);
             InteractCompo.Initialize(this);
             AnimCompo.Initialize(this);
+            MoveCompo.Initialize(this);
             ApplyStats(BodyDataList.uiDataList[0]);
             UIManager.Instance.Initialize(this);
             BindMoveAndAnimator(true);
@@ -97,13 +98,16 @@ namespace _01.Scripts.TAE.Players
                 HealthCompo.SetMaxHealth(CurrentBodyData.health);
             }
         }
+        
+        public bool IsFlipX { get; private set; }
 
         private void FlipController(float value)
         {
             if (value != 0)
             {
-                transform.root.eulerAngles = value > 0f ? Vector3.zero : new Vector3(0, 180, 0);
-                spriteRenderer.sortingOrder = value > 0f ? 0 : 1;
+                IsFlipX = value > 0f;
+                transform.root.eulerAngles = IsFlipX ? Vector3.zero : new Vector3(0, 180, 0);
+                spriteRenderer.sortingOrder = IsFlipX ? 0 : 1;
             }
         }
 

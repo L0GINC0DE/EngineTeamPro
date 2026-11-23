@@ -1,31 +1,53 @@
-﻿using _01.Scripts.TAE.Managers;
+﻿using System;
+using System.Collections;
+using _01.Scripts.TAE.Agents;
+using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Data;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Combat
 {
-    public enum InteractPointType
-    {
-        None = -1,
-        AttackUI,
-        SettingUI,
-        HealthBarUI
-    }
-    
     public class InteractPoint : MonoBehaviour
     {
-        [SerializeField] private InteractPointType type;
-        public InteractPointType PointType => type;
+        public event Action<bool> OnReloadEvent;
+        
+        private UseBarUI useBar;
+        
+        public UIDataSO UIData { get; private set; }
         
         private SpriteRenderer _spriteRenderer;
         private Sprite _originalSprite;
         private Color _originalColor;
 
+        public NotifyValue<float> UseTimer = new(0f);
+
+
         public void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            useBar = GetComponentInChildren<UseBarUI>();
+            
             _originalSprite = _spriteRenderer.sprite;
             _originalColor = _spriteRenderer.color;
+            
+            OnReloadEvent += HandleUse;
+            OnReloadEvent?.Invoke(false);
+
+            UseTimer.OnValueChanged += HandleUseTimerChange;
         }
+
+        private void OnEnable()
+        {
+            OnReloadEvent += HandleUse;
+            UseTimer.OnValueChanged += HandleUseTimerChange;
+        }
+
+        private void OnDisable()
+        {
+            OnReloadEvent -= HandleUse;
+            UseTimer.OnValueChanged -= HandleUseTimerChange;
+        }
+
         public void SetSelected(bool selected)
         {
             _spriteRenderer.color = selected ? Color.yellow : _originalColor;
@@ -33,21 +55,50 @@ namespace _01.Scripts.TAE.Combat
         
         public void ResetPoint()
         {
-            type = InteractPointType.None;
+            OnReloadEvent?.Invoke(false);
             _spriteRenderer.sprite = _originalSprite;
             SetSelected(false);
+            StopAllCoroutines();
         }
 
-        public void ApplyGimmick(InteractPointType selectedType, Sprite sprite)
+        private void Use()
         {
-            if (selectedType == InteractPointType.None)
+            StartCoroutine(UseCoroutine());
+        }
+
+        private void HandleUse(bool isActive)
+        {
+            useBar.gameObject.SetActive(isActive);
+        }
+        
+        private IEnumerator UseCoroutine()
+        {
+            UseTimer.Value = 0f;
+            OnReloadEvent?.Invoke(true);
+
+            while (UseTimer.Value < UIData.duration)
             {
-                ResetPoint();
-                return;
+                UseTimer.Value = Mathf.Min(UseTimer.Value + Time.deltaTime, UIData.duration);
+                yield return null;
             }
-            
-            type = selectedType;
-            _spriteRenderer.sprite = sprite;
+
+            OnReloadEvent?.Invoke(false);
+            ResetPoint();
+        }
+
+        private void HandleUseTimerChange(float prev, float next)
+        {
+            useBar.SetNormalizeValue(next / UIData.duration);
+        }
+        
+        public void SetUp(UIDataSO data)
+        {
+            if (data == null || data.uiSprite == null)
+                return;
+
+            UIData = data;
+            _spriteRenderer.sprite = data.uiSprite;
+            Use();
         }
     }
 }

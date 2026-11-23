@@ -23,8 +23,11 @@ namespace _01.Scripts.TAE.Combat
         {
             var manager = GimmickManager.Instance;
 
-            GameManager.Instance.TimeStop(true);
             manager.StartSelect();
+            if (!manager.CurrentPoint) yield break;
+            
+            GameManager.Instance.TimeStop(true);
+            
             
             playerInput.OnPrevKeyPressed += manager.Prev;
             playerInput.OnNextKeyPressed += manager.Next;
@@ -46,22 +49,41 @@ namespace _01.Scripts.TAE.Combat
         private IEnumerator SelectCoroutine()
         {
             var manager = UIManager.Instance;
-            
             manager.ShowGimmickUI(GimmickManager.Instance.CurrentPointPos());
 
-            while (Keyboard.current.enterKey.wasPressedThisFrame)
-            {
-                yield return null;
-            }
+            void Previous() => manager.MoveGimmickSelection(-1);
+            void Next() => manager.MoveGimmickSelection(1);
 
-            manager.SelectFirstBtn();
-            
-            while (!Keyboard.current.enterKey.wasPressedThisFrame)
+            playerInput.OnPrevKeyPressed += Previous;
+            playerInput.OnNextKeyPressed += Next;
+
+            try
             {
+                // The Enter that picked the point must not confirm a gimmick.
                 yield return null;
+                while (true)
+                {
+                    var keyboard = Keyboard.current;
+                    if (keyboard != null)
+                    {
+                        if (keyboard.leftArrowKey.wasPressedThisFrame)
+                            Previous();
+                        else if (keyboard.rightArrowKey.wasPressedThisFrame)
+                            Next();
+
+                        if (keyboard.enterKey.wasPressedThisFrame && manager.TryConfirmGimmick())
+                            break;
+                    }
+
+                    yield return null;
+                }
             }
-            
-            manager.HideGimmickUI();
+            finally
+            {
+                playerInput.OnPrevKeyPressed -= Previous;
+                playerInput.OnNextKeyPressed -= Next;
+                manager.HideGimmickUI();
+            }
         }
     }
 }
