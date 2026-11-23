@@ -1,13 +1,11 @@
-using UnityEngine;
-
 public class ActAction : PlayerAction
 {
-    private readonly GameObject menu;
-    public ActAction(GameObject menu) => this.menu = menu;
+    private readonly DialogueActionMenu menu;
+    public ActAction(DialogueActionMenu menu) => this.menu = menu;
 
     public override bool PlayAction(Player owner, PlayableUI playerUI, PlayableUI weaponUI)
     {
-        if (menu != null) menu.SetActive(true);
+        if (menu != null) menu.Open();
         return false;
     }
 }

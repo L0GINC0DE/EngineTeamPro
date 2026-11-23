@@ -1,3 +1,4 @@
+using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Managers;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class HealAction : PlayerAction
     {
         if (owner == null || !owner.CanAct) return false;
 
-        var health = owner.BattleUnit.HealthCompo;
+        HealthModule health = owner.BattleUnit.HealthCompo;
         health.Heal(Mathf.RoundToInt(health.MaxHealth * 0.5f));
         owner.AddDestructionStacks(1);
         TurnManager.Instance.EndTurn();
