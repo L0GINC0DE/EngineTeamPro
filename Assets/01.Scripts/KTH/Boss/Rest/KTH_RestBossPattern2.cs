@@ -60,7 +60,7 @@ public class KTH_RestBossPattern2 : KTH_BossAction
         KTH_Throw.Windup(boss, current, windup, () => Fire(boss, fly, doSpin));
         
     }
-    // 화차: 보스 앞 제자리에서 회전 + 애니메이션 → 예고 시간이 끝나면 애니메이션 종료 → 회전 정지 → 플레이어에게 발사
+    // 화차: 보스 앞 제자리에서 회전 + 애니메이션 시작 → 예고 후 회전한 채로 발사 → 패리 튕김 동안에도 유지 → End()에서 종료
     private void Begin2(KTH_Boss boss, bool isEnhanced, KTH_AttackBundle data, float windup, float fly, bool doSpin)
     {
         current = data;
@@ -70,17 +70,14 @@ public class KTH_RestBossPattern2 : KTH_BossAction
             .SetRelative().SetEase(Ease.Linear).SetLoops(-1);
         if (animator != null) animator.SetBool(SpinHash, true);
 
-        KTH_Throw.Windup(boss, current, windup, () =>
-        {
-            if (animator != null) animator.SetBool(SpinHash, false);
-            spinTween?.Kill();
-            branch.localRotation = restRotation;
-            Fire(boss, fly, doSpin);
-        });
+        // 화차 애니메이션·회전은 발사와 패리 튕김 내내 유지하고 End()에서 끈다
+        KTH_Throw.Windup(boss, current, windup,
+            () => KTH_Throw.Throw(branch, boss.target, fly, Hit(boss, 0)));
     }
 
     private void Fire(KTH_Boss boss, float fly, bool doSpin)
     {
+        if (animator != null) animator.SetBool(SpinHash, false);
         spinTween?.Kill();
         if (doSpin)
             spinTween = branch.DORotate(new Vector3(0, 0, 360), spinDuration, RotateMode.FastBeyond360)

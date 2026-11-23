@@ -40,6 +40,7 @@ public class KTH_ParryModule : MonoBehaviour
     public event Action<KTH_DefenseGrade> OnJudged;
     public event Action<KTH_DefenseResult> OnBundleResolved;
     public event Action<KTH_DefenseResult> OnParried;
+    public event Action OnPressed;
 
     [SerializeField] private KeyCode parryKey = KeyCode.F;
     [Header("헛친 입력 잠금")]
@@ -103,6 +104,7 @@ public class KTH_ParryModule : MonoBehaviour
     public void Press()
     {
         if (IsLocked) return;
+        OnPressed?.Invoke();
 
         if (pending.Count > 0)
         {
