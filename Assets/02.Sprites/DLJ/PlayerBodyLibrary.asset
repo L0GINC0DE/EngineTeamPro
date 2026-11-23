@@ -45,10 +45,10 @@ MonoBehaviour:
       m_Sprite: {fileID: 1327884893, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
     - m_Name: Defend
       m_Hash: 355029912
-      m_Sprite: {fileID: 3611343145592988713, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
+      m_Sprite: {fileID: 7978991583685919270, guid: cf161ab5893093943b696c7d44620433, type: 3}
     - m_Name: Act
       m_Hash: 396473252
-      m_Sprite: {fileID: 1469940103629934517, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
+      m_Sprite: {fileID: -1408008056839488257, guid: 631e601eff7f740488eb7483f83bd305, type: 3}
     - m_Name: Heal
       m_Hash: 152752528
       m_Sprite: {fileID: 5088135091866009307, guid: b1762459bcd14484f90b433b14f90346, type: 3}
@@ -60,6 +60,6 @@ MonoBehaviour:
       m_Sprite: {fileID: 7271067372416615815, guid: f0954df162cc0ae408128d7e86e9bc18, type: 3}
     - m_Name: TextBar
       m_Hash: 247661486
-      m_Sprite: {fileID: 4674312620198347305, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
+      m_Sprite: {fileID: -6574583715001338915, guid: 76e354e94020cd24ebeed69a5929a616, type: 3}
   m_ModificationHash: 0
   m_Version: 1
