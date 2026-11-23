@@ -1,5 +1,5 @@
 using System;
-using Agents;
+using _01.Scripts.TAE.Agents;
 using UnityEngine;
 
 public class KTH_RestBossPattern3 : KTH_BossAction
