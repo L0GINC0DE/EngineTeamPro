@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using TMPro;
 using System.Collections;
-using Systems;
-using IPoolable = Systems.IPoolable;
+using _01.Scripts.TAE.Systems;
+using IPoolable = _01.Scripts.TAE.Systems.IPoolable;
 
 namespace _01.Scripts.TAE.UI
 {

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Systems
+namespace _01.Scripts.TAE.Systems
 {
     // [Serializable]
     // public struct PoolingPair

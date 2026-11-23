@@ -1,5 +1,5 @@
-﻿using _01.Scripts.KTH;
-using CoreLib;
+﻿using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Players;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Managers

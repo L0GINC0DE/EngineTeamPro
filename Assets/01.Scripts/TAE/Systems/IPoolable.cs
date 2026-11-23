@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Systems
+namespace _01.Scripts.TAE.Systems
 {
     public interface IPoolable
     {

@@ -1,8 +1,7 @@
-using _01.Scripts.KTH.Effects;
-using Systems;
+using _01.Scripts.TAE.Systems.Effects;
 using UnityEngine;
 
-namespace _01.Scripts.KTH.FeedbackSystem
+namespace _01.Scripts.TAE.Systems.FeedbackSystem
 {
     public class PlayEffectFeedback : AbstractFeedback
     {

@@ -1,6 +1,5 @@
-﻿using _01_Scripts.Enemies.FSM;
-using _01.Scripts.TAE.Enemies.FSM;
-using UnityEngine;
+﻿using _01.Scripts.TAE.Enemies.FSM;
+using _01.Scripts.TAE.Enemies.FSM.EnemyStates;
 
 namespace _01.Scripts.TAE.Enemies
 {

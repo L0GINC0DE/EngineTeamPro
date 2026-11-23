@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _01.Scripts.TAE.UI
+namespace _01.Scripts.TAE.UI.Slots
 {
     public class Slot : MonoBehaviour
     {

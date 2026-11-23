@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Systems
+namespace _01.Scripts.TAE.Systems
 {
     [CreateAssetMenu(fileName = "Pool Item", menuName = "SO/Pool/Item", order = 0)]
     public class PoolItemSO : ScriptableObject

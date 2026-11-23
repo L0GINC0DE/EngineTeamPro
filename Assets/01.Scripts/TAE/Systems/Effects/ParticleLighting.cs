@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace _01.Scripts.KTH.Effects
+namespace _01.Scripts.TAE.Systems.Effects
 {
     public class ParticleLighting : MonoBehaviour
     {

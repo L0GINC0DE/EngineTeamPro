@@ -1,0 +1,156 @@
+[
+  {
+    "label": "Attack",
+    "color": "Red",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_01_Red_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  },
+  {
+    "label": "Setting",
+    "color": "Gray",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_02_Gray_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  },
+  {
+    "label": "Heal",
+    "color": "Green",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_03_Green_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  },
+  {
+    "label": "Act",
+    "color": "Orange",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_04_Orange_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  },
+  {
+    "label": "HealthBar",
+    "color": "Yellow",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_05_Yellow_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  },
+  {
+    "label": "Defend",
+    "color": "Blue",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_06_Blue_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  },
+  {
+    "label": "TextBar",
+    "color": "White",
+    "file": "Assets/02.Sprites/DLJ/Player/Player_07_White_DLJ_Idle.aseprite",
+    "canvas": [
+      64,
+      77
+    ],
+    "frames": 8,
+    "durations": [
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160,
+      160
+    ],
+    "particleLayer": "DLJ_Head_Particles",
+    "originalChunksPreserved": true
+  }
+]

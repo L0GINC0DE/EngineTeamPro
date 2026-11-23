@@ -14,6 +14,9 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private CanvasGroup buttonGroup;
     [SerializeField] private Selectable firstSelectedButton;
+    [Header("Equipped UI (DLJ)")]
+    [SerializeField] private EquippedUIView bodyUIView;
+    [SerializeField] private EquippedUIView weaponUIView;
 
     public static PlayerUIManager Instance { get; private set; }
 
@@ -41,13 +44,15 @@ public class PlayerUIManager : MonoBehaviour
             return;
         }
 
-        playerAppearance = player.GetComponentInChildren<PlayerAppearance>();
+        if (player != null)
+            playerAppearance = player.GetComponentInChildren<PlayerAppearance>(true);
     }
 
     private void OnEnable() => SetInputEnabled(false);
 
     private void OnDisable()
     {
+        RestoreViews();
         ResetSelection();
         SetInputEnabled(false);
     }
@@ -61,12 +66,21 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (CanSelect && !inputEnabled)
         {
+            RestoreViews();
+            ResetSelection();
             if (player.BodyUI != null) player.BodyUI.gameObject.SetActive(true);
             if (player.WeaponUI != null) player.WeaponUI.gameObject.SetActive(true);
-            playerAppearance.HideSelection();
+            if (playerAppearance != null) playerAppearance.HideSelection();
         }
         if (!CanSelect) ResetSelection();
         SetInputEnabled(CanSelect);
+    }
+
+    private void RestoreViews()
+    {
+        // Reverse selection order also restores the original sibling order.
+        if (weaponUIView != null) weaponUIView.Restore();
+        if (bodyUIView != null) bodyUIView.Restore();
     }
 
     private void ResetSelection()
@@ -78,31 +92,37 @@ public class PlayerUIManager : MonoBehaviour
 
     public void SelectPlayableUI(PlayableUI ui)
     {
-        if (!CanSelect || ui == null || !ui.CanEquip) return;
+        if (!CanSelect || ui == null || !ui.CanEquip || selectionStep == SelectionStep.Action
+            || ui == selectedPlayer || ui == selectedWeapon) return;
 
-        Selectable next = ui.GetComponent<Selectable>().FindSelectableOnRight();
+        Selectable selectable = ui.GetComponent<Selectable>();
+        Selectable next = selectable != null
+            ? selectable.FindSelectableOnRight() ?? selectable.FindSelectableOnLeft()
+            : null;
+        bool attached = false;
 
         switch (selectionStep)
         {
             case SelectionStep.Player:
                 selectedPlayer = ui;
-                if (ui.UISo != null)
+                if (ui.UISo != null && playerAppearance != null)
                     playerAppearance.ShowBody(ui.UISo.uiType);
-                Debug.Log(selectedPlayer);
+                attached = bodyUIView != null && bodyUIView.Attach(ui);
                 selectionStep = SelectionStep.Weapon;
                 break;
             case SelectionStep.Weapon:
                 selectedWeapon = ui;
-                if (ui.UISo != null)
+                if (ui.UISo != null && playerAppearance != null)
                     playerAppearance.ShowWeapon(ui.UISo.uiType);
-                Debug.Log(selectedWeapon);
+                attached = weaponUIView != null && weaponUIView.Attach(ui);
                 selectionStep = SelectionStep.Action;
                 break;
         }
 
-        ui.gameObject.SetActive(false);
+        if (!attached) ui.gameObject.SetActive(false);
+        SetInputEnabled(CanSelect);
         if (EventSystem != null)
-            EventSystem.SetSelectedGameObject(next != null ? next.gameObject : null);
+            EventSystem.SetSelectedGameObject(next != null ? next.gameObject : attached ? ui.gameObject : null);
     }
 
     public void SelectAction(PlayerAction action)
@@ -130,7 +150,7 @@ public class PlayerUIManager : MonoBehaviour
     //매개변수로 받은 불 값으로 UI 선택 / 해제
     private void SetInputEnabled(bool enabled)
     {
-        if (buttonGroup != null) buttonGroup.interactable = enabled;
+        if (buttonGroup != null) buttonGroup.interactable = buttonGroup.blocksRaycasts = enabled;
 
         if (!enabled && EventSystem != null && buttonGroup != null)
         {
