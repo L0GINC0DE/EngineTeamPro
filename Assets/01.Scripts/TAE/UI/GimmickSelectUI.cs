@@ -58,17 +58,14 @@ namespace _01.Scripts.TAE.UI
             PlayNextMove();
         }
 
-        public bool TryConfirm()
+        public UIDataSO GetSelectedOption()
         {
-            if (slide != null || pendingMoves.Count > 0)
-                return false;
+            return slide == null && pendingMoves.Count == 0 ? GetOption(selectedIndex.Value) : null;
+        }
 
-            UIDataSO data = GetOption(selectedIndex.Value);
-            if (data == null)
-                return false;
-
-            UIManager.Instance.ApplyGimmick(data);
-            return true;
+        public void ShowLaunchDirection(bool right)
+        {
+            visibleCards[1].SetLabel(right ? "← / →   ▶   Enter" : "← / →   ◀   Enter");
         }
 
         private void PlayNextMove()
@@ -139,6 +136,8 @@ namespace _01.Scripts.TAE.UI
                 SetUp(data);
                 button.image.color = selected ? button.colors.selectedColor : button.colors.normalColor;
             }
+
+            public void SetLabel(string text) => label.text = text;
 
             private void SetUp(UIDataSO data)
             {

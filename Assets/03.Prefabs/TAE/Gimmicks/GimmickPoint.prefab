@@ -32,6 +32,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7875139650099132106}
+  - {fileID: 7402900000000000001}
+  - {fileID: 7402900000000000004}
+  - {fileID: 7402900000000000007}
+  - {fileID: 7402900000000000010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8535113339578997734
@@ -105,6 +109,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133eed0b398d499db08cb6f15ab6c26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Combat.InteractPoint
+  idleMarker: {fileID: 8535113339578997734}
+  useBar: {fileID: 6753582874218326732}
+  selectedColor: {r: 1, g: 0.92, b: 0.016, a: 1}
+  options:
+  - card: {fileID: 11400000, guid: 10cb38c5d8fdf3a4bb1db70adc80b47a, type: 2}
+    gimmick: {fileID: 7402900000000000002}
+  - card: {fileID: 11400000, guid: 2f99084608772434c9f67f46f01ed558, type: 2}
+    gimmick: {fileID: 7402900000000000005}
+  - card: {fileID: 11400000, guid: 7ec5878723cfc464dbf4d76456b34aaf, type: 2}
+    gimmick: {fileID: 7402900000000000008}
+  - card: {fileID: 11400000, guid: 0bf1967c17b946b89b5d1da2f2523202, type: 2}
+    gimmick: {fileID: 7402900000000000011}
 --- !u!1 &1692353596371734580
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,3 +382,135 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Agents.UseBarUI
   barTrm: {fileID: 4319066406247662858}
+--- !u!1001 &7402900000000000000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 519469452448502559}
+    m_Modifications:
+    - target: {fileID: 2924278943021190532, guid: ed1d5396cd2b46c886b372dbc08355ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed1d5396cd2b46c886b372dbc08355ee, type: 3}
+--- !u!4 &7402900000000000001 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3217697662996338062, guid: ed1d5396cd2b46c886b372dbc08355ee, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7402900000000000002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8364696929294560865, guid: ed1d5396cd2b46c886b372dbc08355ee, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aeddea5883f45c09b45df8ccff01d7e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.JumpPadGimmick
+--- !u!1001 &7402900000000000003
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 519469452448502559}
+    m_Modifications:
+    - target: {fileID: 2924278943021190532, guid: ce53813a234340dd94dcdb35a3286839, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ce53813a234340dd94dcdb35a3286839, type: 3}
+--- !u!4 &7402900000000000004 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3217697662996338062, guid: ce53813a234340dd94dcdb35a3286839, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000003}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7402900000000000005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8364696929294560865, guid: ce53813a234340dd94dcdb35a3286839, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647df3200d9446b0bb9d18aefde03820, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.LaunchGimmick
+--- !u!1001 &7402900000000000006
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 519469452448502559}
+    m_Modifications:
+    - target: {fileID: 2924278943021190532, guid: 0c9d48251e7344f5ab79596610795c77, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0c9d48251e7344f5ab79596610795c77, type: 3}
+--- !u!4 &7402900000000000007 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3217697662996338062, guid: 0c9d48251e7344f5ab79596610795c77, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000006}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7402900000000000008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8364696929294560865, guid: 0c9d48251e7344f5ab79596610795c77, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e86eeb076254674badb0eb38a6bf60e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.ShieldGimmick
+--- !u!1001 &7402900000000000009
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 519469452448502559}
+    m_Modifications:
+    - target: {fileID: 2924278943021190532, guid: 4a9ea53356d149e8829f5160c21664c4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a9ea53356d149e8829f5160c21664c4, type: 3}
+--- !u!4 &7402900000000000010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3217697662996338062, guid: 4a9ea53356d149e8829f5160c21664c4, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7402900000000000011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8364696929294560865, guid: 4a9ea53356d149e8829f5160c21664c4, type: 3}
+  m_PrefabInstance: {fileID: 7402900000000000009}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e89a724640ee4627b20c91b1fddaf243, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.HealthBridgeGimmick

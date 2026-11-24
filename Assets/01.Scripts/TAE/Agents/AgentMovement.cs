@@ -35,6 +35,28 @@ namespace _01.Scripts.TAE.Agents
         public NotifyValue<bool> IsMove = new();
 
         private Vector2 pushDir;
+        private float launchVelocity;
+        private float launchTime;
+        private bool boostedAscent;
+        private float boostAscentDeceleration;
+        
+        public void Bounce(float speed, float ascentDeceleration)
+        {
+            launchTime = 0f;
+            boostedAscent = speed > 0f;
+            boostAscentDeceleration = ascentDeceleration;
+            rb.linearVelocityY = speed;
+            _coyoteTimer = 0f;
+            _timeInAir = 0f;
+        }
+
+        public void Launch(float horizontalSpeed, float duration)
+        {
+            boostedAscent = false;
+            launchVelocity = horizontalSpeed;
+            launchTime = duration;
+            rb.linearVelocity = new Vector2(horizontalSpeed, 0f);
+        }
 
         private PlatformPlayer owner;
         
@@ -68,8 +90,7 @@ namespace _01.Scripts.TAE.Agents
         public void SetPushDir(Vector2 pushDir, PushDirType type = PushDirType.None)
         {
             var blockDirection = owner.IsFlipX ? PushDirType.Left : PushDirType.Right;
-            bool isBlocked = owner.WeaponCompo.IsEquipShield && type == blockDirection;
-
+            bool isBlocked = owner.IsEquipShield && type == blockDirection;
             this.pushDir = isBlocked ? Vector2.zero : pushDir;
         }
 
@@ -80,7 +101,7 @@ namespace _01.Scripts.TAE.Agents
 
         public void Jump()
         {
-            if (_coyoteTimer <= 0f) return;
+            if (launchTime > 0f || _coyoteTimer <= 0f) return;
             
             rb.linearVelocityY = 0f;
             rb.AddForceY(jumpForce, ForceMode2D.Impulse);
@@ -89,9 +110,18 @@ namespace _01.Scripts.TAE.Agents
         
         private void FixedUpdate()
         {
+            if (launchTime > 0f)
+            {
+                rb.linearVelocity = new Vector2(launchVelocity, 0f);
+                launchTime -= Time.fixedDeltaTime;
+                return;
+            }
+
             if (CanManualMove)
             {
-                rb.linearVelocityX = moveDir.x * moveSpeed + pushDir.x;
+                float speedMultiplier = owner != null ? owner.GimmickMoveMultiplier : 1f;
+                float push = owner != null && owner.HasGimmickShield ? 0f : pushDir.x;
+                rb.linearVelocityX = moveDir.x * moveSpeed * speedMultiplier + push;
             }
             
             CalculateAirTime();
@@ -124,6 +154,13 @@ namespace _01.Scripts.TAE.Agents
 
         private void ApplyExtraGravity()
         {
+            if (boostedAscent && rb.linearVelocityY > 0f)
+            {
+                rb.AddForceY(-boostAscentDeceleration * rb.mass);
+                return;
+            }
+
+            boostedAscent = false;
             if (_timeInAir > gravityDelay)
                 rb.AddForceY(-extraGravity);
         }
@@ -151,6 +188,24 @@ namespace _01.Scripts.TAE.Agents
             yield return new WaitForSeconds(duration);
             rb.linearVelocity = Vector2.zero;
             CanManualMove = true;
+        }
+
+        public void ResetForStage(Vector2 position)
+        {
+            if (_kbCoroutine != null)
+            {
+                StopCoroutine(_kbCoroutine);
+                _kbCoroutine = null;
+            }
+
+            launchTime = 0f;
+            boostedAscent = false;
+            _timeInAir = 0f;
+            _coyoteTimer = 0f;
+            pushDir = Vector2.zero;
+            SetMoveDir(Vector2.zero);
+            rb.position = position;
+            StopInput(false);
         }
 
         public void StopInput(bool isStop)
