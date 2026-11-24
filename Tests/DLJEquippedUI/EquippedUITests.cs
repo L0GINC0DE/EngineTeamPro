@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using _01.Scripts.TAE;
+using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Managers;
 using NUnit.Framework;
 using UnityEngine;
@@ -17,13 +18,14 @@ public class EquippedUITests
     const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
     GameObject Make(string name, params Type[] types) { var go = new GameObject(name, types); owned.Add(go); return go; }
     static void Set(object target, string field, object value) => target.GetType().GetField(field, Private).SetValue(target, value);
-    DLJ_EquippedUIView View(Transform parent, Transform anchor = null)
+    EquippedUIView View(Transform parent, Transform anchor = null, float width = 86.4f, float offsetX = 0f)
     {
         var go = Make("Slot", typeof(RectTransform), typeof(CanvasGroup));
         var rect = (RectTransform)go.transform;
         rect.SetParent(parent, false);
-        rect.sizeDelta = new Vector2(86.4f, 42f);
-        var view = go.AddComponent<DLJ_EquippedUIView>();
+        rect.sizeDelta = new Vector2(width, 42f);
+        rect.anchoredPosition = new Vector2(offsetX, 0f);
+        var view = go.AddComponent<EquippedUIView>();
         Set(view,"worldAnchor",anchor);
         return view;
     }
@@ -79,7 +81,7 @@ public class EquippedUITests
 
     [UnityTest] public IEnumerator HealthBarContinuesUpdatingAfterAttachment()
     {
-        var health = Make("Health").AddComponent<Agents.HealthModule>();
+        var health = Make("Health").AddComponent<HealthModule>();
         var palette = Make("Palette", typeof(RectTransform), typeof(Canvas));
         var ui = UI<HealthBarUI>(palette.transform); ui.gameObject.SetActive(false);
         var slider = Make("Slider", typeof(RectTransform), typeof(Slider)).GetComponent<Slider>();
@@ -218,13 +220,14 @@ public class EquippedUITests
         var palette = Make("Palette", typeof(RectTransform), typeof(Canvas), typeof(CanvasGroup));
         var canvas = palette.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 100f;
+        canvas.scaleFactor = Screen.height / 1080f;
         var body = UI<DefendUI>(palette.transform); var weapon = UI<HealUI>(palette.transform);
         var top = UI<ActUI>(palette.transform); var bottom = UI<TextBarUI>(palette.transform);
-        ((RectTransform)top.transform).anchoredPosition = new Vector2(0, Screen.height * .4f);
-        ((RectTransform)bottom.transform).anchoredPosition = new Vector2(0, -Screen.height * .4f);
-        var bodyAnchor = Make("Body anchor").transform; bodyAnchor.position = new Vector3(-.5f,1.5f,0);
-        var weaponAnchor = Make("Weapon anchor").transform; weaponAnchor.position = new Vector3(2.5f,1.5f,0);
-        var bodyView = View(palette.transform, bodyAnchor); var weaponView = View(palette.transform, weaponAnchor);
+        ((RectTransform)top.transform).anchoredPosition = new Vector2(0, 432f);
+        ((RectTransform)bottom.transform).anchoredPosition = new Vector2(0, -432f);
+        var anchor = Make("Player UI anchor").transform; anchor.position = new Vector3(.46f,1.97f,0);
+        var bodyView = View(palette.transform, anchor, width: 250f, offsetX: -135f);
+        var weaponView = View(palette.transform, anchor, width: 250f, offsetX: 135f);
         var managerGo = Make("UIManager"); managerGo.SetActive(false);
         var manager = managerGo.AddComponent<PlayerUIManager>();
         Set(manager,"player",player); Set(manager,"buttonGroup",palette.GetComponent<CanvasGroup>());
@@ -241,6 +244,11 @@ public class EquippedUITests
         Assert.That(battle.IsPlayerTurn, Is.True);
 
         manager.SelectPlayableUI(weapon); yield return null;
+        events.SetSelectedGameObject(weapon.gameObject);
+        Move(events, MoveDirection.Left, Vector2.left);
+        Assert.That(events.currentSelectedGameObject, Is.EqualTo(body.gameObject),
+            "Left from the equipped weapon must reach the body with full-width buttons");
+
         events.SetSelectedGameObject(top.gameObject); Move(events, MoveDirection.Down, Vector2.down);
         Assert.That(events.currentSelectedGameObject, Is.EqualTo(body.gameObject));
         Move(events, MoveDirection.Right, Vector2.right);

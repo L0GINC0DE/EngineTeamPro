@@ -1,3 +1,4 @@
+using _01.Scripts.TAE.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,9 +15,14 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private CanvasGroup buttonGroup;
     [SerializeField] private Selectable firstSelectedButton;
+
     [Header("Equipped UI (DLJ)")]
     [SerializeField] private EquippedUIView bodyUIView;
     [SerializeField] private EquippedUIView weaponUIView;
+
+    [Header("전투 대사")]
+    [SerializeField] private TextBarUI dialogue;
+    [SerializeField] private DialogueActionMenu actionMenu;
 
     public static PlayerUIManager Instance { get; private set; }
 
@@ -31,8 +37,9 @@ public class PlayerUIManager : MonoBehaviour
 
     private PlayerAppearance playerAppearance;
 
-    //간단히하면 그냥 현재턴이 플레이어 턴이면 참
+    // 현재 턴을 가진 플레이어만 UI를 선택할 수 있음
     private bool CanSelect => isActiveAndEnabled && player != null && player.CanAct;
+    private bool IsActionMenuOpen => actionMenu != null && actionMenu.IsOpen;
 
     private void Awake()
     {
@@ -76,9 +83,18 @@ public class PlayerUIManager : MonoBehaviour
         SetInputEnabled(CanSelect);
     }
 
+    private void LateUpdate()
+    {
+        if (!CanSelect || IsActionMenuOpen || dialogue == null) return;
+
+        GameObject selected = EventSystem != null ? EventSystem.currentSelectedGameObject : null;
+        PlayableUI focused = selected != null ? selected.GetComponent<PlayableUI>() : null;
+        dialogue.Refresh(player, TurnManager.Instance.GetFirstLivingEnemy(), selectionStep, focused);
+    }
+
     private void RestoreViews()
     {
-        // Reverse selection order also restores the original sibling order.
+        // 선택한 순서의 역순으로 돌려놔야 원래 버튼 순서가 유지됨
         if (weaponUIView != null) weaponUIView.Restore();
         if (bodyUIView != null) bodyUIView.Restore();
     }
@@ -92,7 +108,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void SelectPlayableUI(PlayableUI ui)
     {
-        if (!CanSelect || ui == null || !ui.CanEquip || selectionStep == SelectionStep.Action
+        if (!CanSelect || IsActionMenuOpen || ui == null || !ui.CanEquip || selectionStep == SelectionStep.Action
             || ui == selectedPlayer || ui == selectedWeapon) return;
 
         Selectable selectable = ui.GetComponent<Selectable>();
@@ -127,7 +143,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void SelectAction(PlayerAction action)
     {
-        if (!CanSelect || selectionStep != SelectionStep.Action || action == null) return;
+        if (!CanSelect || IsActionMenuOpen || selectionStep != SelectionStep.Action || action == null) return;
 
         if (selectedPlayer == null || !selectedPlayer.CanEquip || selectedWeapon == null || !selectedWeapon.CanEquip)
         {
@@ -146,11 +162,16 @@ public class PlayerUIManager : MonoBehaviour
         SetInputEnabled(CanSelect);
     }
 
-    //인풋시스템으로 버튼 고르는거 / 버튼 그룹 인터랙터블 껐다 켜기
-    //매개변수로 받은 불 값으로 UI 선택 / 해제
     private void SetInputEnabled(bool enabled)
     {
-        if (buttonGroup != null) buttonGroup.interactable = buttonGroup.blocksRaycasts = enabled;
+        if (!enabled && inputEnabled)
+        {
+            if (actionMenu != null) actionMenu.Close(restoreFocus: false);
+            if (dialogue != null) dialogue.EndTurn();
+        }
+
+        bool mainButtonsEnabled = enabled && !IsActionMenuOpen;
+        if (buttonGroup != null) buttonGroup.interactable = buttonGroup.blocksRaycasts = mainButtonsEnabled;
 
         if (!enabled && EventSystem != null && buttonGroup != null)
         {
@@ -158,7 +179,7 @@ public class PlayerUIManager : MonoBehaviour
             if (selected != null)
                 EventSystem.SetSelectedGameObject(null);
         }
-        else if (enabled && !inputEnabled && EventSystem != null && firstSelectedButton != null
+        else if (mainButtonsEnabled && !inputEnabled && EventSystem != null && firstSelectedButton != null
             && firstSelectedButton.IsActive() && firstSelectedButton.IsInteractable())
         {
             EventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);

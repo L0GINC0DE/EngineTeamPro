@@ -11,7 +11,7 @@ public readonly struct ActionSelection
         PlayableUI weapon,
         PlayableUI action)
     {
-        Player =  player;
+        Player = player;
         Weapon = weapon;
         Action = action;
     }

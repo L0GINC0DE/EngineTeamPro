@@ -1,6 +1,7 @@
 ﻿using System;
 using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Data;
 using _01.Scripts.TAE.Players;
 using _01.Scripts.TAE.Systems;
 using _01.Scripts.TAE.UI;
@@ -111,18 +112,13 @@ namespace _01.Scripts.TAE.Managers
 
         public void ShowGimmickUI(Vector3 pos) => gimmickSelectUI.Show(pos);
         public void HideGimmickUI() => gimmickSelectUI.Hide();
-        public void SelectFirstBtn() => gimmickSelectUI.SelectFirstButton();
+        public void MoveGimmickSelection(int direction) => gimmickSelectUI.MoveSelection(direction);
+        public bool TryConfirmGimmick() => gimmickSelectUI.TryConfirm();
 
-        public void ApplyGimmick(InteractPointType type)
+        public void ApplyGimmick(UIDataSO data)
         {
-            var manager = GimmickManager.Instance;
-            var point = manager.CurrentPoint;
-            var sprite = manager.GetSprite(type);
-
-            if (point == null || sprite == null)
-                return;
-
-            point.ApplyGimmick(type, sprite);
+            var point = GimmickManager.Instance.CurrentPoint;
+            if (point != null) point.SetUp(data);
         }
 
         #region Escape

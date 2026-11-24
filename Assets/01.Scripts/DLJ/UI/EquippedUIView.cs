@@ -7,19 +7,25 @@ public sealed class EquippedUIView : MonoBehaviour
     [SerializeField] private Transform worldAnchor;
 
     private RectTransform slot;
+    private Vector2 slotOffset;
     private Canvas canvas;
     private CanvasGroup input;
     private PlayableUI source;
     private RectTransform button;
+
     private Transform originalParent;
     private int originalIndex;
-    private Vector2 originalAnchorMin, originalAnchorMax, originalSize;
-    private Vector3 originalPosition, originalScale;
+    private Vector2 originalAnchorMin;
+    private Vector2 originalAnchorMax;
+    private Vector2 originalSize;
+    private Vector3 originalPosition;
+    private Vector3 originalScale;
     private bool originalActive;
 
     private void Awake()
     {
         slot = (RectTransform)transform;
+        slotOffset = slot.anchoredPosition;
         canvas = GetComponentInParent<Canvas>();
         input = GetComponent<CanvasGroup>();
     }
@@ -42,7 +48,7 @@ public sealed class EquippedUIView : MonoBehaviour
         originalActive = rect.gameObject.activeSelf;
 
         Vector2 size = rect.rect.size;
-        float scale = slot.rect.width / Mathf.Max(1f, size.x);
+        float scale = Mathf.Min(1f, slot.rect.width / Mathf.Max(1f, size.x));
         rect.SetParent(slot, false);
         rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
         rect.sizeDelta = size;
@@ -66,7 +72,7 @@ public sealed class EquippedUIView : MonoBehaviour
         Vector2 screenPoint = worldCamera.WorldToScreenPoint(worldAnchor.position);
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
             (RectTransform)slot.parent, screenPoint, uiCamera, out Vector3 point))
-            slot.position = point;
+            slot.position = point + slot.parent.TransformVector(slotOffset);
     }
 
     public void Restore()

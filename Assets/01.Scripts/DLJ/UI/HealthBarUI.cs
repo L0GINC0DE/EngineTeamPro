@@ -1,3 +1,4 @@
+using System;
 using _01.Scripts.TAE.Agents;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,8 +6,17 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class HealthBarUI : ActionUI
 {
+    [Serializable]
+    private struct ColorLayer
+    {
+        public Image image;
+        public Sprite sprite;
+    }
+
     [SerializeField] private HealthModule health;
     [SerializeField] private GameObject content;
+    [SerializeField] private ColorLayer[] colorLayers = Array.Empty<ColorLayer>();
+
     private Slider healthSlider;
     private Button healthButton;
 
@@ -26,6 +36,15 @@ public class HealthBarUI : ActionUI
     }
 
     private void OnHealthChanged(int previous, int next) => Refresh();
+
+    internal void SetColor(bool showColor)
+    {
+        foreach (ColorLayer layer in colorLayers)
+        {
+            if (layer.image != null)
+                layer.image.overrideSprite = showColor ? layer.sprite : null;
+        }
+    }
 
     public void Refresh()
     {

@@ -5,9 +5,9 @@ if (!$ValidationPath) { $ValidationPath = Join-Path $repoPath '.utmp/DLJ_Equippe
 foreach ($folder in @('Assets/Runtime','Assets/Tests','Assets/Plugins','Packages','ProjectSettings')) {
     New-Item -ItemType Directory -Force -Path (Join-Path $ValidationPath $folder) | Out-Null
 }
-$sources = @('DLJ','TAE/Modules/HealthModule.cs','TAE/CoreLib/MonoSingleton.cs',
-    'TAE/BattleUnit.cs','TAE/Attacker.cs','TAE/ICommand.cs','TAE/AttackCommand.cs',
-    'TAE/PlayerAttack.cs','TAE/Managers/TurnManager.cs','KTH/Parry/KTH_DefenseStats.cs','KTH/HitEffect')
+$sources = @('DLJ','TAE/Agents/HealthModule.cs','TAE/CoreLib/MonoSingleton.cs',
+    'TAE/BattleUnit.cs','TAE/Attacker.cs','TAE/Interface/ICommand.cs','TAE/AttackCommand.cs',
+    'TAE/Players/PlayerAttack.cs','TAE/Managers/TurnManager.cs','KTH/Parry/KTH_DefenseStats.cs','KTH/HitEffect')
 foreach ($source in $sources) {
     $sourcePath = Join-Path $repoPath "Assets/01.Scripts/$source"
     if (Test-Path -LiteralPath $sourcePath -PathType Container) {

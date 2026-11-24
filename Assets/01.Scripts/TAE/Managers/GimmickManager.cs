@@ -64,16 +64,6 @@ using UnityEngine;
              _points.Clear();
          }
          
-         public Sprite GetSprite(InteractPointType type)
-         {
-             int index = (int)type;
-
-             if (sprites == null || index < 0 || index >= sprites.Length)
-                 return null;
-
-             return sprites[index];
-         }
-         
          private bool IsVisible(InteractPoint point)
          {
              if (point == null ||
