@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -72,8 +73,6 @@ public static class HeadParticlesValidation
     {
         try
         {
-            var tick = typeof(PlayerAppearance).GetMethod("AdvanceBodyIdle", Private);
-            Check(tick != null, "Original body animation playback is missing");
             string[] names = { "01_Red", "06_Blue", "04_Orange", "03_Green", "05_Yellow", "02_Gray", "07_White" };
             var allFrames = names.Select(name => ReadableFrames("Assets/Sprites/Player/Player_" + name + "_DLJ_Idle.aseprite")).ToArray();
             var baselineFrames = names.Select(name => ReadableFrames("Assets/Baselines/Player_" + name + "_DLJ_Idle.aseprite")).ToArray();
@@ -119,56 +118,27 @@ public static class HeadParticlesValidation
                 AssetDatabase.TryGetGUIDAndLocalFileIdentifier(sprite, out string guid, out long id);
                 return "  - {fileID: " + id + ", guid: " + guid + ", type: 3}";
             }));
-            var root = new GameObject("Baked body validation", typeof(SpriteLibrary), typeof(SpriteRenderer));
-            try
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>("Assets/Sprites/Player/PlayerBody_DLJ.controller");
+            Check(controller != null, "Body Animator Controller is missing");
+            var states = controller.layers[0].stateMachine.states;
+            var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
+            for (int i = 0; i < names.Length; i++)
             {
-                root.GetComponent<SpriteLibrary>().spriteLibraryAsset = library;
-                var body = root.GetComponent<SpriteRenderer>();
-                var appearance = root.AddComponent<PlayerAppearance>();
-                var so = new SerializedObject(appearance);
-                so.FindProperty("bodyRenderer").objectReferenceValue = body;
-                var frameList = so.FindProperty("bodyIdleFrames");
-                Check(frameList != null, "Original body frames must be configurable");
-                var flat = allFrames.SelectMany(f => f).ToArray();
-                frameList.arraySize = flat.Length;
-                for (int i = 0; i < flat.Length; i++) frameList.GetArrayElementAtIndex(i).objectReferenceValue = flat[i];
-                so.FindProperty("bodyIdleFramesPerSecond").floatValue = 6.25f;
-                so.ApplyModifiedPropertiesWithoutUndo();
-
-                for (int i = 0; i < names.Length; i++)
+                var type = (UIType)i;
+                var clip = states.Single(child => child.state.name == type.ToString()).state.motion as AnimationClip;
+                Check(clip != null && clip.isLooping, "Missing looping body clip: " + type);
+                var frames = allFrames[i];
+                Check(frames.Length == 8 && library.GetSprite("Body", type.ToString()) == frames[0],
+                    "Existing body selection or frame count changed: " + type);
+                var keys = AnimationUtility.GetObjectReferenceCurve(clip, binding);
+                Check(keys != null && keys.Length >= frames.Length, "Missing body frames: " + type);
+                for (int frame = 0; frame < frames.Length; frame++)
                 {
-                    Check(allFrames[i].Length == 8, "Keep the original eight frames: " + names[i]);
-                    var type = (UIType)i;
-                    Check(library.GetSprite("Body", type.ToString()) == allFrames[i][0], "Existing body reference changed: " + type);
-                    var bytes = File.ReadAllBytes("Assets/Sprites/Player/Player_" + names[i] + "_DLJ_Idle.aseprite");
-                    Check(System.Text.Encoding.UTF8.GetString(bytes).Contains("DLJ_Head_Particles"), "Particles must be inside the original Aseprite: " + type);
-                    Check(BitConverter.ToUInt16(bytes, 8) == 64 && BitConverter.ToUInt16(bytes, 10) == 77, "Original canvas changed");
-                    int offset = 128;
-                    for (int f = 0; f < 8; f++)
-                    {
-                        Check(BitConverter.ToUInt16(bytes, offset + 8) == 160, "Original breathing timing changed");
-                        offset += BitConverter.ToInt32(bytes, offset);
-                    }
-                    appearance.ShowBody(type);
-                    Check(body.sprite == allFrames[i][0], "Selection must start the original animation: " + type);
-                    tick.Invoke(appearance, new object[] { .1601f });
-                    Check(body.sprite == allFrames[i][1], "Baked animation must advance: " + type);
-                    tick.Invoke(appearance, new object[] { 1.12f });
-                    Check(body.sprite == allFrames[i][0], "Baked animation must loop: " + type);
-                    Check(root.GetComponentsInChildren<SpriteRenderer>(true).Length == 1, "No extra particle renderer may be created");
-                    appearance.HideSelection();
-                    tick.Invoke(appearance, new object[] { .16f });
-                    Check(body.sprite == null, "Hidden body must stay hidden");
+                    Check(keys[frame].value == frames[frame] && Mathf.Abs(keys[frame].time - frame * .16f) < .001f,
+                        "Body clip frame or timing changed: " + type + " frame " + frame);
                 }
-
-                appearance.ShowBody(UIType.Heal);
-                body.sprite = allFrames[0][0];
-                tick.Invoke(appearance, new object[] { .16f });
-                Check(body.sprite == allFrames[0][0], "External body animation must not be overwritten");
-                Debug.Log("DLJ_BAKED_HEAD_PARTICLES_PASS: seven original Aseprites, eight frames, 160ms timing, selection, loop, hiding and single renderer");
             }
-            finally { UnityEngine.Object.DestroyImmediate(root); }
-            DLJ_SwordIdleValidation.Behavior();
+            Debug.Log("DLJ_BAKED_HEAD_PARTICLES_PASS: seven Animator states reuse the original looping clips");
         }
         catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
     }

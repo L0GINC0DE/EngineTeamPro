@@ -7,9 +7,12 @@ namespace _01.Scripts.TAE.Players
     {
         [SerializeField] private BattleUnit target;
 
-        public void Attack()
+        public void Attack() => TryAttack();
+
+        public bool TryAttack()
         {
-            TurnManager.Instance?.PlayerAttack(target != null ? target : TurnManager.Instance.GetFirstLivingEnemy());
+            TurnManager manager = TurnManager.Instance;
+            return manager != null && manager.PlayerAttack(target != null ? target : manager.GetFirstLivingEnemy());
         }
     }
 }
