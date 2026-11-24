@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bace07faaf57a414e97273a24da83b7b, type: 3}
+  m_Name: spriteList
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_RandomSpriteListSo
+  <SpriteList>k__BackingField:
+  - {fileID: 21300000, guid: 73f20a145a13406ca18c643dada9a117, type: 3}
+  - {fileID: 21300000, guid: 824fea42cd4f40c680594513fb768ba1, type: 3}
+  - {fileID: 21300000, guid: bf5fe19137854782b5302ff907995019, type: 3}
