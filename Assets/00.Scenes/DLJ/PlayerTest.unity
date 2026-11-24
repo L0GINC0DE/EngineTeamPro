@@ -401,6 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 356703712}
   - component: {fileID: 356703713}
+  - component: {fileID: 356703714}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -418,7 +419,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.8, y: -0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.5, y: 5.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 794967392}
@@ -482,6 +483,28 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!95 &356703714
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356703711}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ce38f898f3a46d74eb1fa23f3b924217, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &430314274
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,7 +680,7 @@ Transform:
   m_GameObject: {fileID: 454720442}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.69, y: 2.55, z: 0}
+  m_LocalPosition: {x: -1.3, y: 2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1714,6 +1737,7 @@ GameObject:
   - component: {fileID: 1472282635}
   - component: {fileID: 1472282634}
   - component: {fileID: 1472282633}
+  - component: {fileID: 1472282636}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -1731,7 +1755,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.56, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 794967392}
@@ -1749,129 +1773,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAppearance
   bodyRenderer: {fileID: 1472282634}
-  bodyCategory: Body
-  bodyIdleFrames:
-  - {fileID: 7247564697799273448, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: 4177161287834600304, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: 2394286508236363688, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: 8247033140014019866, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: -5420341843348058853, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: -7684082178571027247, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: -5517372621044877203, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: 7385560566283371398, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
-  - {fileID: 3611343145592988713, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: -1591795351720625208, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: -215565588640005614, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: 8500149505546157895, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: -3975462249334103949, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: 5028553052555446624, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: 5192431807863368663, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: -7168033319676336925, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
-  - {fileID: 1469940103629934517, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: 1090738869729352474, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: 2635024002937880680, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: 5569271068372140849, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: 9163056912567435142, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: -6995311547060597220, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: 8421800420411102511, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: -4985044580016232612, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
-  - {fileID: -6836681163904204092, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: -4684541966991734249, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: -232420492343610005, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: -8414455745601871229, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: -8562326887599658716, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: 5309881347652710674, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: -1021127517377650414, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: 1881942293463554636, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
-  - {fileID: 5927891723065722450, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: -435562033396189520, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: -3733478155800467572, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: 5015586725493272915, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: -4864054465757221929, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: -9110609783276785286, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: 3737481058699487694, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: 3365938730510103892, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
-  - {fileID: -313719836618290768, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: 469808689137174324, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: -4092324907584284846, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: 2696382091890566471, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: -3160236272393730728, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: 2818969001225019745, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: 4467055105632241656, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: 7651527551178797812, guid: b0de540adfba16242809b19069229f50, type: 3}
-  - {fileID: 4674312620198347305, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: 8298285993695164288, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: 467214306544248973, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: -5336274250475335563, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: 1160756222638657204, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: 2602637789585647848, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: -2754813509970326112, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  - {fileID: -9177879786372137613, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}
-  bodyIdleFramesPerSecond: 6.25
   weaponRenderer: {fileID: 356703713}
-  weaponCategory: Weapon
-  swordIdleFrames:
-  - {fileID: 1327884893, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 232046319, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1623642723, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1287485982, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -290620686, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1333397181, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -999952122, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 446059136, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 885500812, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -610859298, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1219414865, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1288867328, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1611076787, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -987721351, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1395475865, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -916048551, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 182693886, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1873935908, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1460582451, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1372353114, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1215107926, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1087180242, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 2072223015, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1246968731, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -881595627, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 935145518, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1740103863, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1106518642, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1721414622, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1746373479, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 2120468285, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1923630743, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1306801322, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1326523537, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -619754774, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -258288201, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 373310550, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -224907315, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -98020424, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -998022256, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -993622441, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 348592576, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 2064351265, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 251429494, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1036874252, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1641872926, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -634782804, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1381395880, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -592220271, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1398688617, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 49966501, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 301161197, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 829151741, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 1689622646, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -55456016, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1862719093, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -2004367298, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -718438337, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: 844335448, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  - {fileID: -1709496801, guid: 52e52e672fbe36e4da7c99ba396185c8, type: 3}
-  swordIdleFramesPerSecond: 30
+  swordAttackOffset: {x: 0.41045415, y: -0.04}
+  attackOffset: {x: -0.2, y: -0.1}
+  defendOffset: {x: 0, y: -0.1}
+  actOffset: {x: 0.3, y: 0}
+  healOffset: {x: -0.26, y: 0}
+  healthbarOffset: {x: 0, y: 0}
+  settingOffset: {x: 0, y: 0}
+  textbarOffset: {x: 0, y: 0}
 --- !u!212 &1472282634
 SpriteRenderer:
   serializedVersion: 2
@@ -1945,6 +1855,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 11400000, guid: 5037a50fb16c40549bf0cf676c4395a1, type: 2}
+--- !u!95 &1472282636
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472282631}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91692034d26fa724ab70869c3401a299, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1536422190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2908,7 +2840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3000, y: 920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &810000000000000153

@@ -5,131 +5,159 @@ using UnityEngine.U2D.Animation;
 [RequireComponent(typeof(SpriteLibrary), typeof(SpriteRenderer))]
 public class PlayerAppearance : MonoBehaviour
 {
-    [Header("Body")]
+    private static readonly int ReadyHash = Animator.StringToHash("Base Layer.Ready");
+    private static readonly int SwordIdleHash = Animator.StringToHash("Base Layer.SwordIdle");
+
     [SerializeField] private SpriteRenderer bodyRenderer;
-    [SerializeField] private string bodyCategory = "Body";
-
-    [Header("Body idle")]
-    [SerializeField] private Sprite[] bodyIdleFrames;
-    [SerializeField, Min(1f)] private float bodyIdleFramesPerSecond = 6.25f;
-    
-    [Header("Weapon")]
     [SerializeField] private SpriteRenderer weaponRenderer;
-    [SerializeField] private string weaponCategory = "Weapon";
-
-    [Header("Sword idle")]
-    [SerializeField] private Sprite[] swordIdleFrames;
-    [SerializeField, Min(1f)] private float swordIdleFramesPerSecond = 30f;
+    [SerializeField] private Vector2 swordAttackOffset;
     
+    [SerializeField] private Vector2 attackOffset;
+    [SerializeField] private Vector2 defendOffset;
+    [SerializeField] private Vector2 actOffset;
+    [SerializeField] private Vector2 healOffset;
+    [SerializeField] private Vector2 healthbarOffset;
+    [SerializeField] private Vector2 settingOffset;
+    [SerializeField] private Vector2 textbarOffset;
+
     private SpriteLibrary spriteLibrary;
-    private int bodyIdleStart = -1;
-    private int bodyIdleCount;
-    private float bodyIdleTime;
-    private Sprite displayedBodyFrame;
-    private bool playingSwordIdle;
-    private float swordIdleTime;
-    private Sprite displayedSwordFrame;
+    private Animator bodyAnimator;
+    private Animator weaponAnimator;
+    private UIType? selectedWeapon;
+    private Sprite selectedWeaponSprite;
+    private bool attacking;
+    private Vector3 weaponRestPosition;
+    private Quaternion weaponRestRotation;
+
+    private void Awake()
+    {
+        spriteLibrary = GetComponent<SpriteLibrary>();
+        if (bodyRenderer == null) bodyRenderer = GetComponent<SpriteRenderer>();
+
+        bodyAnimator = bodyRenderer.GetComponent<Animator>();
+        if (weaponRenderer != null)
+            weaponAnimator = weaponRenderer.GetComponent<Animator>();
+    }
 
     private void LateUpdate()
     {
-        AdvanceBodyIdle(Time.deltaTime);
-        AdvanceWeaponIdle(Time.deltaTime);
+        if (attacking && (weaponAnimator == null || !weaponAnimator.isActiveAndEnabled ||
+            weaponAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash == ReadyHash))
+            StopWeaponAttack();
     }
 
-    private void AdvanceBodyIdle(float deltaTime)
-    {
-        if (bodyIdleStart < 0) return;
-        if (bodyRenderer == null || bodyRenderer.sprite != displayedBodyFrame
-            || bodyIdleFrames == null || bodyIdleStart + bodyIdleCount > bodyIdleFrames.Length)
-        {
-            bodyIdleStart = -1;
-            return;
-        }
+    private void OnDisable() => StopWeaponAttack();
 
-        float fps = Mathf.Max(1f, bodyIdleFramesPerSecond);
-        bodyIdleTime = Mathf.Repeat(bodyIdleTime + deltaTime, bodyIdleCount / fps);
-        int index = Mathf.Min(Mathf.FloorToInt(bodyIdleTime * fps), bodyIdleCount - 1);
-        displayedBodyFrame = bodyIdleFrames[bodyIdleStart + index];
-        bodyRenderer.sprite = displayedBodyFrame;
+    public void ShowBody(UIType type)
+    {
+        Sprite sprite = spriteLibrary.GetSprite("Body", type.ToString());
+        if (sprite == null || bodyRenderer == null) return;
+
+        if (!PlayState(bodyAnimator, Animator.StringToHash($"Base Layer.{type}")))
+            ShowStaticSprite(bodyRenderer, bodyAnimator, sprite);
     }
 
-    private void AdvanceWeaponIdle(float deltaTime)
+    public void ShowWeapon(UIType type)
     {
-        if (!playingSwordIdle) return;
-        if (weaponRenderer == null || weaponRenderer.sprite != displayedSwordFrame
-            || swordIdleFrames == null || swordIdleFrames.Length == 0)
-        {
-            playingSwordIdle = false;
-            return;
-        }
+        Sprite sprite = spriteLibrary.GetSprite("Weapon", type.ToString());
+        if (sprite == null || weaponRenderer == null) return;
 
-        float fps = Mathf.Max(1f, swordIdleFramesPerSecond);
-        swordIdleTime = Mathf.Repeat(swordIdleTime + deltaTime, swordIdleFrames.Length / fps);
-        int index = Mathf.Min(Mathf.FloorToInt(swordIdleTime * fps), swordIdleFrames.Length - 1);
-        displayedSwordFrame = swordIdleFrames[index];
-        weaponRenderer.sprite = displayedSwordFrame;
+        RestoreWeaponPose();
+        selectedWeapon = type;
+        selectedWeaponSprite = sprite;
+        
+        Transform weapon = weaponRenderer.transform;
+        weaponRestPosition = weapon.localPosition;
+        weaponRestRotation = weapon.localRotation;
+        
+        if (type == UIType.Attack)
+            weapon.localPosition += (Vector3)attackOffset;
+        if (type == UIType.Defend)
+            weapon.localPosition += (Vector3)defendOffset;
+        if (type == UIType.Act)
+            weapon.localPosition += (Vector3)actOffset;
+        if (type == UIType.Heal)
+            weapon.localPosition += (Vector3)healOffset;
+        if (type == UIType.HealthBar)
+            weapon.localPosition += (Vector3)healthbarOffset;
+        if (type == UIType.Setting)
+            weapon.localPosition += (Vector3)settingOffset;
+        if (type == UIType.TextBar)
+            weapon.localPosition += (Vector3)textbarOffset;
+        
+        ShowSelectedWeapon();
     }
 
     public void HideSelection()
     {
-        bodyIdleStart = -1;
-        bodyIdleTime = 0f;
-        playingSwordIdle = false;
-        swordIdleTime = 0f;
+        ShowStaticSprite(bodyRenderer, bodyAnimator, null);
 
-        if (bodyRenderer != null)
-        {
-            bodyRenderer.sprite = null;
-        }
+        selectedWeapon = null;
+        selectedWeaponSprite = null;
+        if (!attacking) ShowSelectedWeapon();
+    }
 
+    public void PlayWeaponAttack(UIType type)
+    {
+        int attackHash = Animator.StringToHash($"Base Layer.Attack_{type}");
+        if (!isActiveAndEnabled || weaponRenderer == null) return;
+
+        RestoreWeaponPose();
+        Transform weapon = weaponRenderer.transform;
+        weaponRestPosition = weapon.localPosition;
+        weaponRestRotation = weapon.localRotation;
+        if (!PlayState(weaponAnimator, attackHash)) return;
+
+        if (type == UIType.Attack)
+            weapon.localPosition += (Vector3)swordAttackOffset;
+
+        attacking = true;
+    }
+
+    private void StopWeaponAttack()
+    {
+        if (!attacking) return;
+
+        RestoreWeaponPose();
+        ShowSelectedWeapon();
+    }
+
+    private void RestoreWeaponPose()
+    {
+        if (!attacking) return;
+
+        attacking = false;
         if (weaponRenderer != null)
-        {
-            weaponRenderer.sprite = null;
-        }
+            weaponRenderer.transform.SetLocalPositionAndRotation(weaponRestPosition, weaponRestRotation);
     }
 
-    public void ShowBody(UIType type)
+    private void ShowSelectedWeapon()
     {
-        if (spriteLibrary == null) spriteLibrary = GetComponent<SpriteLibrary>();
-        if (bodyRenderer == null) bodyRenderer = GetComponent<SpriteRenderer>();
-        if (spriteLibrary == null || bodyRenderer == null) return;
-
-        Sprite sprite = spriteLibrary.GetSprite(bodyCategory, type.ToString());
-        if (sprite == null) return;
-
-        bodyIdleStart = -1;
-        bodyIdleCount = 0;
-        bodyIdleTime = 0f;
-        if (bodyIdleFrames != null)
-        {
-            for (int i = 0; i < bodyIdleFrames.Length; i++)
-            {
-                if (bodyIdleFrames[i] != sprite) continue;
-                bodyIdleStart = i;
-                while (i + bodyIdleCount < bodyIdleFrames.Length
-                    && bodyIdleFrames[i + bodyIdleCount] != null
-                    && bodyIdleFrames[i + bodyIdleCount].texture == sprite.texture)
-                    bodyIdleCount++;
-                break;
-            }
-        }
-        displayedBodyFrame = sprite;
-        bodyRenderer.sprite = sprite;
+        if (selectedWeapon != UIType.Attack || !PlayState(weaponAnimator, SwordIdleHash))
+            ShowStaticSprite(weaponRenderer, weaponAnimator, selectedWeaponSprite);
     }
-    
-    public void ShowWeapon(UIType type)
+
+    private static void ShowStaticSprite(SpriteRenderer renderer, Animator animator, Sprite sprite)
     {
-        if (spriteLibrary == null) spriteLibrary = GetComponent<SpriteLibrary>();
-        if (weaponRenderer == null) weaponRenderer = GetComponent<SpriteRenderer>();
-        if (spriteLibrary == null || weaponRenderer == null) return;
+        if (animator != null) animator.enabled = false;
+        if (renderer != null) renderer.sprite = sprite;
+    }
 
-        Sprite sprite = spriteLibrary.GetSprite(weaponCategory, type.ToString());
-        if (sprite == null) return;
+    private static bool PlayState(Animator animator, int state)
+    {
+        if (animator == null || !animator.gameObject.activeInHierarchy || animator.runtimeAnimatorController == null)
+            return false;
 
-        playingSwordIdle = type == UIType.Attack && swordIdleFrames != null
-            && swordIdleFrames.Length > 0 && swordIdleFrames[0] != null;
-        swordIdleTime = 0f;
-        displayedSwordFrame = playingSwordIdle ? swordIdleFrames[0] : sprite;
-        weaponRenderer.sprite = displayedSwordFrame;
+        bool wasEnabled = animator.enabled;
+        animator.enabled = true;
+        if (!animator.HasState(0, state))
+        {
+            animator.enabled = wasEnabled;
+            return false;
+        }
+
+        animator.Play(state, 0, 0f);
+        animator.Update(0f);
+        return true;
     }
 }

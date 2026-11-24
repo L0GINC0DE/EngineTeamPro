@@ -1,13 +1,15 @@
-using _01.Scripts.TAE.Managers;
-
 public class AttackAction : PlayerAction
 {
     public override bool PlayAction(Player owner, PlayableUI playerUI, PlayableUI weaponUI)
     {
-        TurnManager manager = TurnManager.Instance;
         if (owner == null || !owner.CanAct || owner.AttackCompo == null) return false;
+        if (!owner.AttackCompo.TryAttack()) return false;
 
-        owner.AttackCompo.Attack();
-        return !manager.IsPlayerTurn;
+        if (weaponUI != null && weaponUI.UISo != null)
+        {
+            PlayerAppearance appearance = owner.GetComponentInChildren<PlayerAppearance>();
+            if (appearance != null) appearance.PlayWeaponAttack(weaponUI.UISo.uiType);
+        }
+        return true;
     }
 }
