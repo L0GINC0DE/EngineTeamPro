@@ -523,6 +523,81 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1 &227229093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 227229094}
+  - component: {fileID: 227229096}
+  - component: {fileID: 227229095}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &227229094
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227229093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 497096312}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 164.05286}
+  m_SizeDelta: {x: 77.15, y: 76.1057}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &227229095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227229093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -8706515997816002603, guid: d0742e7c006826642b061391d03f8df0, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &227229096
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227229093}
+  m_CullTransparentMesh: 1
 --- !u!1 &229609923
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +780,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262568394}
   m_CullTransparentMesh: 1
+--- !u!1001 &373345846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8505299703218985533}
+    m_Modifications:
+    - target: {fileID: 2989040946547026304, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_Name
+      value: Impulser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 959.9591
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 704.76917
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
 --- !u!1 &374918893
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,8 +1092,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c529dbc888834586b8a08c13fda166c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Test.TestPush
-  power: 15
   <DirType>k__BackingField: 1
+  power: 15
 --- !u!4 &465102910
 Transform:
   m_ObjectHideFlags: 0
@@ -1225,6 +1357,7 @@ RectTransform:
   - {fileID: 1504074013}
   - {fileID: 1900417137}
   - {fileID: 1900000002}
+  - {fileID: 227229094}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2488,6 +2621,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798081289}
   m_CullTransparentMesh: 1
+--- !u!114 &819743694 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6283761460638364320, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+  m_PrefabInstance: {fileID: 1166050510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bea2a6a41541c2b786ceaf9e52abea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Systems.FeedbackSystem.ImpulseFeedback
+--- !u!4 &819743696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+  m_PrefabInstance: {fileID: 1166050510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &859699097 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+  m_PrefabInstance: {fileID: 373345846}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &859699098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6283761460638364320, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+  m_PrefabInstance: {fileID: 373345846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bea2a6a41541c2b786ceaf9e52abea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Systems.FeedbackSystem.ImpulseFeedback
 --- !u!114 &872252308 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2911292452964550647, guid: 5628bfa43130101438d599db7f4a9c20, type: 3}
@@ -3658,6 +3823,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110613913}
   m_CullTransparentMesh: 1
+--- !u!1001 &1166050510
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2003941435}
+    m_Modifications:
+    - target: {fileID: 2989040946547026304, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_Name
+      value: Impulser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 965.64905
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 706.2392
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186518949048467972, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6214041a9cf5039459dce7fbd842551c, type: 3}
 --- !u!1 &1205985954
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,6 +6274,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa96ab82beb4ff99e6aefde3c4e4711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.UI.ClothUI
+--- !u!4 &2003941435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6891467426446793357, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+  m_PrefabInstance: {fileID: 3919434476076299046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2009923640
 GameObject:
   m_ObjectHideFlags: 0
@@ -6852,7 +7079,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7661241539139162211, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
       propertyPath: OnHitEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661241539139162211, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+      propertyPath: OnHitEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 819743694}
+    - target: {fileID: 7661241539139162211, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+      propertyPath: OnHitEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CreateFeedback
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661241539139162211, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+      propertyPath: OnHitEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: _01.Scripts.TAE.Systems.FeedbackSystem.ImpulseFeedback, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8920299960831447966, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
       propertyPath: m_Size.x
@@ -6880,7 +7119,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6891467426446793357, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 819743696}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b618c278b6c68f4ebcec208c2f9a0bd, type: 3}
 --- !u!114 &4220314032550501989
@@ -6895,6 +7137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa35dd118d441daa59d63cc7a910a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.KTH.Player
+  shieldIcon: {fileID: 227229093}
   spriteRenderer: {fileID: 3769806486123245304}
   <BodyDataList>k__BackingField: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
 --- !u!61 &4492103042838082730
@@ -7085,6 +7328,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 859699098}
+        m_TargetAssemblyTypeName: _01.Scripts.TAE.Systems.FeedbackSystem.ImpulseFeedback,
+          Assembly-CSharp
+        m_MethodName: CreateFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   maxHealth: 50
   currentHealth: 0
   hitEffect: {fileID: 0}
@@ -7108,6 +7364,7 @@ Transform:
   - {fileID: 374918894}
   - {fileID: 1431116373}
   - {fileID: 229609924}
+  - {fileID: 859699097}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8541472082065349487

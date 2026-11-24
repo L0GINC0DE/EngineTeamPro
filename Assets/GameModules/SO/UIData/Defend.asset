@@ -23,3 +23,4 @@ MonoBehaviour:
   knockbackPower: 5
   attackRange: 3
   duration: 2
+  gimmickPrefab: {fileID: 8364696929294560865, guid: 0c9d48251e7344f5ab79596610795c77, type: 3}

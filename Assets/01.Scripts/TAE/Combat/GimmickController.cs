@@ -1,7 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using _01.Scripts.TAE.Managers;
 using _01.Scripts.TAE.Players;
-using _01.Scripts.TAE.UI;
+using _01.Scripts.TAE.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,9 +31,31 @@ namespace _01.Scripts.TAE.Combat
             
             playerInput.OnPrevKeyPressed += manager.Prev;
             playerInput.OnNextKeyPressed += manager.Next;
+            yield return null;
 
-            while (!Keyboard.current.enterKey.wasPressedThisFrame)
+            while (true)
             {
+                var keyboard = Keyboard.current;
+                if (keyboard != null)
+                {
+                    if (keyboard.leftArrowKey.wasPressedThisFrame)
+                        manager.Prev();
+                    else if (keyboard.rightArrowKey.wasPressedThisFrame)
+                        manager.Next();
+
+                    if (keyboard.escapeKey.wasPressedThisFrame || keyboard.cKey.wasPressedThisFrame)
+                    {
+                        playerInput.OnPrevKeyPressed -= manager.Prev;
+                        playerInput.OnNextKeyPressed -= manager.Next;
+                        manager.ClearSelection();
+                        GameManager.Instance.TimeStop(false);
+                        yield break;
+                    }
+
+                    if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame)
+                        break;
+                }
+
                 yield return null;
             }
 
@@ -49,10 +71,25 @@ namespace _01.Scripts.TAE.Combat
         private IEnumerator SelectCoroutine()
         {
             var manager = UIManager.Instance;
+            var placement = GimmickManager.Instance;
+            UIDataSO pendingLaunch = null;
+            bool launchRight = true;
             manager.ShowGimmickUI(GimmickManager.Instance.CurrentPointPos());
 
-            void Previous() => manager.MoveGimmickSelection(-1);
-            void Next() => manager.MoveGimmickSelection(1);
+            void Previous() => Move(-1);
+            void Next() => Move(1);
+
+            void Move(int direction)
+            {
+                if (pendingLaunch == null)
+                {
+                    manager.MoveGimmickSelection(direction);
+                    return;
+                }
+
+                launchRight = direction > 0;
+                manager.ShowGimmickDirection(launchRight);
+            }
 
             playerInput.OnPrevKeyPressed += Previous;
             playerInput.OnNextKeyPressed += Next;
@@ -71,8 +108,30 @@ namespace _01.Scripts.TAE.Combat
                         else if (keyboard.rightArrowKey.wasPressedThisFrame)
                             Next();
 
-                        if (keyboard.enterKey.wasPressedThisFrame && manager.TryConfirmGimmick())
+                        if (keyboard.escapeKey.wasPressedThisFrame || keyboard.cKey.wasPressedThisFrame)
                             break;
+
+                        if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame)
+                        {
+                            if (pendingLaunch != null)
+                            {
+                                if (placement.TryPlace(pendingLaunch, launchRight))
+                                    break;
+                            }
+                            else
+                            {
+                                UIDataSO selected = manager.GetSelectedGimmick();
+                                if (selected != null && selected.GimmickPrefab is LaunchGimmick)
+                                {
+                                    pendingLaunch = selected;
+                                    manager.ShowGimmickDirection(launchRight);
+                                }
+                                else if (placement.TryPlace(selected))
+                                {
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     yield return null;

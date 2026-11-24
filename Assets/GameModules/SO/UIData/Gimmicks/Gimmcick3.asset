@@ -22,4 +22,5 @@ MonoBehaviour:
   swingCoolTime: 0.5
   knockbackPower: 5
   attackRange: 5
-  duration: 1.5
+  duration: 15
+  gimmickPrefab: {fileID: 8364696929294560865, guid: 0c9d48251e7344f5ab79596610795c77, type: 3}
