@@ -1,5 +1,7 @@
 using System.Collections;
 using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Players;
+using _01.Scripts.TAE.Test;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Agents
@@ -31,6 +33,32 @@ namespace _01.Scripts.TAE.Agents
         
         public NotifyValue<bool> IsGrounded = new();
         public NotifyValue<bool> IsMove = new();
+
+        private Vector2 pushDir;
+        private float launchVelocity;
+        private float launchTime;
+        private bool boostedAscent;
+        private float boostAscentDeceleration;
+        
+        public void Bounce(float speed, float ascentDeceleration)
+        {
+            launchTime = 0f;
+            boostedAscent = speed > 0f;
+            boostAscentDeceleration = ascentDeceleration;
+            rb.linearVelocityY = speed;
+            _coyoteTimer = 0f;
+            _timeInAir = 0f;
+        }
+
+        public void Launch(float horizontalSpeed, float duration)
+        {
+            boostedAscent = false;
+            launchVelocity = horizontalSpeed;
+            launchTime = duration;
+            rb.linearVelocity = new Vector2(horizontalSpeed, 0f);
+        }
+
+        private PlatformPlayer owner;
         
         private void Awake()
         {
@@ -48,10 +76,22 @@ namespace _01.Scripts.TAE.Agents
             CanManualMove = true;
         }
 
+        public void Initialize(PlatformPlayer player)
+        {
+            owner = player;
+        }
+
         public void SetMoveDir(Vector2 moveDir)
         {
             this.moveDir = moveDir;
             IsMove.Value = moveDir != Vector2.zero;
+        }
+
+        public void SetPushDir(Vector2 pushDir, PushDirType type = PushDirType.None)
+        {
+            var blockDirection = owner.IsFlipX ? PushDirType.Left : PushDirType.Right;
+            bool isBlocked = owner.IsEquipShield && type == blockDirection;
+            this.pushDir = isBlocked ? Vector2.zero : pushDir;
         }
 
         public void SetSpeed(float speed)
@@ -61,7 +101,7 @@ namespace _01.Scripts.TAE.Agents
 
         public void Jump()
         {
-            if (_coyoteTimer <= 0f) return;
+            if (launchTime > 0f || _coyoteTimer <= 0f) return;
             
             rb.linearVelocityY = 0f;
             rb.AddForceY(jumpForce, ForceMode2D.Impulse);
@@ -70,14 +110,20 @@ namespace _01.Scripts.TAE.Agents
         
         private void FixedUpdate()
         {
+            if (launchTime > 0f)
+            {
+                rb.linearVelocity = new Vector2(launchVelocity, 0f);
+                launchTime -= Time.fixedDeltaTime;
+                return;
+            }
+
             if (CanManualMove)
             {
-                rb.linearVelocityX = moveDir.x * moveSpeed;
+                float speedMultiplier = owner != null ? owner.GimmickMoveMultiplier : 1f;
+                float push = owner != null && owner.HasGimmickShield ? 0f : pushDir.x;
+                rb.linearVelocityX = moveDir.x * moveSpeed * speedMultiplier + push;
             }
-        }
-
-        private void Update()
-        {
+            
             CalculateAirTime();
             ApplyExtraGravity();
         }
@@ -96,8 +142,8 @@ namespace _01.Scripts.TAE.Agents
         {
             if (!CheckGround())
             {
-                _timeInAir += Time.deltaTime;
-                _coyoteTimer -= Time.deltaTime;
+                _timeInAir += Time.fixedDeltaTime;
+                _coyoteTimer -= Time.fixedDeltaTime;
             }
             else
             {
@@ -108,6 +154,13 @@ namespace _01.Scripts.TAE.Agents
 
         private void ApplyExtraGravity()
         {
+            if (boostedAscent && rb.linearVelocityY > 0f)
+            {
+                rb.AddForceY(-boostAscentDeceleration * rb.mass);
+                return;
+            }
+
+            boostedAscent = false;
             if (_timeInAir > gravityDelay)
                 rb.AddForceY(-extraGravity);
         }
@@ -135,6 +188,24 @@ namespace _01.Scripts.TAE.Agents
             yield return new WaitForSeconds(duration);
             rb.linearVelocity = Vector2.zero;
             CanManualMove = true;
+        }
+
+        public void ResetForStage(Vector2 position)
+        {
+            if (_kbCoroutine != null)
+            {
+                StopCoroutine(_kbCoroutine);
+                _kbCoroutine = null;
+            }
+
+            launchTime = 0f;
+            boostedAscent = false;
+            _timeInAir = 0f;
+            _coyoteTimer = 0f;
+            pushDir = Vector2.zero;
+            SetMoveDir(Vector2.zero);
+            rb.position = position;
+            StopInput(false);
         }
 
         public void StopInput(bool isStop)

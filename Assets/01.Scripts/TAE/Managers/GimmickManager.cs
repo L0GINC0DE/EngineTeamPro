@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Data;
 using _01.Scripts.TAE.Utils;
 using UnityEngine;
 
@@ -21,13 +22,14 @@ using UnityEngine;
          {
              ClearSelection();
 
+             ResetActivePoint();
+
              if (list.gimmickList.Count <= 0) return;
 
              // 화면에 보이는 포인트만 모으기
              foreach (var gimmick in list.gimmickList)
              {
                  if (gimmick == null) continue;
-                 gimmick.ResetPoint();
 
                  bool visible = IsVisible(gimmick.point);
                  gimmick.CheckSelect(visible);
@@ -64,16 +66,6 @@ using UnityEngine;
              _points.Clear();
          }
          
-         public Sprite GetSprite(InteractPointType type)
-         {
-             int index = (int)type;
-
-             if (sprites == null || index < 0 || index >= sprites.Length)
-                 return null;
-
-             return sprites[index];
-         }
-         
          private bool IsVisible(InteractPoint point)
          {
              if (point == null ||
@@ -87,6 +79,30 @@ using UnityEngine;
          public Vector3 CurrentPointPos()
          {
              return CurrentPoint.transform.position;
+         }
+
+         private InteractPoint activePoint;
+
+         public void ResetActivePoint()
+         {
+             if (activePoint != null)
+                 activePoint.ResetPoint();
+
+             activePoint = null;
+         }
+
+         public bool TryPlace(UIDataSO data, bool launchRight = true)
+         {
+             InteractPoint point = CurrentPoint;
+
+             if (point == null || !point.TryApplyGimmick(data, launchRight))
+                 return false;
+
+             if (activePoint != null && activePoint != point)
+                 activePoint.ResetPoint();
+
+             activePoint = point;
+             return true;
          }
      }
  }

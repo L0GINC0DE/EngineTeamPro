@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95debfe773ab4519aa1f245023593f8f, type: 3}
+  m_Name: Gimmcick1
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIWeaponDataSO
+  uiName: ActUI
+  uiSprite: {fileID: -2322697686200378494, guid: 31d979cbf789a354a86680fa78ba8d42, type: 3}
+  moveSpeed: 10
+  health: 50
+  spriteLibrary: {fileID: 7108339969198208228, guid: e5178ae4296d6d943b231a340920e3ee, type: 3}
+  weaponSpritePos: {x: 0.325, y: -0.231, z: 0}
+  damage: 15
+  swingCoolTime: 0.5
+  knockbackPower: 5
+  attackRange: 5
+  duration: 15
+  gimmickPrefab: {fileID: 8364696929294560865, guid: ed1d5396cd2b46c886b372dbc08355ee, type: 3}

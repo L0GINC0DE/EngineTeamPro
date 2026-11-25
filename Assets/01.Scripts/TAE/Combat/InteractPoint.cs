@@ -1,53 +1,113 @@
-﻿using _01.Scripts.TAE.Managers;
+using System;
+using System.Collections;
+using _01.Scripts.TAE.Agents;
+using _01.Scripts.TAE.CoreLib;
+using _01.Scripts.TAE.Data;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Combat
 {
-    public enum InteractPointType
-    {
-        None = -1,
-        AttackUI,
-        SettingUI,
-        HealthBarUI
-    }
-    
     public class InteractPoint : MonoBehaviour
     {
-        [SerializeField] private InteractPointType type;
-        public InteractPointType PointType => type;
-        
-        private SpriteRenderer _spriteRenderer;
-        private Sprite _originalSprite;
-        private Color _originalColor;
-
-        public void Awake()
+        [Serializable]
+        private struct GimmickOption
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _originalSprite = _spriteRenderer.sprite;
-            _originalColor = _spriteRenderer.color;
+            public UIDataSO card;
+            public GimmickBase gimmick;
         }
+
+        [SerializeField] private SpriteRenderer idleMarker;
+        [SerializeField] private UseBarUI useBar;
+        [SerializeField] private Color selectedColor = Color.yellow;
+        [SerializeField] private GimmickOption[] options;
+
+        private GimmickBase activeGimmick;
+        private Coroutine useRoutine;
+        private Color idleColor;
+
+        public UIDataSO UIData { get; private set; }
+        public NotifyValue<float> UseTimer = new(0f);
+        public event Action<bool> OnReloadEvent;
+
+        private void Awake()
+        {
+            idleColor = idleMarker.color;
+            SetTimerVisible(false);
+        }
+
         public void SetSelected(bool selected)
         {
-            _spriteRenderer.color = selected ? Color.yellow : _originalColor;
-        }
-        
-        public void ResetPoint()
-        {
-            type = InteractPointType.None;
-            _spriteRenderer.sprite = _originalSprite;
-            SetSelected(false);
+            idleMarker.color = selected ? selectedColor : idleColor;
         }
 
-        public void ApplyGimmick(InteractPointType selectedType, Sprite sprite)
+        public bool TryApplyGimmick(UIDataSO data, bool launchRight)
         {
-            if (selectedType == InteractPointType.None)
+            if (data == null || options == null)
+                return false;
+
+            foreach (var option in options)
             {
+                if (option.card != data || option.gimmick == null)
+                    continue;
+
                 ResetPoint();
-                return;
+                UIData = data;
+                activeGimmick = option.gimmick;
+                activeGimmick.SetDirection(launchRight);
+                idleMarker.enabled = false;
+                activeGimmick.gameObject.SetActive(true);
+                useRoutine = StartCoroutine(UseForDuration(data.duration));
+                return true;
             }
-            
-            type = selectedType;
-            _spriteRenderer.sprite = sprite;
+
+            return false;
+        }
+
+        public void ResetPoint()
+        {
+            if (useRoutine != null)
+            {
+                StopCoroutine(useRoutine);
+                useRoutine = null;
+            }
+
+            if (activeGimmick != null)
+            {
+                activeGimmick.gameObject.SetActive(false);
+                activeGimmick = null;
+            }
+
+            UIData = null;
+            idleMarker.enabled = true;
+            SetSelected(false);
+            UseTimer.Value = 0f;
+            SetTimerVisible(false);
+        }
+
+        private void SetTimerVisible(bool visible)
+        {
+            if (useBar != null)
+                useBar.gameObject.SetActive(visible);
+
+            OnReloadEvent?.Invoke(visible);
+        }
+
+        private IEnumerator UseForDuration(float duration)
+        {
+            if (useBar != null)
+                useBar.SetNormalizeValue(1f);
+            SetTimerVisible(true);
+
+            while (UseTimer.Value < duration)
+            {
+                yield return null;
+                UseTimer.Value = Mathf.Min(UseTimer.Value + Time.deltaTime, duration);
+                if (useBar != null)
+                    useBar.SetNormalizeValue(1f - UseTimer.Value / duration);
+            }
+
+            useRoutine = null;
+            ResetPoint();
         }
     }
 }

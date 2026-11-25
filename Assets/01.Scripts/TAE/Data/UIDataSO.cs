@@ -20,5 +20,13 @@ namespace _01.Scripts.TAE.Data
         public int damage;
         public float swingCoolTime;
         public float knockbackPower;
+        public float attackRange;
+        
+        [Header("Gimmick Settings")]
+        public float duration;
+        
+        [SerializeField] private GimmickBase gimmickPrefab;
+        public GimmickBase GimmickPrefab => gimmickPrefab;
+        
     }
 }

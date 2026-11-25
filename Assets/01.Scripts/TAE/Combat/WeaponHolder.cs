@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using _01.Scripts.TAE.CoreLib;
 using _01.Scripts.TAE.Data;
@@ -15,10 +15,13 @@ namespace _01.Scripts.TAE.Combat
         public NotifyValue<UIWeapon> CurrentWeapon;
 
         private PlayerInputReader _playerInput;
+        private PlatformPlayer owner;
 
         private Dictionary<UIDataSO, UIWeapon> weaponDict = new();
         
         public UIDataListSO WeaponDataList => weaponDataList;
+        
+        [SerializeField] private UIDataSO shieldData;
 
         private void Awake()
         {
@@ -37,13 +40,15 @@ namespace _01.Scripts.TAE.Combat
 
         public void InitializeWeapons(PlatformPlayer player)
         {
+            owner = player;
             _playerInput = player.InputCompo;
             _playerInput.OnAttackKeyPressed += HandleAttackKeyPressed;
         }
 
         private void HandleAttackKeyPressed()
         {
-            CurrentWeapon.Value.Attack();
+            if (Time.timeScale > 0.1f && !owner.HasGimmickShield)
+                CurrentWeapon.Value.Attack();
         }
 
         private void HandleWeaponChange(UIWeapon prev, UIWeapon next)
@@ -59,7 +64,7 @@ namespace _01.Scripts.TAE.Combat
             return true;
         }
 
-        public void MakeWeaponList()
+        private void MakeWeaponList()
         {
             foreach (var weaponData in weaponDataList.uiDataList)
             {

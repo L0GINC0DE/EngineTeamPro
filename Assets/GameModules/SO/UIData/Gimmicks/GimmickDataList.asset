@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b557620c874e67b9af3d6141d33eac, type: 3}
+  m_Name: GimmickDataList
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.TAE.Data.UIDataListSO
+  uiDataList:
+  - {fileID: 11400000, guid: 10cb38c5d8fdf3a4bb1db70adc80b47a, type: 2}
+  - {fileID: 11400000, guid: 2f99084608772434c9f67f46f01ed558, type: 2}
+  - {fileID: 11400000, guid: 7ec5878723cfc464dbf4d76456b34aaf, type: 2}
+  - {fileID: 11400000, guid: 0bf1967c17b946b89b5d1da2f2523202, type: 2}

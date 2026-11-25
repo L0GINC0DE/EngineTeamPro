@@ -1,7 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using _01.Scripts.TAE.Managers;
 using _01.Scripts.TAE.Players;
-using _01.Scripts.TAE.UI;
+using _01.Scripts.TAE.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,14 +23,39 @@ namespace _01.Scripts.TAE.Combat
         {
             var manager = GimmickManager.Instance;
 
-            GameManager.Instance.TimeStop(true);
             manager.StartSelect();
+            if (!manager.CurrentPoint) yield break;
+            
+            GameManager.Instance.TimeStop(true);
+            
             
             playerInput.OnPrevKeyPressed += manager.Prev;
             playerInput.OnNextKeyPressed += manager.Next;
+            yield return null;
 
-            while (!Keyboard.current.enterKey.wasPressedThisFrame)
+            while (true)
             {
+                var keyboard = Keyboard.current;
+                if (keyboard != null)
+                {
+                    if (keyboard.leftArrowKey.wasPressedThisFrame)
+                        manager.Prev();
+                    else if (keyboard.rightArrowKey.wasPressedThisFrame)
+                        manager.Next();
+
+                    if (keyboard.escapeKey.wasPressedThisFrame || keyboard.cKey.wasPressedThisFrame)
+                    {
+                        playerInput.OnPrevKeyPressed -= manager.Prev;
+                        playerInput.OnNextKeyPressed -= manager.Next;
+                        manager.ClearSelection();
+                        GameManager.Instance.TimeStop(false);
+                        yield break;
+                    }
+
+                    if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame)
+                        break;
+                }
+
                 yield return null;
             }
 
@@ -46,22 +71,78 @@ namespace _01.Scripts.TAE.Combat
         private IEnumerator SelectCoroutine()
         {
             var manager = UIManager.Instance;
-            
+            var placement = GimmickManager.Instance;
+            UIDataSO pendingLaunch = null;
+            bool launchRight = true;
             manager.ShowGimmickUI(GimmickManager.Instance.CurrentPointPos());
 
-            while (Keyboard.current.enterKey.wasPressedThisFrame)
+            void Previous() => Move(-1);
+            void Next() => Move(1);
+
+            void Move(int direction)
             {
-                yield return null;
+                if (pendingLaunch == null)
+                {
+                    manager.MoveGimmickSelection(direction);
+                    return;
+                }
+
+                launchRight = direction > 0;
+                manager.ShowGimmickDirection(launchRight);
             }
 
-            manager.SelectFirstBtn();
-            
-            while (!Keyboard.current.enterKey.wasPressedThisFrame)
+            playerInput.OnPrevKeyPressed += Previous;
+            playerInput.OnNextKeyPressed += Next;
+
+            try
             {
+                // The Enter that picked the point must not confirm a gimmick.
                 yield return null;
+                while (true)
+                {
+                    var keyboard = Keyboard.current;
+                    if (keyboard != null)
+                    {
+                        if (keyboard.leftArrowKey.wasPressedThisFrame)
+                            Previous();
+                        else if (keyboard.rightArrowKey.wasPressedThisFrame)
+                            Next();
+
+                        if (keyboard.escapeKey.wasPressedThisFrame || keyboard.cKey.wasPressedThisFrame)
+                            break;
+
+                        if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame)
+                        {
+                            if (pendingLaunch != null)
+                            {
+                                if (placement.TryPlace(pendingLaunch, launchRight))
+                                    break;
+                            }
+                            else
+                            {
+                                UIDataSO selected = manager.GetSelectedGimmick();
+                                if (selected != null && selected.GimmickPrefab is LaunchGimmick)
+                                {
+                                    pendingLaunch = selected;
+                                    manager.ShowGimmickDirection(launchRight);
+                                }
+                                else if (placement.TryPlace(selected))
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    yield return null;
+                }
             }
-            
-            manager.HideGimmickUI();
+            finally
+            {
+                playerInput.OnPrevKeyPressed -= Previous;
+                playerInput.OnNextKeyPressed -= Next;
+                manager.HideGimmickUI();
+            }
         }
     }
 }

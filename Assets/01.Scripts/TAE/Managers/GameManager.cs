@@ -10,7 +10,7 @@ namespace _01.Scripts.TAE.Managers
         
         public void TimeStop(bool isTimeStop)
         {
-            Time.timeScale = isTimeStop ? 0f : 1f;
+            Time.timeScale = isTimeStop ? 0.015f : 1f;
             player.MoveCompo.StopInput(isTimeStop);
         }
     }
