@@ -11,11 +11,21 @@ public class KTH_Ui : MonoBehaviour
         sr.sortingOrder = 10;
         RandomSprite(so);
 
-        // 콜라이더 크기를 스프라이트에 맞춘다 (스프라이트를 넣은 뒤에 해야 함)
         if (TryGetComponent(out BoxCollider2D col) && sr.sprite != null)
             col.size = sr.sprite.bounds.size;
 
         Go(boss, bundle, style);
+    }
+
+    /// <summary>던지기 없이 스프라이트만 세팅 (묶음 투척 패턴에서 사용)</summary>
+    public void Setup(Sprite sprite)
+    {
+        sr = GetComponent<SpriteRenderer>();
+        sr.sortingOrder = 10;
+        sr.sprite = sprite;
+
+        if (TryGetComponent(out BoxCollider2D col) && sr.sprite != null)
+            col.size = sr.sprite.bounds.size;
     }
 
     private void RandomSprite(KTH_RandomSpriteListSo so)
@@ -36,10 +46,9 @@ public class KTH_Ui : MonoBehaviour
         KTH_Throw.Throw(transform, boss.target, style.flyDuration, hit).SetLink(gameObject);
     }
 
-    /// <summary>패링당하면 보스 쪽으로 회전하며 튕겨 나간 뒤 사라진다.</summary>
-    private void FlyAway(KTH_Boss boss, KTH_UiThrowStyle style)
+    public void FlyAway(KTH_Boss boss, KTH_UiThrowStyle style)
     {
-        transform.SetParent(null, true); // 보스가 움직여도 따라가지 않게 떼어낸다
+        transform.SetParent(null, true);
 
         float back = KTH_Throw.Direction(boss.target, boss.transform);
 

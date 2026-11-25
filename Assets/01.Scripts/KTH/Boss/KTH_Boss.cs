@@ -11,6 +11,15 @@ public class KTH_Boss : KTH_Enemy
     private KTH_BossAction reserved;
     private bool reservedEnhanced;
 
+    private void Awake()
+    {
+        if (_target == null)
+        {
+            KTH_ParryModule player = FindAnyObjectByType<KTH_ParryModule>();
+            if (player != null) _target = player.transform;
+        }
+    }
+
     public KTH_BossAction NextAction
     {
         get

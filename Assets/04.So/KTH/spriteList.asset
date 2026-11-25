@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KTH_RandomSpriteListSo
   <SpriteList>k__BackingField:
   - {fileID: 21300000, guid: 73f20a145a13406ca18c643dada9a117, type: 3}
-  - {fileID: 21300000, guid: 824fea42cd4f40c680594513fb768ba1, type: 3}
   - {fileID: 21300000, guid: bf5fe19137854782b5302ff907995019, type: 3}
+  - {fileID: 7635569982567093561, guid: aefb6d1f8dfcebc47a293fe860f374f1, type: 3}
+  - {fileID: 21300000, guid: de37982d35898dc4e83cae63ba2002c5, type: 3}

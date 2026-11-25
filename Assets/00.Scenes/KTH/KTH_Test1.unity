@@ -737,8 +737,14 @@ GameObject:
   - component: {fileID: 1861913611}
   - component: {fileID: 1861913610}
   - component: {fileID: 1861913609}
+  - component: {fileID: 1861913616}
   - component: {fileID: 1861913608}
   - component: {fileID: 1861913612}
+  - component: {fileID: 1861913613}
+  - component: {fileID: 1861913615}
+  - component: {fileID: 1861913614}
+  - component: {fileID: 1861913617}
+  - component: {fileID: 1861913618}
   m_Layer: 0
   m_Name: Circle (4)
   m_TagString: Untagged
@@ -759,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
   patterns:
-  - {fileID: 1861913612}
+  - {fileID: 1861913617}
   _target: {fileID: 1183141850}
 --- !u!114 &1861913609
 MonoBehaviour:
@@ -847,8 +853,8 @@ Transform:
   m_GameObject: {fileID: 1861913604}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.35, y: 5.48, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 6.18, y: 0.12, z: 0}
+  m_LocalScale: {x: 0.9679, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -865,7 +871,157 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ece144a90cd21c47a1120be18afe4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern1
-  spriteListSo: {fileID: 0}
+  spriteListSo: {fileID: 11400000, guid: 7a95b89aef51e9746a04546ac661e258, type: 2}
+  bundle:
+    baseDamage: 10
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+  style:
+    windup: 0.4
+    flyDuration: 0.6
+    flyAwayAngle: 45
+    flyAwayDistance: 12
+    flyAwayDuration: 0.6
+    spinDuration: 0.15
+--- !u!114 &1861913613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d14c63402ac0a34d8ff677e963ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern3
+  hm: {fileID: 1861913609}
+  healAmount: 20
+  windupTime: 0.6
+  maxHealReduction: 0.7
+  bundle:
+    baseDamage: 0
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+--- !u!114 &1861913614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3032f9e0ad4ec4547bf0d81d12f80587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_CheckHp
+  phase1: {fileID: 1861913608}
+  phase2: {fileID: 1861913616}
+  hm: {fileID: 0}
+  phaseRatio: 0.5
+--- !u!114 &1861913615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb59ecdff15225149be8a6ac9af1a000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern5
+  bundle:
+    baseDamage: 10
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+  p5d:
+    <WindupTime>k__BackingField: 0.9
+    <ApproachDuration>k__BackingField: 1
+    <Reach>k__BackingField: 1
+    <ReturnDuration>k__BackingField: 0.4
+    <AttackDelayTime>k__BackingField: 0
+    <RecoverTime>k__BackingField: 0
+  scratchTrigger: IsScratch
+  knockbackAngle: 30
+  knockbackDistance: 2
+  knockbackDuration: 0.3
+--- !u!114 &1861913616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6341fe838c84f744b65236e0a481d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
+  patterns: []
+  _target: {fileID: 0}
+--- !u!114 &1861913617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0340deb10d7174e996f41a3b6f5e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern7
+  storage: {fileID: 1861913618}
+  fallbackSprites: {fileID: 11400000, guid: 7a95b89aef51e9746a04546ac661e258, type: 2}
+  bundle:
+    baseDamage: 10
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+  style:
+    windup: 0.4
+    flyDuration: 0.6
+    flyAwayAngle: 45
+    flyAwayDistance: 12
+    flyAwayDuration: 0.6
+    spinDuration: 0.15
+  p7d:
+    groups: 030000000200000002000000
+    showTime: 0.6
+    groupInterval: 1
+    groupWindup: 0.3
+    hoverHeight: 2.5
+    hoverSpacing: 0.8
+    hoverMoveDuration: 0.3
+    damagePerUi: 1
+--- !u!114 &1861913618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9561a516dc103f749856719ac79a105d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_UiStorage
 --- !u!1 &1967005346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,9 +1326,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 173050254918184166, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 173050254918184166, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 883226423338946787, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
       propertyPath: m_Name
       value: Circle (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 883226423338946787, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045276473704708447, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045276473704708447, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607704557987778517, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607704557987778517, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004375852276229626, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004375852276229626, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2578523285399020560, guid: 53e496683a1e9104289f7c7b9e5191e3, type: 3}
       propertyPath: style.mashCamera
