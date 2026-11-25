@@ -2195,16 +2195,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueActionMenu
   dialogue: {fileID: 1361962261}
   returnFocus: {fileID: 1441787417}
-  prompt: "* \uC5B4\uB5BB\uAC8C \uD589\uB3D9\uD560\uAE4C?"
+  prompt: "* \uD589\uB3D9 \uC120\uD0DD"
   choices:
-  - label: "\uC0B4\uD3B4\uBCF4\uAE30"
+  - label: "\uD655\uC778\uD558\uAE30"
+    effect: "\uC801 \uC2A4\uD15F \uD655\uC778"
     response: "\uC801\uC774 \uB2E4\uC74C \uB3D9\uC791\uC744 \uC900\uBE44\uD558\uACE0
       \uC788\uC5B4."
-  - label: "\uB9D0 \uAC78\uAE30"
+  - label: "\uB3C4\uBC1C\uD558\uAE30"
+    effect: "\uC801 \uBC29\uC5B4 \uAC10\uC18C (Def\u2193)"
     response: "\uB300\uB2F5\uC774 \uB3CC\uC544\uC624\uC9C0 \uC54A\uC558\uC5B4."
-  - label: "\uC190\uC9D3\uD558\uAE30"
+  - label: "\uCE6D\uCC2C\uD558\uAE30"
+    effect: "\uC801 \uACF5\uACA9 \uAC10\uC18C (Atk\u2193)"
     response: "\uC801\uC774 \uB124 \uC190\uC9D3\uC744 \uC9C0\uCF1C\uBD10."
-  - label: "\uADC0 \uAE30\uC6B8\uC774\uAE30"
+  - label: "\uC704\uD611\uD558\uAE30"
+    effect: "\uC801 \uBAA8\uB4E0 \uC2A4\uD15F \uC99D\uAC00 (All\u2191)"
     response: "\uC870\uC6A9\uD55C \uC228\uC18C\uB9AC\uAC00 \uB4E4\uB824."
 --- !u!1 &1852660987
 GameObject:
