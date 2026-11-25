@@ -90,11 +90,13 @@ namespace _01.Scripts.TAE.Agents
 
         public void SetMaxHealth(int value)
         {
-            maxHealth = value;
-            float healthRatio = currentHealth / (float)maxHealth;
-            int newMaxHealth = Mathf.RoundToInt(maxHealth * (1f / 100f));
-            int newCurrentHealth = (int)(newMaxHealth * healthRatio);
-            currentHealth = newCurrentHealth;
+            EnsureInitialized();
+            int previousHealth = currentHealth;
+            float healthRatio = previousHealth / (float)maxHealth;
+
+            maxHealth = Mathf.Max(1, value);
+            int nextHealth = Mathf.RoundToInt(maxHealth * healthRatio);
+            SetHealth(previousHealth > 0 ? Mathf.Max(1, nextHealth) : 0);
         }
     }
 }

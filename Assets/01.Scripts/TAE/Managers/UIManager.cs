@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using _01.Scripts.TAE.Combat;
 using _01.Scripts.TAE.CoreLib;
 using _01.Scripts.TAE.Data;
@@ -113,13 +113,8 @@ namespace _01.Scripts.TAE.Managers
         public void ShowGimmickUI(Vector3 pos) => gimmickSelectUI.Show(pos);
         public void HideGimmickUI() => gimmickSelectUI.Hide();
         public void MoveGimmickSelection(int direction) => gimmickSelectUI.MoveSelection(direction);
-        public bool TryConfirmGimmick() => gimmickSelectUI.TryConfirm();
-
-        public void ApplyGimmick(UIDataSO data)
-        {
-            var point = GimmickManager.Instance.CurrentPoint;
-            if (point != null) point.SetUp(data);
-        }
+        public UIDataSO GetSelectedGimmick() => gimmickSelectUI.GetSelectedOption();
+        public void ShowGimmickDirection(bool right) => gimmickSelectUI.ShowLaunchDirection(right);
 
         #region Escape
 

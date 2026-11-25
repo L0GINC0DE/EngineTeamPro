@@ -18,6 +18,46 @@ namespace _01.Scripts.TAE.Players
         public PlayerAnimator AnimCompo { get; private set; }
         public GimmickController GimmickCompo { get; private set; }
 
+        private ShieldGimmick gimmickShield;
+        public bool HasGimmickShield => gimmickShield != null;
+        public float GimmickMoveMultiplier { get; private set; } = 1f;
+
+        public GameObject shieldIcon;
+
+        private SpriteRenderer _spriteRenderer;
+
+        private bool isEquipShield;
+        public bool IsEquipShield
+        {
+            get => isEquipShield;
+            private set
+            {
+                bool isEquip = value != isEquipShield;
+                if (isEquip)
+                {
+                    isEquipShield = value;
+                    shieldIcon.SetActive(isEquipShield);
+                    _spriteRenderer.color = isEquipShield ? Color.aquamarine : Color.white;
+                }
+            }
+        }
+
+        public void EquipGimmickShield(ShieldGimmick source, float moveMultiplier)
+        {
+            gimmickShield = source;
+            GimmickMoveMultiplier = moveMultiplier;
+            IsEquipShield = true;
+        }
+
+        public void ReleaseGimmickShield(ShieldGimmick source)
+        {
+            if (gimmickShield != source)
+                return;
+            gimmickShield = null;
+            GimmickMoveMultiplier = 1f;
+            IsEquipShield = false;
+        }
+
         [SerializeField] private SpriteRenderer spriteRenderer;
         
         [field: SerializeField] public UIDataListSO BodyDataList { get; private set; }
@@ -32,6 +72,8 @@ namespace _01.Scripts.TAE.Players
             InteractCompo = GetComponentInChildren<Interactor>();
             AnimCompo = GetComponentInChildren<PlayerAnimator>();
             GimmickCompo = GetComponentInChildren<GimmickController>();
+
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
         private void Start()
@@ -84,8 +126,13 @@ namespace _01.Scripts.TAE.Players
         {
             if (HealthCompo.IsDead) return;
 
+            bool attackFromFront = Vector2.Dot(transform.right, kbPower) < 0f;
+            if (HasGimmickShield && attackFromFront)
+                return;
+
             HealthCompo.TakeDamage(dmg);
-            MoveCompo.KnockbackPower(kbPower);
+            if (!HasGimmickShield)
+                MoveCompo.KnockbackPower(kbPower);
         }
 
         public void ApplyStats(UIDataSO data)
@@ -143,7 +190,11 @@ namespace _01.Scripts.TAE.Players
 
         #endregion
         
-        private void HandleJumpKeyPressed() => MoveCompo.Jump();
+        private void HandleJumpKeyPressed()
+        {
+            if (Time.timeScale > 0.1f)
+                MoveCompo.Jump();
+        }
         private void HandleExitKeyPressed() => UIManager.Instance.OnEscape();
         
     }

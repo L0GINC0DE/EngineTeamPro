@@ -5,12 +5,21 @@ $validationPath = Join-Path $repoPath '.utmp/DLJ_SwordIdleIntegration/Validation
 $runtimePath = Join-Path $validationPath 'Assets/Runtime'
 $editorPath = Join-Path $validationPath 'Assets/Editor'
 $spritePath = Join-Path $validationPath 'Assets/02.Sprites/DLJ'
+$weaponPath = Join-Path $spritePath 'Weapon'
 $scenePath = Join-Path $validationPath 'Assets/00.Scenes/DLJ'
-New-Item -ItemType Directory -Force -Path $runtimePath,$editorPath,$spritePath,$scenePath,(Join-Path $validationPath 'Packages'),(Join-Path $validationPath 'ProjectSettings') | Out-Null
+New-Item -ItemType Directory -Force -Path $runtimePath,$editorPath,$weaponPath,$scenePath,(Join-Path $validationPath 'Packages'),(Join-Path $validationPath 'ProjectSettings') | Out-Null
 Copy-Item -LiteralPath (Join-Path $repoPath 'Assets/01.Scripts/DLJ/PlayerAppearance.cs'),(Join-Path $repoPath 'Assets/01.Scripts/DLJ/PlayerAppearance.cs.meta'),(Join-Path $repoPath 'Assets/01.Scripts/DLJ/UI/PlayableUISO.cs') -Destination $runtimePath -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'WeaponIdleValidation.cs') -Destination (Join-Path $editorPath 'DLJ_SwordIdleValidation.cs') -Force
-foreach ($name in @('SwordAnimation.aseprite','SwordAnimation.aseprite.meta','PlayerBodyLibrary.asset','PlayerBodyLibrary.asset.meta')) {
+foreach ($name in @('PlayerBodyLibrary.asset','PlayerBodyLibrary.asset.meta')) {
     Copy-Item -LiteralPath (Join-Path $repoPath "Assets/02.Sprites/DLJ/$name") -Destination $spritePath -Force
+}
+if ($Mode -eq 'ImportSheet') {
+    $originalSword = Join-Path $repoPath 'Assets/02.Sprites/DLJ/Weapon/SwordAnimation.aseprite'
+    Copy-Item -LiteralPath $originalSword,"$originalSword.meta" -Destination $spritePath -Force
+}
+foreach ($name in @('SwordIdle_DLJ.anim','PlayerWeapon_DLJ.controller')) {
+    $assetPath = Join-Path $repoPath "Assets/02.Sprites/DLJ/Weapon/$name"
+    Copy-Item -LiteralPath $assetPath,"$assetPath.meta" -Destination $weaponPath -Force
 }
 $sheetPath = Join-Path $repoPath 'Assets/02.Sprites/DLJ/SwordIdle_DLJ_RedParticles.png'
 if (Test-Path -LiteralPath $sheetPath) {

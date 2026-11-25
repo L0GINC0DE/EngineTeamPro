@@ -25,5 +25,8 @@ namespace _01.Scripts.TAE.Data
         [Header("Gimmick Settings")]
         public float duration;
         
+        [SerializeField] private GimmickBase gimmickPrefab;
+        public GimmickBase GimmickPrefab => gimmickPrefab;
+        
     }
 }

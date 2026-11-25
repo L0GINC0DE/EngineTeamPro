@@ -10,6 +10,7 @@ public sealed class DialogueActionMenu : MonoBehaviour
     private struct Choice
     {
         public string label;
+        public string effect;
         [TextArea] public string response;
     }
 
@@ -100,11 +101,15 @@ public sealed class DialogueActionMenu : MonoBehaviour
     private void ShowChoices()
     {
         string text = prompt ?? string.Empty;
+        string effect = choices[selectedChoice].effect;
+        int firstRowEnd = Mathf.Min(1, choices.Length - 1);
         for (int i = 0; i < choices.Length; i++)
         {
-            text += i % 2 == 0 ? "\n" : "<pos=50%>";
+            text += i % 2 == 0 ? "\n" : "<pos=43%>";
             text += i == selectedChoice ? "> " : "   ";
             text += choices[i].label;
+            if (i == firstRowEnd && !string.IsNullOrWhiteSpace(effect))
+                text += $"<pos=71%><size=71%><color=#C0CAD8>{effect}</color></size>";
         }
         dialogue.Text = text;
     }

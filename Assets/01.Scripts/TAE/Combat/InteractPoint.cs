@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.CoreLib;
@@ -9,96 +9,105 @@ namespace _01.Scripts.TAE.Combat
 {
     public class InteractPoint : MonoBehaviour
     {
-        public event Action<bool> OnReloadEvent;
-        
-        private UseBarUI useBar;
-        
+        [Serializable]
+        private struct GimmickOption
+        {
+            public UIDataSO card;
+            public GimmickBase gimmick;
+        }
+
+        [SerializeField] private SpriteRenderer idleMarker;
+        [SerializeField] private UseBarUI useBar;
+        [SerializeField] private Color selectedColor = Color.yellow;
+        [SerializeField] private GimmickOption[] options;
+
+        private GimmickBase activeGimmick;
+        private Coroutine useRoutine;
+        private Color idleColor;
+
         public UIDataSO UIData { get; private set; }
-        
-        private SpriteRenderer _spriteRenderer;
-        private Sprite _originalSprite;
-        private Color _originalColor;
-
         public NotifyValue<float> UseTimer = new(0f);
+        public event Action<bool> OnReloadEvent;
 
-
-        public void Awake()
+        private void Awake()
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            useBar = GetComponentInChildren<UseBarUI>();
-            
-            _originalSprite = _spriteRenderer.sprite;
-            _originalColor = _spriteRenderer.color;
-            
-            OnReloadEvent += HandleUse;
-            OnReloadEvent?.Invoke(false);
-
-            UseTimer.OnValueChanged += HandleUseTimerChange;
-        }
-
-        private void OnEnable()
-        {
-            OnReloadEvent += HandleUse;
-            UseTimer.OnValueChanged += HandleUseTimerChange;
-        }
-
-        private void OnDisable()
-        {
-            OnReloadEvent -= HandleUse;
-            UseTimer.OnValueChanged -= HandleUseTimerChange;
+            idleColor = idleMarker.color;
+            SetTimerVisible(false);
         }
 
         public void SetSelected(bool selected)
         {
-            _spriteRenderer.color = selected ? Color.yellow : _originalColor;
-        }
-        
-        public void ResetPoint()
-        {
-            OnReloadEvent?.Invoke(false);
-            _spriteRenderer.sprite = _originalSprite;
-            SetSelected(false);
-            StopAllCoroutines();
+            idleMarker.color = selected ? selectedColor : idleColor;
         }
 
-        private void Use()
+        public bool TryApplyGimmick(UIDataSO data, bool launchRight)
         {
-            StartCoroutine(UseCoroutine());
-        }
+            if (data == null || options == null)
+                return false;
 
-        private void HandleUse(bool isActive)
-        {
-            useBar.gameObject.SetActive(isActive);
-        }
-        
-        private IEnumerator UseCoroutine()
-        {
-            UseTimer.Value = 0f;
-            OnReloadEvent?.Invoke(true);
-
-            while (UseTimer.Value < UIData.duration)
+            foreach (var option in options)
             {
-                UseTimer.Value = Mathf.Min(UseTimer.Value + Time.deltaTime, UIData.duration);
-                yield return null;
+                if (option.card != data || option.gimmick == null)
+                    continue;
+
+                ResetPoint();
+                UIData = data;
+                activeGimmick = option.gimmick;
+                activeGimmick.SetDirection(launchRight);
+                idleMarker.enabled = false;
+                activeGimmick.gameObject.SetActive(true);
+                useRoutine = StartCoroutine(UseForDuration(data.duration));
+                return true;
             }
 
-            OnReloadEvent?.Invoke(false);
+            return false;
+        }
+
+        public void ResetPoint()
+        {
+            if (useRoutine != null)
+            {
+                StopCoroutine(useRoutine);
+                useRoutine = null;
+            }
+
+            if (activeGimmick != null)
+            {
+                activeGimmick.gameObject.SetActive(false);
+                activeGimmick = null;
+            }
+
+            UIData = null;
+            idleMarker.enabled = true;
+            SetSelected(false);
+            UseTimer.Value = 0f;
+            SetTimerVisible(false);
+        }
+
+        private void SetTimerVisible(bool visible)
+        {
+            if (useBar != null)
+                useBar.gameObject.SetActive(visible);
+
+            OnReloadEvent?.Invoke(visible);
+        }
+
+        private IEnumerator UseForDuration(float duration)
+        {
+            if (useBar != null)
+                useBar.SetNormalizeValue(1f);
+            SetTimerVisible(true);
+
+            while (UseTimer.Value < duration)
+            {
+                yield return null;
+                UseTimer.Value = Mathf.Min(UseTimer.Value + Time.deltaTime, duration);
+                if (useBar != null)
+                    useBar.SetNormalizeValue(1f - UseTimer.Value / duration);
+            }
+
+            useRoutine = null;
             ResetPoint();
-        }
-
-        private void HandleUseTimerChange(float prev, float next)
-        {
-            useBar.SetNormalizeValue(next / UIData.duration);
-        }
-        
-        public void SetUp(UIDataSO data)
-        {
-            if (data == null || data.uiSprite == null)
-                return;
-
-            UIData = data;
-            _spriteRenderer.sprite = data.uiSprite;
-            Use();
         }
     }
 }
