@@ -6,6 +6,7 @@ using UnityEngine.U2D.Animation;
 public class PlayerAppearance : MonoBehaviour
 {
     private static readonly int ReadyHash = Animator.StringToHash("Base Layer.Ready");
+    private static readonly int CapeFlareHash = Animator.StringToHash("Base Layer.CapeFlare");
     private static readonly int SwordIdleHash = Animator.StringToHash("Base Layer.SwordIdle");
 
     [SerializeField] private SpriteRenderer bodyRenderer;
@@ -23,6 +24,8 @@ public class PlayerAppearance : MonoBehaviour
     private SpriteLibrary spriteLibrary;
     private Animator bodyAnimator;
     private Animator weaponAnimator;
+    private UIType? selectedBody;
+    private bool bodyAttacking;
     private UIType? selectedWeapon;
     private Sprite selectedWeaponSprite;
     private bool attacking;
@@ -41,17 +44,28 @@ public class PlayerAppearance : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (bodyAttacking && (bodyAnimator == null || !bodyAnimator.isActiveAndEnabled ||
+            bodyAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != CapeFlareHash))
+            StopBodyAttack();
+
         if (attacking && (weaponAnimator == null || !weaponAnimator.isActiveAndEnabled ||
             weaponAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash == ReadyHash))
             StopWeaponAttack();
     }
 
-    private void OnDisable() => StopWeaponAttack();
+    private void OnDisable()
+    {
+        StopBodyAttack();
+        StopWeaponAttack();
+    }
 
     public void ShowBody(UIType type)
     {
         Sprite sprite = spriteLibrary.GetSprite("Body", type.ToString());
         if (sprite == null || bodyRenderer == null) return;
+
+        selectedBody = type;
+        if (bodyAttacking) return;
 
         if (!PlayState(bodyAnimator, Animator.StringToHash($"Base Layer.{type}")))
             ShowStaticSprite(bodyRenderer, bodyAnimator, sprite);
@@ -90,11 +104,28 @@ public class PlayerAppearance : MonoBehaviour
 
     public void HideSelection()
     {
-        ShowStaticSprite(bodyRenderer, bodyAnimator, null);
+        selectedBody = null;
+        if (!bodyAttacking) ShowStaticSprite(bodyRenderer, bodyAnimator, null);
 
         selectedWeapon = null;
         selectedWeaponSprite = null;
         if (!attacking) ShowSelectedWeapon();
+    }
+
+    public void PlayBodyAttack()
+    {
+        if (isActiveAndEnabled && PlayState(bodyAnimator, CapeFlareHash))
+            bodyAttacking = true;
+    }
+
+    private void StopBodyAttack()
+    {
+        if (!bodyAttacking) return;
+        bodyAttacking = false;
+        if (selectedBody is UIType type)
+            ShowBody(type);
+        else
+            ShowStaticSprite(bodyRenderer, bodyAnimator, null);
     }
 
     public void PlayWeaponAttack(UIType type)

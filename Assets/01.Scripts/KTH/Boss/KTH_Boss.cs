@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,8 +6,10 @@ public class KTH_Boss : KTH_Enemy
 {
     [SerializeField]private List<KTH_BossAction> patterns = new();
     [SerializeField]private Transform _target;
+    [SerializeField] private bool useManagedTurns;
 
     public Transform target => _target;
+    public bool UsesManagedTurns => useManagedTurns;
     int index;
     private KTH_BossAction reserved;
     private bool reservedEnhanced;
@@ -37,30 +40,30 @@ public class KTH_Boss : KTH_Enemy
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (!useManagedTurns && Input.GetKeyDown(KeyCode.S))
         {
             TakeTurn();
         }
     }
 
-    public void TakeTurn()
+    public void TakeTurn() => TakeTurn(null);
+
+    public void TakeTurn(Action onComplete)
     {
+        KTH_BossAction action = NextAction;
+        bool enhanced = false;
         if (reserved != null)
         {
-            KTH_BossAction action = reserved;
-            bool enhanced = reservedEnhanced;
+            enhanced = reservedEnhanced;
             reserved = null;
             reservedEnhanced = false;
-            if (enhanced) action.ExecuteEnhanced(this);
-            else action.Execute(this);
-            return;
+        }
+        else if (patterns.Count > 0)
+        {
+            index = (index + 1) % patterns.Count;
         }
 
-        if (patterns.Count == 0) return;
-
-        index %= patterns.Count;
-        if (patterns[index] != null)
-            patterns[index].Execute(this);
-        index = (index + 1) % patterns.Count;
+        if (action != null) action.ExecuteTurn(this, enhanced, onComplete);
+        else onComplete?.Invoke();
     }
 }

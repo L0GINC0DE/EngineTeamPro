@@ -21,15 +21,18 @@ public class KTH_RestBossPattern3 : KTH_BossAction
         if (hm == null) hm = GetComponent<HealthModule>();
     }
 
-    public override void Execute(KTH_Boss kthBoss)
-    {
-        CheckHp(kthBoss);
-    }
+    public override void Execute(KTH_Boss boss) => ExecuteTurn(boss, false, null);
 
-    private void CheckHp(KTH_Boss kthBoss)
+    public override void ExecuteTurn(KTH_Boss boss, bool enhanced, Action onComplete)
     {
-        if (hm.CurrentHealth <= explosionHp) KTH_Bomb.Explosion(kthBoss, bundle, style);
-        else kthBoss.Reserve(RandomPattern(), true);
+        if (hm.CurrentHealth <= explosionHp)
+        {
+            KTH_Bomb.Explosion(boss, bundle, style, _ => onComplete?.Invoke());
+            return;
+        }
+
+        boss.Reserve(RandomPattern(), true);
+        onComplete?.Invoke();
     }
 
     private KTH_BossAction RandomPattern()
