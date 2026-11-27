@@ -87,7 +87,7 @@ public class KTH_RestBossPattern2 : KTH_BossAction
 
     private Action Hit(KTH_Boss boss, int parried, Action onComplete)
     {
-        return KTH_Throw.Judge(boss.target, current, branch.position, maxParry, r =>
+        return KTH_Throw.Judge(boss, current, branch.position, maxParry, r =>
         {
             Debug.Log($"[화차] {parried + 1}번째 판정 - perfect:{r.perfect} good:{r.good} fail:{r.fail} parried:{r.parried}");
             if (!r.parried)

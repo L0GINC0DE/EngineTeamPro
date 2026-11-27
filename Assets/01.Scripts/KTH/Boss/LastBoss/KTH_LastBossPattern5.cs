@@ -51,7 +51,7 @@ public class KTH_LastBossPattern5 : KTH_BossAction
         Sequence seq = DOTween.Sequence().SetLink(gameObject);
 
         // 패리 결과는 타격 직후 또는 입력 시점에 늦게 올 수 있어서 콜백에서 처리
-        Action hit = KTH_Throw.Judge(target, bundle, origin, 1, r =>
+        Action hit = KTH_Throw.Judge(kthBoss, bundle, origin, 1, r =>
         {
             if (r.parried) Knockback(t, origin, dir);
         });
@@ -62,7 +62,7 @@ public class KTH_LastBossPattern5 : KTH_BossAction
         {
             if (animator != null && !string.IsNullOrEmpty(scratchTrigger))
                 animator.SetTrigger(scratchTrigger);
-            if (bundle.parryable && telegraph != null)
+            if (bundle.ShowsParryTelegraph && telegraph != null)
                 telegraph.Play();
         });
         seq.AppendInterval(p5d.AttackDelayTime);

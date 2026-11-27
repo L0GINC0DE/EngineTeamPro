@@ -7,11 +7,7 @@ public class AttackAction : PlayerAction
 
         PlayerAppearance appearance = owner.GetComponentInChildren<PlayerAppearance>();
         if (appearance != null)
-        {
-            appearance.PlayBodyAttack();
-            if (weaponUI != null && weaponUI.UISo != null)
-                appearance.PlayWeaponAttack(weaponUI.UISo.uiType);
-        }
+            appearance.PlayAttack(weaponUI != null && weaponUI.UISo != null ? weaponUI.UISo.uiType : null);
         return true;
     }
 }

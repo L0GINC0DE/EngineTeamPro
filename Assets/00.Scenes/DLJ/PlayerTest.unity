@@ -581,7 +581,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.30666667, y: 0.36666667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -1338,8 +1338,8 @@ Transform:
   m_GameObject: {fileID: 1149495631}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 0.26, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 0.28, y: 0.36, z: 0}
+  m_LocalScale: {x: 4.3, y: 4.3, z: 4.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1442597061}
@@ -1982,8 +1982,8 @@ MonoBehaviour:
   actOffset: {x: 0.3, y: 0}
   healOffset: {x: -0.26, y: 0}
   healthbarOffset: {x: 0, y: 0}
-  settingOffset: {x: 0, y: 0}
-  textbarOffset: {x: 0, y: 0}
+  settingOffset: {x: 0.6, y: -0.36}
+  textbarOffset: {x: 0.26, y: 0.58}
 --- !u!212 &1472282634
 SpriteRenderer:
   serializedVersion: 2

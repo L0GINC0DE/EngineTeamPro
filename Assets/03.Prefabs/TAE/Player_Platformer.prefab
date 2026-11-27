@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 4466228498539053843}
   - component: {fileID: 4747205442963886433}
   - component: {fileID: 3706342402189669026}
+  - component: {fileID: 5628819096641525361}
   m_Layer: 8
   m_Name: Player_Platformer
   m_TagString: Untagged
@@ -455,6 +456,25 @@ MonoBehaviour:
   shieldIcon: {fileID: 0}
   spriteRenderer: {fileID: 1857171658087177315}
   <BodyDataList>k__BackingField: {fileID: 11400000, guid: ca97c52f0b585a44da8f93c249effc53, type: 2}
+--- !u!114 &5628819096641525361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8637792110162554345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00eb6bf8bd95477bb8ecf7e2399f51ec, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DLJ_Parry
+  OnParryEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  parryKey: 102
+  whiffLockout: 0.3
+  whiffWindow: 0.2
+  parryEffect: {fileID: 0}
 --- !u!114 &2282046762284913038
 MonoBehaviour:
   m_ObjectHideFlags: 0

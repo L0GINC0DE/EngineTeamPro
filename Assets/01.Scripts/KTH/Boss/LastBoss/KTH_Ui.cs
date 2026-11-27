@@ -37,7 +37,7 @@ public class KTH_Ui : MonoBehaviour
 
     private void Go(KTH_Boss boss, KTH_AttackBundle bundle, KTH_UiThrowStyle style)
     {
-        var hit = KTH_Throw.Judge(boss.target, bundle, transform.position, 1, result =>
+        var hit = KTH_Throw.Judge(boss, bundle, transform.position, 1, result =>
         {
             if (result.parried) FlyAway(boss, style);
             else Destroy(gameObject);

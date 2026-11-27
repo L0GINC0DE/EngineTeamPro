@@ -1,5 +1,4 @@
 using System;
-using _01.Scripts.TAE.Agents;
 using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -54,23 +53,15 @@ public class KTH_Speaker : MonoBehaviour
         Transform target = boss.target;
         Vector3 mouth = transform.TransformPoint(mouthOffset);
 
-        KTH_DefenseBundle defense = null;
-        if (target.TryGetComponent(out KTH_ParryModule parry))
-            defense = parry.BeginBundle(bundle, count, mouth);
-
-        Action hit = () =>
-        {
-            if (defense != null) defense.Hit();
-            else if (target.TryGetComponent(out HealthModule hm))
-                hm.TakeDamage((int)(bundle.baseDamage * bundle.damageCoefficient));
-        };
+        int contacts = Mathf.Max(1, bundle.inputCount);
+        Action hit = KTH_Throw.Judge(boss, bundle, mouth, count, contactCount: contacts);
 
         transform.localScale = originalScale;
         transform.DOPunchScale(originalScale * 0.2f, 0.25f, 6);
         if (style.shakeForce > 0)
             KTH_CameraShake.Shake(impulse, style.shakeForce);
 
-        for (int i = 0; i < bundle.inputCount; i++)
+        for (int i = 0; i < contacts; i++)
         {
             DOVirtual.DelayedCall(i * style.ringInterval, () =>
             {

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using _01.Scripts.TAE.Agents;
 using _01.Scripts.TAE.Interface;
+using _01.Scripts.TAE.Players;
 using UnityEngine;
 
 namespace _01.Scripts.TAE.Combat
@@ -9,6 +11,8 @@ namespace _01.Scripts.TAE.Combat
         [SerializeField] private ContactFilter2D targetFilter;
         [SerializeField] private float radius;
         [SerializeField] private int detectCount = 1;
+        [Tooltip("플랫포머 플레이어에게 적중할 때 사용할 패링 설정")]
+        [SerializeField] private DLJ_ParryProfile parryProfile = DLJ_ParryProfile.Default;
 
         private readonly List<Collider2D> targets = new();
 
@@ -34,7 +38,11 @@ namespace _01.Scripts.TAE.Combat
                     continue;
 
                 Vector2 knockbackDirection = (Vector2)target.transform.position - origin;
-                damageable.ApplyDamage(damage, kbPower * knockbackDirection.normalized);
+                Vector2 knockback = kbPower * knockbackDirection.normalized;
+                if (damageable is PlatformPlayer player)
+                    player.ApplyDamage(damage, knockback, parryProfile, GetComponentInParent<HealthModule>(), transform.position);
+                else
+                    damageable.ApplyDamage(damage, knockback);
                 hitCount++;
             }
 

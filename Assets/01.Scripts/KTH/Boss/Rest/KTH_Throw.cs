@@ -7,7 +7,7 @@ public static class KTH_Throw
 {
     public static void Windup(KTH_Boss boss, KTH_AttackBundle bundle, float time, Action onFire)
     {
-        if (bundle.parryable && boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
+        if (bundle.ShowsParryTelegraph && boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
             telegraph.Play();
 
         DOTween.Sequence().AppendInterval(time).AppendCallback(() => onFire());
@@ -47,20 +47,27 @@ public static class KTH_Throw
         return to.position.x >= from.position.x ? 1 : -1;
     }
 
-    public static Action Judge(Transform target, KTH_AttackBundle bundle, Vector3 from, int bundleCount = 1,
-        Action<KTH_DefenseResult> onResolved = null)
+    public static Action Judge(KTH_Boss boss, KTH_AttackBundle bundle, Vector3 from, int bundleCount = 1,
+        Action<KTH_DefenseResult> onResolved = null, int contactCount = 1)
     {
-        if (target.TryGetComponent(out KTH_ParryModule judge))
-            return judge.BeginBundle(bundle, bundleCount, from, onResolved).Hit;
-        return () => NoJudge(target, bundle, from, onResolved);
-    }
+        Transform target = boss.target;
+        contactCount = Mathf.Max(1, contactCount);
+        if (target != null && target.TryGetComponent(out KTH_ParryModule judge) && judge.isActiveAndEnabled)
+        {
+            boss.TryGetComponent(out HealthModule attacker);
+            return judge.BeginBundle(bundle, bundleCount, from, onResolved, attacker, contactCount).Hit;
+        }
 
-    private static void NoJudge(Transform target, KTH_AttackBundle bundle, Vector3 from,
-        Action<KTH_DefenseResult> onResolved)
-    {
-        if (target.TryGetComponent(out HealthModule hm))
-            hm.TakeDamage(Mathf.RoundToInt(bundle.baseDamage * bundle.damageCoefficient), from);
-        onResolved?.Invoke(new KTH_DefenseResult());
+        int remaining = contactCount;
+        return () =>
+        {
+            if (--remaining != 0) return;
+            KTH_DefenseStats stats = target != null ? target.GetComponent<KTH_DefenseStats>() : null;
+            var result = KTH_DefenseCalculator.Calculate(bundle, 0, 0, contactCount, bundleCount, stats);
+            if (target != null && target.gameObject.activeInHierarchy && target.TryGetComponent(out HealthModule health))
+                health.TakeDamage(result.damage, from);
+            onResolved?.Invoke(result);
+        };
     }
 
     private static bool Touching(Transform a, Transform b)

@@ -7,7 +7,7 @@ public class KTH_RestBossPattern1 : KTH_BossAction
     [SerializeField]private Transform fireTransform;
     [SerializeField]private float windupTime = 0.4f;
     [SerializeField]private float flyDuration = 0.6f;
-    [SerializeField]private KTH_AttackBundle bundle = new();
+    [SerializeField]private KTH_AttackBundle bundle = new() { parryMode = DLJ_ParryMode.Counter };
 
     [Header("강화: 큰 불꽃")]
     [SerializeField]private KTH_Fire enhancedPrefab;
@@ -46,7 +46,7 @@ public class KTH_RestBossPattern1 : KTH_BossAction
     private void FireBallSpawn(KTH_Boss boss, KTH_Fire prefab, float fly, KTH_AttackBundle data, Action onComplete)
     {
         KTH_Fire fireBall = Instantiate(prefab, fireTransform.position, Quaternion.identity);
-        Action hit = KTH_Throw.Judge(boss.target, data, fireTransform.position, 1, _ =>
+        Action hit = KTH_Throw.Judge(boss, data, fireTransform.position, 1, _ =>
         {
             fireBall.Explode();
             onComplete?.Invoke();
