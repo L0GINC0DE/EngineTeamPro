@@ -745,6 +745,8 @@ GameObject:
   - component: {fileID: 1861913614}
   - component: {fileID: 1861913617}
   - component: {fileID: 1861913618}
+  - component: {fileID: 1861913619}
+  - component: {fileID: 1861913620}
   m_Layer: 0
   m_Name: Circle (4)
   m_TagString: Untagged
@@ -765,8 +767,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
   patterns:
-  - {fileID: 1861913617}
+  - {fileID: 1861913619}
   _target: {fileID: 1183141850}
+  randomOrder: 1
+  noRepeat: 1
 --- !u!114 &1861913609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -911,6 +915,12 @@ MonoBehaviour:
     goodCoefficient: 0.5
     perfectWindow: 0.08
     goodWindow: 0.2
+  interruptThreshold: 0.5
+  desperatePatterns:
+  - {fileID: 1861913612}
+  - {fileID: 1861913617}
+  - {fileID: 1861913615}
+  noRepeatDesperate: 1
 --- !u!114 &1861913614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,6 +982,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
   patterns: []
   _target: {fileID: 0}
+  randomOrder: 1
+  noRepeat: 1
 --- !u!114 &1861913617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -984,8 +996,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0340deb10d7174e996f41a3b6f5e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern7
-  storage: {fileID: 1861913618}
-  fallbackSprites: {fileID: 11400000, guid: 7a95b89aef51e9746a04546ac661e258, type: 2}
+  uiPrefabs:
+  - {fileID: 8936337744868981692, guid: 0cf5bba90b981a54f85e5cf8f8b89b59, type: 3}
+  - {fileID: 1012785127534522529, guid: 8d419bf855cba3cd698db75c935ab6c1, type: 3}
+  - {fileID: 1066876044940726372, guid: 96f7ce5181bcf9c7154811ce9fb24d3e, type: 3}
+  - {fileID: 1058299119283603292, guid: 615e3b6c41a4d8352830122e405a56f2, type: 3}
+  - {fileID: 1067210268967545241, guid: f0d390ee514230471939610cc3b61480, type: 3}
+  - {fileID: 1017040159712192868, guid: fe9ecc775581ca9440e86c1278561931, type: 3}
+  - {fileID: 1046375268840391522, guid: 36af41df9306b78d465513ce90fdd578, type: 3}
+  uiWorldSize: 1.2
   bundle:
     baseDamage: 10
     damageCoefficient: 1
@@ -1003,13 +1022,20 @@ MonoBehaviour:
     spinDuration: 0.15
   p7d:
     groups: 030000000200000002000000
-    showTime: 0.6
+    showTime: 0.3
     groupInterval: 1
-    groupWindup: 0.3
-    hoverHeight: 2.5
-    hoverSpacing: 0.8
-    hoverMoveDuration: 0.3
+    groupWindup: 0.5
+    skyHeight: 6
+    skyBackOffset: 3
+    skySpacing: 1.4
+    skyHeightJitter: 0.6
+    appearDuration: 0.2
+    fallDuration: 0.35
     damagePerUi: 1
+    alignToFall: 1
+    spriteAngleOffset: -90
+    impactEffect: {fileID: 0}
+    impactEffectLife: 1
 --- !u!114 &1861913618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,6 +1048,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9561a516dc103f749856719ac79a105d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_UiStorage
+--- !u!114 &1861913619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986332547af44644bb2d42bfb387afd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern4
+  hm: {fileID: 1861913609}
+  p4d:
+    windupTime: 0.4
+    stanceDuration: 0
+    reflectMultiplier: 1
+    requiredPress: 5
+    mashTime: 1.5
+    mashShakeForce: 0.2
+    counterOnSuccess: 1
+  stanceBool: IsCounter
+  counterTrigger: IsCounterAttack
+--- !u!114 &1861913620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861913604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab26eed04d8510c4fb92c2523aea899e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern6
+  muzzle: {fileID: 0}
+  hm: {fileID: 0}
+  bundle:
+    baseDamage: 0
+    damageCoefficient: 1
+    parryable: 1
+    inputCount: 1
+    goodCoefficient: 0.5
+    perfectWindow: 0.08
+    goodWindow: 0.2
+  p6d:
+    chargeTime: 1.2
+    chargeEffect: {fileID: 0}
+    beamDuration: 2.5
+    beamWidth: 1.2
+    beamOverreach: 6
+    beamGrowTime: 0.15
+    beamColor: {r: 0, g: 0, b: 0, a: 1}
+    blockedColor: {r: 1, g: 1, b: 1, a: 1}
+    beamMaterial: {fileID: 0}
+    sortingOrder: 20
+    successRatio: 0.8
+    startGrace: 0.15
+    tickInterval: 0.25
+    tickDamage: 5
+    holdShakeForce: 0.15
+    hitShakeForce: 0.35
+    reflectOnSuccess: 1
+    reflectDamage: 30
+  chargeTrigger: IsLaserCharge
+  fireBool: IsLaser
 --- !u!1 &1967005346
 GameObject:
   m_ObjectHideFlags: 0

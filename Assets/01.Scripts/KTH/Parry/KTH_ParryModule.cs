@@ -71,6 +71,8 @@ public class KTH_ParryModule : MonoBehaviour
 
     public bool IsLocked => Time.time < lockedUntil;
     public bool IsMashing => mashDepth > 0;
+    /// <summary>패리 키를 누르고 있는지 (홀딩 패턴용)</summary>
+    public bool IsHolding => parryKey != KeyCode.None && Input.GetKey(parryKey);
     private bool HasStoredPress => !float.IsNegativeInfinity(storedPress);
     private float StoredPressExpire => Mathf.Max(whiffWindow, lastGoodWindow);
 

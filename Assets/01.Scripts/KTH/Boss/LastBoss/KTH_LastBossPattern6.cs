@@ -6,169 +6,237 @@ using UnityEngine;
 [Serializable]
 public class Pattern6Data
 {
-    [Tooltip("반격 자세를 잡기 전 예고 시간")]
-    public float windupTime = 0.4f;
-    [Tooltip("반격 자세 유지 시간 (0 이하면 다음에 맞을 때까지 계속 유지)")]
-    public float stanceDuration = 0f;
-    [Tooltip("받아친 공격을 되돌려줄 때 피해 배율")]
-    public float reflectMultiplier = 1f;
+    [Header("차지")]
+    [Tooltip("레이저 발사 전 예고(차지) 시간")]
+    public float chargeTime = 1.2f;
+    [Tooltip("차지 중 켤 이펙트 (비우면 없음)")]
+    public GameObject chargeEffect;
 
-    [Header("연타")]
-    [Tooltip("받아치기를 막기 위해 눌러야 하는 최소 횟수")]
-    [Min(1)] public int requiredPress = 5;
-    [Tooltip("연타 제한 시간")]
-    public float mashTime = 1.5f;
-    [Tooltip("연타 1번당 카메라 흔들림 세기")]
-    public float mashShakeForce = 0.2f;
+    [Header("레이저")]
+    [Tooltip("레이저 유지 시간. 이 시간 동안 패리 키를 꾹 누르고 있어야 한다")]
+    public float beamDuration = 2.5f;
+    [Tooltip("레이저 굵기")]
+    public float beamWidth = 1.2f;
+    [Tooltip("플레이어 뒤로 얼마나 더 뻗어 나갈지")]
+    public float beamOverreach = 6f;
+    [Tooltip("레이저가 굵어지는/가늘어지는 시간")]
+    public float beamGrowTime = 0.15f;
+    public Color beamColor = new(1f, 0.25f, 0.25f, 1f);
+    [Tooltip("막는 중일 때 레이저 색")]
+    public Color blockedColor = new(1f, 0.9f, 0.4f, 1f);
+    [Tooltip("레이저 머티리얼 (비우면 Sprites/Default)")]
+    public Material beamMaterial;
+    public int sortingOrder = 20;
 
-    [Header("연타 성공 시")]
-    [Tooltip("켜면 연타 성공 시 받아친 피해가 다시 보스에게 들어간다")]
-    public bool counterOnSuccess = true;
+    [Header("홀딩 판정")]
+    [Tooltip("레이저 시간 중 이 비율 이상 누르고 있으면 막아낸다")]
+    [Range(0, 1)] public float successRatio = 0.8f;
+    [Tooltip("레이저가 닿고 나서 이 시간 안에는 안 누르고 있어도 봐준다")]
+    public float startGrace = 0.15f;
+
+    [Header("피해")]
+    [Tooltip("안 누르고 있을 때 이 간격마다 피해")]
+    public float tickInterval = 0.25f;
+    [Tooltip("안 누르고 있을 때 틱당 피해")]
+    public int tickDamage = 5;
+    [Tooltip("막는 중일 때 카메라 흔들림 세기 (틱마다)")]
+    public float holdShakeForce = 0.15f;
+    [Tooltip("뚫렸을 때 카메라 흔들림 세기 (틱마다)")]
+    public float hitShakeForce = 0.35f;
+
+    [Header("막아냈을 때")]
+    [Tooltip("켜면 막아낸 뒤 보스에게 피해를 되돌린다")]
+    public bool reflectOnSuccess = true;
+    public int reflectDamage = 30;
 }
 
 /// <summary>
-/// 반격 자세: 보스가 자세를 잡은 뒤 플레이어에게 맞으면 그 피해를 무효화하고 역으로 받아친다.
-/// 플레이어가 제한 시간 안에 requiredPress번 연타하면 막아내고(옵션으로 보스에게 되돌림), 실패하면 받아친 피해를 입는다.
+/// 2페이즈 대형 레이저: 차지 → 플레이어를 향해 레이저 발사 → 레이저가 나가는 동안 패리 키를 꾹 누르고 있어야 한다.
+/// 누르고 있는 동안은 레이저가 플레이어 앞에서 막히고, 떼면 뚫려서 틱 피해를 입는다.
+/// 끝났을 때 누른 시간 비율이 successRatio 이상이면 막아낸 것(패리 성공).
 /// </summary>
 public class KTH_LastBossPattern6 : KTH_BossAction
 {
+    [Tooltip("레이저가 나가는 위치 (비우면 보스 위치)")]
+    [SerializeField] private Transform muzzle;
     [SerializeField] private HealthModule hm;
+    [SerializeField] private KTH_AttackBundle bundle = new() { baseDamage = 0f };
     [SerializeField] private Pattern6Data p6d = new();
 
     [Header("애니메이션")]
-    [SerializeField] private string stanceBool = "IsCounter";
-    [SerializeField] private string counterTrigger = "IsCounterAttack";
+    [SerializeField] private string chargeTrigger = "IsLaserCharge";
+    [SerializeField] private string fireBool = "IsLaser";
 
-    private KTH_Boss boss;
-    private Animator animator;
-    private bool inStance;
-    private bool countering;
-    private Tween stanceTimer;
+    private LineRenderer line;
+    private Sequence seq;
+    private Action endBeam;
 
     private void Awake()
     {
         if (hm == null) hm = GetComponentInParent<HealthModule>();
+        CreateLine();
     }
-
-    private void OnEnable() => hm.OnHealthChanged += OnBossHealthChanged;
 
     private void OnDisable()
     {
-        hm.OnHealthChanged -= OnBossHealthChanged;
-        EndStance();
+        seq?.Kill();
+        endBeam?.Invoke();
     }
 
     public override void Execute(KTH_Boss kthBoss)
     {
-        boss = kthBoss;
-        animator = kthBoss.GetComponentInChildren<Animator>();
+        seq?.Kill();
 
-        DOVirtual.DelayedCall(p6d.windupTime, BeginStance).SetLink(gameObject);
-    }
+        Animator animator = kthBoss.GetComponentInChildren<Animator>();
+        SetTrigger(animator, chargeTrigger);
+        SetActive(p6d.chargeEffect, true);
 
-    private void BeginStance()
-    {
-        inStance = true;
-        SetStanceAnim(true);
-        Debug.Log("[반격] 반격 자세");
-
-        stanceTimer?.Kill();
-        if (p6d.stanceDuration > 0f)
-            stanceTimer = DOVirtual.DelayedCall(p6d.stanceDuration, EndStance).SetLink(gameObject);
-    }
-
-    private void EndStance()
-    {
-        inStance = false;
-        stanceTimer?.Kill();
-        SetStanceAnim(false);
-    }
-
-    private void OnBossHealthChanged(int prev, int next)
-    {
-        // 반격 중 회복/피해로 다시 들어오는 경우는 무시
-        if (!inStance || countering || next >= prev || hm.IsDead) return;
-
-        int damage = prev - next;
-        EndStance();
-        Counter(damage);
-    }
-
-    private void Counter(int damage)
-    {
-        countering = true;
-        hm.Heal(damage); // 받은 피해 무효화
-
-        if (animator != null && !string.IsNullOrEmpty(counterTrigger))
-            animator.SetTrigger(counterTrigger);
-        if (boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
-            telegraph.Play();
-
-        int reflected = Mathf.RoundToInt(damage * p6d.reflectMultiplier);
-        Debug.Log($"[반격] {damage} 피해를 받아침 → {p6d.requiredPress}번 연타");
-
-        boss.target.TryGetComponent(out KTH_ParryModule parry);
-        Mash(parry, success =>
+        KTH_Throw.Windup(kthBoss, bundle, p6d.chargeTime, () =>
         {
-            countering = false;
-            Vector3 from = boss.transform.position;
-
-            if (success)
-            {
-                Debug.Log("[반격] 연타 성공");
-                if (p6d.counterOnSuccess) hm.TakeDamage(reflected, boss.target.position);
-            }
-            else
-            {
-                Debug.Log("[반격] 연타 실패");
-                if (boss.target.TryGetComponent(out HealthModule targetHm))
-                    targetHm.TakeDamage(reflected, from);
-            }
+            SetActive(p6d.chargeEffect, false);
+            SetBool(animator, fireBool, true);
+            Fire(kthBoss, success => SetBool(animator, fireBool, false));
         });
     }
 
-    /// <summary>제한 시간 안에 requiredPress번 누르면 즉시 성공, 시간이 다 되면 실패.</summary>
-    private void Mash(KTH_ParryModule parry, Action<bool> onEnd)
+    private void Fire(KTH_Boss kthBoss, Action<bool> onEnd)
     {
-        if (parry == null)
-        {
-            onEnd(false);
-            return;
-        }
+        Transform target = kthBoss.target;
+        target.TryGetComponent(out KTH_ParryModule parry);
+        target.TryGetComponent(out HealthModule targetHm);
 
-        int presses = 0;
+        // 홀딩 중 누르는 입력이 헛친 입력으로 잠기지 않게
+        parry?.BeginMash();
+
+        float elapsed = 0f, held = 0f, tickTimer = 0f;
         bool ended = false;
-        Tween timeout = null;
 
-        void End(bool success)
+        line.enabled = true;
+        line.widthMultiplier = 0f;
+        DOTween.To(() => line.widthMultiplier, w => line.widthMultiplier = w, p6d.beamWidth, p6d.beamGrowTime)
+            .SetTarget(line);
+
+        void End()
         {
             if (ended) return;
             ended = true;
-            parry.OnPressed -= OnPress;
-            parry.EndMash();
-            timeout?.Kill();
-            onEnd(success);
-        }
+            endBeam = null;
+            parry?.EndMash();
 
-        void OnPress()
+            float ratio = p6d.beamDuration > 0f ? held / p6d.beamDuration : 1f;
+            bool success = ratio >= p6d.successRatio;
+            Debug.Log($"[레이저] 홀딩 {ratio:P0} → {(success ? "막아냄" : "실패")}");
+
+            if (success)
+            {
+                parry?.OnParryEvent?.Invoke();
+                if (p6d.reflectOnSuccess && hm != null) hm.TakeDamage(p6d.reflectDamage, target.position);
+            }
+
+            if (line == null) return; // 오브젝트 파괴 중
+            DOTween.Kill(line);
+            DOTween.To(() => line.widthMultiplier, w => line.widthMultiplier = w, 0f, p6d.beamGrowTime)
+                .SetTarget(line)
+                .OnComplete(() => line.enabled = false);
+
+            onEnd?.Invoke(success);
+        }
+        endBeam = End;
+
+        seq = DOTween.Sequence().SetLink(gameObject);
+        seq.AppendInterval(p6d.beamDuration);
+        seq.OnUpdate(() =>
         {
-            if (KTH_DamageEffectManager.instance != null)
-                KTH_DamageEffectManager.instance.CameraShake(p6d.mashShakeForce);
-            if (++presses >= p6d.requiredPress) End(true);
-        }
+            if (ended || target == null) return;
+            float dt = Time.deltaTime;
+            elapsed += dt;
 
-        parry.BeginMash();
-        parry.OnPressed += OnPress;
-        timeout = DOVirtual.DelayedCall(p6d.mashTime, () => End(false)).SetLink(gameObject);
+            bool holding = parry != null && parry.IsHolding;
+            if (holding || elapsed <= p6d.startGrace) held += dt;
+
+            Vector3 from = muzzle != null ? muzzle.position : kthBoss.transform.position;
+            DrawBeam(from, target.position, holding);
+
+            tickTimer += dt;
+            if (tickTimer < p6d.tickInterval) return;
+            tickTimer -= p6d.tickInterval;
+
+            if (holding)
+            {
+                Shake(p6d.holdShakeForce);
+            }
+            else if (elapsed > p6d.startGrace)
+            {
+                Shake(p6d.hitShakeForce);
+                if (targetHm != null) targetHm.TakeDamage(p6d.tickDamage, from);
+            }
+        });
+        seq.OnComplete(End);
+        seq.OnKill(End);
     }
 
-    private void SetStanceAnim(bool on)
+    /// <summary>막는 중이면 플레이어 앞에서 끊기고, 아니면 플레이어를 뚫고 뒤로 뻗는다.</summary>
+    private void DrawBeam(Vector3 from, Vector3 to, bool blocked)
     {
-        if (animator == null || string.IsNullOrEmpty(stanceBool)) return;
+        Vector3 dir = to - from;
+        float dist = dir.magnitude;
+        if (dist < 0.001f) return;
+        dir /= dist;
+
+        Vector3 end = blocked
+            ? to - dir * (p6d.beamWidth * 0.5f)
+            : to + dir * p6d.beamOverreach;
+
+        line.SetPosition(0, from);
+        line.SetPosition(1, end);
+
+        Color c = blocked ? p6d.blockedColor : p6d.beamColor;
+        line.startColor = c;
+        line.endColor = c;
+    }
+
+    private void CreateLine()
+    {
+        GameObject go = new GameObject("Laser");
+        go.transform.SetParent(transform, false);
+        line = go.AddComponent<LineRenderer>();
+        line.positionCount = 2;
+        line.useWorldSpace = true;
+        line.numCapVertices = 6;
+        line.sortingOrder = p6d.sortingOrder;
+        line.material = p6d.beamMaterial != null ? p6d.beamMaterial : new Material(Shader.Find("Sprites/Default"));
+        line.enabled = false;
+    }
+
+    private static void Shake(float force)
+    {
+        if (force > 0f && KTH_DamageEffectManager.instance != null)
+            KTH_DamageEffectManager.instance.CameraShake(force);
+    }
+
+    private static void SetActive(GameObject go, bool active)
+    {
+        if (go != null) go.SetActive(active);
+    }
+
+    private static void SetTrigger(Animator animator, string name)
+    {
+        if (animator == null || string.IsNullOrEmpty(name)) return;
         foreach (AnimatorControllerParameter p in animator.parameters)
-            if (p.name == stanceBool && p.type == AnimatorControllerParameterType.Bool)
+            if (p.name == name && p.type == AnimatorControllerParameterType.Trigger)
             {
-                animator.SetBool(stanceBool, on);
+                animator.SetTrigger(name);
+                return;
+            }
+    }
+
+    private static void SetBool(Animator animator, string name, bool on)
+    {
+        if (animator == null || string.IsNullOrEmpty(name)) return;
+        foreach (AnimatorControllerParameter p in animator.parameters)
+            if (p.name == name && p.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool(name, on);
                 return;
             }
     }
