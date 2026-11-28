@@ -55,7 +55,7 @@ public class KTH_LastBossPattern3 : KTH_BossAction
 
     private void HealTiming(KTH_Boss kthBoss)
     {
-        KTH_Throw.Judge(kthBoss.target, bundle, kthBoss.transform.position, 1, result =>
+        KTH_Throw.Judge(kthBoss, bundle, kthBoss.transform.position, 1, result =>
         {
             try
             {

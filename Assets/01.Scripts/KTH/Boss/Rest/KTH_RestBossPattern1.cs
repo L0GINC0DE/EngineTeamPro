@@ -7,7 +7,7 @@ public class KTH_RestBossPattern1 : KTH_BossAction
     [SerializeField]private Transform fireTransform;
     [SerializeField]private float windupTime = 0.4f;
     [SerializeField]private float flyDuration = 0.6f;
-    [SerializeField]private KTH_AttackBundle bundle = new();
+    [SerializeField]private KTH_AttackBundle bundle = new() { parryMode = DLJ_ParryMode.Counter };
 
     [Header("강화: 큰 불꽃")]
     [SerializeField]private KTH_Fire enhancedPrefab;
@@ -25,28 +25,32 @@ public class KTH_RestBossPattern1 : KTH_BossAction
         animator = transform.GetChild(0).GetComponentInChildren<Animator>();
     }
 
-    public override void Execute(KTH_Boss kthBoss)
+    public override void Execute(KTH_Boss boss) => ExecuteTurn(boss, false, null);
+
+    public override void ExecuteEnhanced(KTH_Boss boss) => ExecuteTurn(boss, true, null);
+
+    public override void ExecuteTurn(KTH_Boss boss, bool enhanced, Action onComplete)
     {
-        Fire(kthBoss, fireBallPrefab, windupTime, flyDuration, bundle);
+        if (enhanced)
+            Fire(boss, enhancedPrefab, enhancedWindupTime, enhancedFlyDuration, enhancedBundle, onComplete);
+        else
+            Fire(boss, fireBallPrefab, windupTime, flyDuration, bundle, onComplete);
         animator.SetTrigger(FireHash);
     }
 
-    public override void ExecuteEnhanced(KTH_Boss kthBoss)
+    private void Fire(KTH_Boss boss, KTH_Fire prefab, float windup, float fly, KTH_AttackBundle data, Action onComplete)
     {
-        Fire(kthBoss, enhancedPrefab,
-            enhancedWindupTime, enhancedFlyDuration, enhancedBundle);
-        animator.SetTrigger(FireHash);
+        KTH_Throw.Windup(boss, data, windup, () => FireBallSpawn(boss, prefab, fly, data, onComplete));
     }
 
-    private void Fire(KTH_Boss boss, KTH_Fire prefab, float windup, float fly, KTH_AttackBundle data)
-    {
-        KTH_Throw.Windup(boss, data, windup, () => FireBallSpawn(boss, prefab, fly, data));
-    }
-
-    private void FireBallSpawn(KTH_Boss boss, KTH_Fire prefab, float fly, KTH_AttackBundle data)
+    private void FireBallSpawn(KTH_Boss boss, KTH_Fire prefab, float fly, KTH_AttackBundle data, Action onComplete)
     {
         KTH_Fire fireBall = Instantiate(prefab, fireTransform.position, Quaternion.identity);
-        Action hit = KTH_Throw.Judge(boss.target, data, fireTransform.position, 1, _ => fireBall.Explode());
+        Action hit = KTH_Throw.Judge(boss, data, fireTransform.position, 1, _ =>
+        {
+            fireBall.Explode();
+            onComplete?.Invoke();
+        });
         fireBall.Launch(boss.target, fly, hit);
     }
 }

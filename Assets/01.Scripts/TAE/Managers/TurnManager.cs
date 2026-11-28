@@ -101,27 +101,33 @@ namespace _01.Scripts.TAE.Managers
         {
             foreach (var enemy in enemies)
             {
-                EnemyTurn(enemy);
+                if (CheckBattleEnd()) break;
+                if (!IsAlive(enemy)) continue;
+
+                CurrentUnit = enemy;
+                Debug.Log($"적 턴: {enemy.name}", enemy);
                 yield return new WaitForSeconds(turnDelay);
 
-                if (!CheckBattleEnd() || IsAlive(enemy))
+                if (CheckBattleEnd()) break;
+                if (!IsAlive(enemy)) continue;
+
+                if (enemy.TryGetComponent(out KTH_Boss boss) && boss.isActiveAndEnabled
+                    && boss.UsesManagedTurns && boss.target != null)
                 {
-                    new AttackCommand(CurrentUnit, player).Execute();
-                    Debug.Log($"적 공격");
+                    bool completed = false;
+                    boss.TakeTurn(() => completed = true);
+                    while (!completed && IsAlive(player) && IsAlive(enemy) && boss != null && boss.isActiveAndEnabled)
+                        yield return null;
+                }
+                else if (new AttackCommand(enemy, player).Execute())
+                {
+                    Debug.Log("적 공격", enemy);
                 }
             }
 
             isProcessing = false;
             BeginPlayerTurn();
         }
-
-        private void EnemyTurn(BattleUnit enemy)
-        {
-            if (CheckBattleEnd() || !IsAlive(enemy)) return;
-            CurrentUnit = enemy;
-            Debug.Log($"적 턴: {CurrentUnit.name}", enemy);
-        }
-
 
         private static bool IsAlive(BattleUnit unit) => unit != null && unit.IsAlive;
     }

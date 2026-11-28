@@ -163,7 +163,7 @@ public class KTH_LastBossPattern2 : KTH_BossAction
         var tweens = new List<Tween>();
         bool resolved = false;
 
-        Action judge = KTH_Throw.Judge(kthBoss.target, CloneBundle(group.Count), group[0].transform.position, groupCount, r =>
+        Action judge = KTH_Throw.Judge(kthBoss, CloneBundle(group.Count), group[0].transform.position, groupCount, r =>
         {
             foreach (KTH_Ui ui in group)
             {

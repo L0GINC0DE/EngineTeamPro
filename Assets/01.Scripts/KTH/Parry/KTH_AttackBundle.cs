@@ -1,13 +1,6 @@
 using System;
 using UnityEngine;
 
-public enum KTH_DefenseGrade
-{
-    Perfect,
-    Good,
-    Fail,
-}
-
 [Serializable]
 public class KTH_AttackBundle
 {
@@ -15,8 +8,11 @@ public class KTH_AttackBundle
     public float baseDamage = 10f;
     [Tooltip("적이 가하는 피해 계수")]
     public float damageCoefficient = 1f;
-    [Tooltip("노란 예고가 뜨는 공격. 입력이 전부 대성공이면 피해 0")]
-    public bool parryable = true;
+    [Tooltip("Legacy는 기존 씬의 패링 설정을 사용. Block은 완전 차단, Counter는 차단과 반격")]
+    public DLJ_ParryMode parryMode;
+    [HideInInspector] public bool parryable = true;
+    [Tooltip("Counter 성공 시 적에게 들어가는 원래 공격 피해의 배율")]
+    [Min(0)] public float counterMultiplier = 1f;
 
     [Header("방어 타이밍")]
     [Tooltip("이 묶음에서 받아야 하는 입력 수 (접촉 횟수)")]
@@ -27,4 +23,16 @@ public class KTH_AttackBundle
     public float perfectWindow = 0.08f;
     [Tooltip("접촉 시점 앞뒤로 일반 성공이 되는 시간(초). 이보다 벗어나면 실패")]
     public float goodWindow = 0.2f;
+
+    public bool ShowsParryTelegraph => Profile().mode is DLJ_ParryMode.Block or DLJ_ParryMode.Counter;
+
+    public DLJ_ParryProfile Profile(float windowScale = 1f)
+    {
+        DLJ_ParryMode mode = parryMode;
+        if (mode == DLJ_ParryMode.Legacy)
+            mode = parryable ? DLJ_ParryMode.Block : DLJ_ParryMode.Reduce;
+
+        windowScale = Mathf.Max(0, windowScale);
+        return new DLJ_ParryProfile(mode, perfectWindow * windowScale, goodWindow * windowScale, counterMultiplier);
+    }
 }

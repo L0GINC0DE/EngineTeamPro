@@ -69,7 +69,7 @@ public static class KTH_Bomb
         Transform target = boss.target;
         int required = Mathf.Max(1, bundle.inputCount);
 
-        if (bundle.parryable && boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
+        if (bundle.ShowsParryTelegraph && boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
             telegraph.Play();
 
         KTH_ParryModule parry = null;

@@ -9,6 +9,8 @@ public struct KTH_DefenseResult
     public float timingMultiplier;
     public int damage;
     public bool parried;
+    public bool succeeded;
+    public int counterDamage;
 }
 
 public static class KTH_DefenseCalculator
@@ -19,24 +21,19 @@ public static class KTH_DefenseCalculator
         var result = new KTH_DefenseResult { perfect = perfect, good = good, fail = fail };
 
         int inputs = Mathf.Max(1, perfect + good + fail);
-        result.achievement = (perfect + good * bundle.goodCoefficient) / inputs;
+        DLJ_ParryProfile profile = bundle.Profile();
+        result.achievement = profile.CanParry ? (perfect + good * Mathf.Clamp01(bundle.goodCoefficient)) / inputs : 0;
+        float baseDamage = bundle.baseDamage * bundle.damageCoefficient;
+        float maxReduction = stats != null ? stats.maxReduction : DLJ_ParryProfile.DefaultReduction;
+        (result.timingMultiplier, result.counterDamage, result.parried, result.succeeded) =
+            profile.Resolve(baseDamage, result.achievement, perfect == inputs, maxReduction);
+        if (result.parried) return result;
 
-        if (bundle.parryable && perfect == inputs)
-        {
-            result.parried = true;
-            result.timingMultiplier = 0;
-            result.damage = 0;
-            return result;
-        }
-
-        float maxReduction = stats != null ? stats.maxReduction : 0;
         float takenCoef = stats != null ? stats.TakenCoefficient : 1;
         float defense = stats != null ? (stats.bodyDefense + stats.weaponDefense) * stats.defenseConversion : 0;
         int minDamage = stats != null ? stats.minDamage : 0;
 
-        result.timingMultiplier = 1 - maxReduction * result.achievement;
-
-        float damage = bundle.baseDamage * bundle.damageCoefficient * takenCoef * result.timingMultiplier
+        float damage = baseDamage * takenCoef * result.timingMultiplier
                        - defense / Mathf.Max(1, bundleCount);
 
         result.damage = Mathf.Max(minDamage, Mathf.RoundToInt(damage));

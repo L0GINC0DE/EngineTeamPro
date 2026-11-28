@@ -40,7 +40,7 @@ public class KTH_ShieldCast : MonoBehaviour
         void Back() => Return(returnDuration, () =>
             ThrowOnce(boss, bundle, flyDuration, returnDuration, total, remaining - 1));
 
-        Action hit = KTH_Throw.Judge(boss.target, bundle, transform.position, total);
+        Action hit = KTH_Throw.Judge(boss, bundle, transform.position, total);
 
         tween?.Kill();
         tween = KTH_Throw.Throw(transform, boss.target, flyDuration, () =>

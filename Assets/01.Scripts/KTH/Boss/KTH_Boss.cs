@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class KTH_Boss : KTH_Enemy
 {
     [SerializeField]private List<KTH_BossAction> patterns = new();
     [SerializeField]private Transform _target;
+    [SerializeField] private bool useManagedTurns;
 
     [Header("패턴 순서")]
     [Tooltip("켜면 patterns 중에서 랜덤으로 고른다. 끄면 순서대로")]
@@ -13,6 +15,7 @@ public class KTH_Boss : KTH_Enemy
     [SerializeField] private bool noRepeat = true;
 
     public Transform target => _target;
+    public bool UsesManagedTurns => useManagedTurns;
     int index = -1; // -1 = 아직 안 뽑음
     private int lastIndex = -1;
     private KTH_BossAction reserved;
@@ -59,42 +62,34 @@ public class KTH_Boss : KTH_Enemy
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (!useManagedTurns && Input.GetKeyDown(KeyCode.S))
         {
             TakeTurn();
         }
     }
 
-    public void TakeTurn()
+    public void TakeTurn() => TakeTurn(null);
+
+    public void TakeTurn(Action onComplete)
     {
+        // NextAction으로 미리 본 패턴을 그대로 쓴다 (예고와 실제가 다르지 않게)
+        KTH_BossAction action = NextAction;
+        bool enhanced = false;
         if (reserved != null)
         {
-            KTH_BossAction action = reserved;
-            bool enhanced = reservedEnhanced;
+            enhanced = reservedEnhanced;
             reserved = null;
             reservedEnhanced = false;
-            if (enhanced) action.ExecuteEnhanced(this);
-            else action.Execute(this);
-            return;
         }
-
-        if (patterns.Count == 0) return;
-
-        if (randomOrder)
+        else if (patterns.Count > 0)
         {
-            // NextAction으로 미리 본 패턴이 있으면 그걸 그대로 쓴다 (예고와 실제가 다르지 않게)
-            if (index < 0 || index >= patterns.Count) index = PickRandomIndex();
-            int current = index;
-            lastIndex = current;
-            index = -1; // 다음 턴에 새로 뽑기
-            patterns[current]?.Execute(this);
-            return;
+            index = Mathf.Max(0, index) % patterns.Count;
+            lastIndex = index;
+            // 랜덤이면 다음 턴에 새로 뽑고, 아니면 순서대로 다음 칸
+            index = randomOrder ? -1 : (index + 1) % patterns.Count;
         }
 
-        index = Mathf.Max(0, index) % patterns.Count;
-        lastIndex = index;
-        if (patterns[index] != null)
-            patterns[index].Execute(this);
-        index = (index + 1) % patterns.Count;
+        if (action != null) action.ExecuteTurn(this, enhanced, onComplete);
+        else onComplete?.Invoke();
     }
 }

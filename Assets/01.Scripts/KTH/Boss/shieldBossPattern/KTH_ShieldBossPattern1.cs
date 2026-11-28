@@ -1,5 +1,4 @@
-using System.Collections;
-using _01.Scripts.TAE.Agents;
+using System;
 using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
@@ -36,12 +35,11 @@ public class KTH_ShieldBossPattern1 : KTH_BossAction
         bool hit = false;
 
         Sequence seq = DOTween.Sequence();
-        KTH_DefenseBundle defense = null;
-        if (boss.target.TryGetComponent(out KTH_ParryModule judge))
-            defense = judge.BeginBundle(bundle, 1, origin, r => { if (r.parried) Overshoot(boss, seq, origin); });
+        Action contact = KTH_Throw.Judge(boss, bundle, origin, 1,
+            r => { if (r.parried) Overshoot(boss, seq, origin); });
 
         seq.Append(t.DOMoveY(boss.target.position.y, dashDuration).SetEase(yEasing));
-        if (bundle.parryable && boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
+        if (bundle.ShowsParryTelegraph && boss.TryGetComponent(out KTH_ParryTelegraph telegraph))
             seq.AppendCallback(telegraph.Play);
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => dashing = true);
@@ -49,7 +47,7 @@ public class KTH_ShieldBossPattern1 : KTH_BossAction
         seq.AppendCallback(() =>
         {
             dashing = false;
-            if (!hit) { hit = true; Contact(boss, defense, origin); }
+            if (!hit) { hit = true; contact(); }
         });
         seq.Append(t.DOMoveX(origin.x, returnDuration).SetEase(returnXEasing));
         seq.Append(t.DOMoveY(origin.y, returnDuration).SetEase(yEasing));
@@ -59,20 +57,8 @@ public class KTH_ShieldBossPattern1 : KTH_BossAction
             if (!dashing || hit) return;
             if (Mathf.Abs(t.position.x - boss.target.position.x) > contactDist) return;
             hit = true;
-            Contact(boss, defense, origin);
+            contact();
         });
-    }
-
-    private void Contact(KTH_Boss boss, KTH_DefenseBundle defense, Vector3 origin)
-    {
-        if (defense != null)
-        {
-            defense.Hit();
-            return;
-        }
-
-        if (boss.target.TryGetComponent(out HealthModule hm))
-            hm.TakeDamage(Mathf.RoundToInt(bundle.baseDamage * bundle.damageCoefficient), origin);
     }
 
     private void Overshoot(KTH_Boss boss, Sequence dash, Vector3 origin)

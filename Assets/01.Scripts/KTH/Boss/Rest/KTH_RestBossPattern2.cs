@@ -43,27 +43,26 @@ public class KTH_RestBossPattern2 : KTH_BossAction
         animator = branch.GetComponentInChildren<Animator>();
     }
 
-    public override void Execute(KTH_Boss kthBoss)
+    public override void Execute(KTH_Boss boss) => ExecuteTurn(boss, false, null);
+
+    public override void ExecuteEnhanced(KTH_Boss boss) => ExecuteTurn(boss, true, null);
+
+    public override void ExecuteTurn(KTH_Boss boss, bool enhanced, Action onComplete)
     {
-        Begin(kthBoss, false, bundle, windupTime, flyDuration, spin);
+        if (enhanced)
+        {
+            BeginEnhanced(boss, onComplete);
+            return;
+        }
+
+        current = bundle;
+        KTH_Throw.Windup(boss, current, windupTime, () => Fire(boss, onComplete));
     }
 
-    public override void ExecuteEnhanced(KTH_Boss kthBoss)
-    {
-        Begin2(kthBoss, true, enhancedBundle, enhancedWindupTime, enhancedFlyDuration, enhancedSpin);
-
-    }
-
-    private void Begin(KTH_Boss boss, bool isEnhanced, KTH_AttackBundle data, float windup, float fly, bool doSpin)
-    {
-        current = data;
-        KTH_Throw.Windup(boss, current, windup, () => Fire(boss, fly, doSpin));
-        
-    }
     // 화차: 보스 앞 제자리에서 회전 + 애니메이션 시작 → 예고 후 회전한 채로 발사 → 패리 튕김 동안에도 유지 → End()에서 종료
-    private void Begin2(KTH_Boss boss, bool isEnhanced, KTH_AttackBundle data, float windup, float fly, bool doSpin)
+    private void BeginEnhanced(KTH_Boss boss, Action onComplete)
     {
-        current = data;
+        current = enhancedBundle;
 
         spinTween?.Kill();
         spinTween = branch.DOLocalRotate(new Vector3(0, 0, 360), spinDuration, RotateMode.FastBeyond360)
@@ -71,29 +70,29 @@ public class KTH_RestBossPattern2 : KTH_BossAction
         if (animator != null) animator.SetBool(SpinHash, true);
 
         // 화차 애니메이션·회전은 발사와 패리 튕김 내내 유지하고 End()에서 끈다
-        KTH_Throw.Windup(boss, current, windup,
-            () => KTH_Throw.Throw(branch, boss.target, fly, Hit(boss, 0)));
+        KTH_Throw.Windup(boss, current, enhancedWindupTime,
+            () => KTH_Throw.Throw(branch, boss.target, enhancedFlyDuration, Hit(boss, 0, onComplete)));
     }
 
-    private void Fire(KTH_Boss boss, float fly, bool doSpin)
+    private void Fire(KTH_Boss boss, Action onComplete)
     {
         if (animator != null) animator.SetBool(SpinHash, false);
         spinTween?.Kill();
-        if (doSpin)
+        if (spin)
             spinTween = branch.DORotate(new Vector3(0, 0, 360), spinDuration, RotateMode.FastBeyond360)
                 .SetEase(Ease.Linear).SetLoops(-1);
 
-        KTH_Throw.Throw(branch, boss.target, fly, Hit(boss, 0));
+        KTH_Throw.Throw(branch, boss.target, flyDuration, Hit(boss, 0, onComplete));
     }
 
-    private Action Hit(KTH_Boss boss, int parried)
+    private Action Hit(KTH_Boss boss, int parried, Action onComplete)
     {
-        return KTH_Throw.Judge(boss.target, current, branch.position, maxParry, r =>
+        return KTH_Throw.Judge(boss, current, branch.position, maxParry, r =>
         {
             Debug.Log($"[화차] {parried + 1}번째 판정 - perfect:{r.perfect} good:{r.good} fail:{r.fail} parried:{r.parried}");
             if (!r.parried)
             {
-                End();
+                End(onComplete);
                 return;
             }
 
@@ -102,22 +101,24 @@ public class KTH_RestBossPattern2 : KTH_BossAction
 
             if (count >= maxParry)
             {
-                KTH_Throw.Return(branch, reflectAngle, back, reflectDistance, reflectDuration).OnComplete(End);
+                KTH_Throw.Return(branch, reflectAngle, back, reflectDistance, reflectDuration)
+                    .OnComplete(() => End(onComplete));
                 return;
             }
 
-            Action next = Hit(boss, count);
+            Action next = Hit(boss, count, onComplete);
             KTH_Throw.Return(branch, 90, back, bounceHeight, bounceDuration)
                 .OnComplete(() => KTH_Throw.Throw(branch, boss.target, fallDuration, next));
         });
     }
 
-    private void End()
+    private void End(Action onComplete)
     {
         spinTween?.Kill();
         branch.localPosition = restPosition;
         branch.localRotation = restRotation;
         if (animator != null) animator.SetBool(SpinHash, false);
+        onComplete?.Invoke();
     }
 
     

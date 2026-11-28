@@ -1,0 +1,473 @@
+{
+  "frames": {
+    "idle-in": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 90,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "gather": {
+      "frame": {
+        "x": 72,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 70,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "coil": {
+      "frame": {
+        "x": 144,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "lead": {
+      "frame": {
+        "x": 216,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 50,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "snap": {
+      "frame": {
+        "x": 288,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 40,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "crest": {
+      "frame": {
+        "x": 0,
+        "y": 80,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 50,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "billow": {
+      "frame": {
+        "x": 72,
+        "y": 80,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "present": {
+      "frame": {
+        "x": 144,
+        "y": 80,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 110,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "ripple": {
+      "frame": {
+        "x": 216,
+        "y": 80,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "release": {
+      "frame": {
+        "x": 288,
+        "y": 80,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "fall": {
+      "frame": {
+        "x": 0,
+        "y": 160,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 70,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "settle": {
+      "frame": {
+        "x": 72,
+        "y": 160,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    },
+    "idle-out": {
+      "frame": {
+        "x": 144,
+        "y": 160,
+        "w": 72,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 72,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 72,
+        "h": 80
+      },
+      "duration": 140,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9625
+      },
+      "anchorPx": {
+        "x": 36,
+        "y": 77
+      }
+    }
+  },
+  "animations": {
+    "CapeFlare": {
+      "frames": [
+        "idle-in",
+        "gather",
+        "coil",
+        "lead",
+        "snap",
+        "crest",
+        "billow",
+        "present",
+        "ripple",
+        "release",
+        "fall",
+        "settle",
+        "idle-out"
+      ],
+      "loop": false,
+      "duration": 1020
+    }
+  },
+  "meta": {
+    "app": "Pixelbolt",
+    "version": "1",
+    "image": "PlayerCapeFlare_DLJ.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 360,
+      "h": 240
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "CapeFlare",
+        "from": 0,
+        "to": 12,
+        "direction": "forward"
+      }
+    ]
+  }
+}

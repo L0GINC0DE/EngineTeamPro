@@ -5,11 +5,9 @@ public class AttackAction : PlayerAction
         if (owner == null || !owner.CanAct || owner.AttackCompo == null) return false;
         if (!owner.AttackCompo.TryAttack()) return false;
 
-        if (weaponUI != null && weaponUI.UISo != null)
-        {
-            PlayerAppearance appearance = owner.GetComponentInChildren<PlayerAppearance>();
-            if (appearance != null) appearance.PlayWeaponAttack(weaponUI.UISo.uiType);
-        }
+        PlayerAppearance appearance = owner.GetComponentInChildren<PlayerAppearance>();
+        if (appearance != null)
+            appearance.PlayAttack(weaponUI != null && weaponUI.UISo != null ? weaponUI.UISo.uiType : null);
         return true;
     }
 }

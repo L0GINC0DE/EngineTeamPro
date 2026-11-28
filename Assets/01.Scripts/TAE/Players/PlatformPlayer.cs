@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace _01.Scripts.TAE.Players
 {
+    [RequireComponent(typeof(DLJ_Parry))]
     public class PlatformPlayer : MonoBehaviour, IDamageable
     {
         public PlayerInputReader InputCompo { get; private set; }
@@ -19,6 +20,7 @@ namespace _01.Scripts.TAE.Players
         public GimmickController GimmickCompo { get; private set; }
 
         private ShieldGimmick gimmickShield;
+        private DLJ_Parry parry;
         public bool HasGimmickShield => gimmickShield != null;
         public float GimmickMoveMultiplier { get; private set; } = 1f;
 
@@ -68,6 +70,7 @@ namespace _01.Scripts.TAE.Players
             InputCompo = GetComponent<PlayerInputReader>();
             MoveCompo = GetComponentInChildren<AgentMovement>();
             HealthCompo = GetComponent<HealthModule>();
+            if (!TryGetComponent(out parry)) parry = gameObject.AddComponent<DLJ_Parry>();
             WeaponCompo = GetComponentInChildren<WeaponHolder>();
             InteractCompo = GetComponentInChildren<Interactor>();
             AnimCompo = GetComponentInChildren<PlayerAnimator>();
@@ -114,7 +117,8 @@ namespace _01.Scripts.TAE.Players
             FlipController(moveInput.x);
 
             if (Keyboard.current.tKey.wasPressedThisFrame)
-                HealthCompo.TakeDamage(1);
+                ApplyDamage(1, Vector2.zero, DLJ_ParryProfile.Default, null, transform.position + Vector3.right,
+                    applyKnockback: false);
 
             if (Keyboard.current.cKey.wasPressedThisFrame)
             {
@@ -124,15 +128,33 @@ namespace _01.Scripts.TAE.Players
 
         public void ApplyDamage(int dmg, Vector2 kbPower)
         {
+            ApplyDamage(dmg, kbPower, DLJ_ParryProfile.Default, null, transform.position + Vector3.right);
+        }
+
+        public void ApplyDamage(int dmg, Vector2 kbPower, DLJ_ParryProfile profile, HealthModule attacker, Vector3 hitFrom,
+            bool applyKnockback = true)
+        {
             if (HealthCompo.IsDead) return;
 
             bool attackFromFront = Vector2.Dot(transform.right, kbPower) < 0f;
             if (HasGimmickShield && attackFromFront)
                 return;
 
-            HealthCompo.TakeDamage(dmg);
-            if (!HasGimmickShield)
-                MoveCompo.KnockbackPower(kbPower);
+            parry.JudgeContact(profile, false, grade =>
+            {
+                bool perfect = grade == DLJ_ParryGrade.Perfect;
+                float achievement = grade == DLJ_ParryGrade.Fail ? 0f : perfect ? 1f : DLJ_ParryProfile.GoodWeight;
+                var outcome = profile.Resolve(dmg, achievement, perfect);
+                float takenCoefficient = TryGetComponent(out KTH_DefenseStats stats) ? stats.TakenCoefficient : 1f;
+                int damage = Mathf.RoundToInt(dmg * outcome.damageMultiplier * takenCoefficient);
+
+                if (damage > 0) HealthCompo.TakeDamage(damage, hitFrom);
+                if (applyKnockback && !outcome.blocked && !HasGimmickShield)
+                    MoveCompo.KnockbackPower(kbPower);
+                if (outcome.counterDamage > 0 && attacker != null && attacker != HealthCompo && attacker.isActiveAndEnabled)
+                    attacker.TakeDamage(outcome.counterDamage, transform.position);
+                if (outcome.succeeded) parry.PlaySuccess();
+            });
         }
 
         public void ApplyStats(UIDataSO data)

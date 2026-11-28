@@ -68,17 +68,22 @@ public class KTH_RestBossPattern3 : KTH_BossAction
         if (boss != null) boss.Reserve(this);
     }
 
-    public override void Execute(KTH_Boss kthBoss)
+    public override void Execute(KTH_Boss boss) => ExecuteTurn(boss, false, null);
+
+    public override void ExecuteTurn(KTH_Boss boss, bool enhanced, Action onComplete)
     {
         try
         {
-            ReserveEnhanced(kthBoss);
+            ReserveEnhanced(boss);
         }
         catch (KTH_DesperateException e)
         {
             Debug.Log($"[휴식 보스] {e.Message} → 발악: 태초의 폭발");
-            Desperate(kthBoss);
+            Desperate(boss, onComplete);
+            return;
         }
+
+        onComplete?.Invoke();
     }
 
     /// <summary>강화 패턴 예약. 피가 기준 이하면 예약하지 않고 예외를 던진다.</summary>
@@ -99,11 +104,15 @@ public class KTH_RestBossPattern3 : KTH_BossAction
         Debug.Log($"[휴식 보스] 강화 패턴 예약: {pick.GetType().Name}");
     }
 
-    private void Desperate(KTH_Boss kthBoss)
+    private void Desperate(KTH_Boss kthBoss, Action onComplete)
     {
-        if (exploded) return;
+        if (exploded)
+        {
+            onComplete?.Invoke();
+            return;
+        }
         exploded = true;
-        KTH_Bomb.Explosion(kthBoss, bundle, style);
+        KTH_Bomb.Explosion(kthBoss, bundle, style, _ => onComplete?.Invoke());
     }
 
     private KTH_BossAction RandomPattern()

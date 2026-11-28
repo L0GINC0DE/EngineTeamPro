@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -5,13 +6,15 @@ using UnityEngine.U2D.Animation;
 [RequireComponent(typeof(SpriteLibrary), typeof(SpriteRenderer))]
 public class PlayerAppearance : MonoBehaviour
 {
+    private const float WeaponAttackDelay = 0.3f;
     private static readonly int ReadyHash = Animator.StringToHash("Base Layer.Ready");
+    private static readonly int CapeFlareHash = Animator.StringToHash("Base Layer.CapeFlare");
     private static readonly int SwordIdleHash = Animator.StringToHash("Base Layer.SwordIdle");
 
     [SerializeField] private SpriteRenderer bodyRenderer;
     [SerializeField] private SpriteRenderer weaponRenderer;
     [SerializeField] private Vector2 swordAttackOffset;
-    
+
     [SerializeField] private Vector2 attackOffset;
     [SerializeField] private Vector2 defendOffset;
     [SerializeField] private Vector2 actOffset;
@@ -23,11 +26,12 @@ public class PlayerAppearance : MonoBehaviour
     private SpriteLibrary spriteLibrary;
     private Animator bodyAnimator;
     private Animator weaponAnimator;
+    private UIType? selectedBody;
+    private bool bodyAttacking;
     private UIType? selectedWeapon;
     private Sprite selectedWeaponSprite;
-    private bool attacking;
-    private Vector3 weaponRestPosition;
-    private Quaternion weaponRestRotation;
+    private Coroutine pendingWeaponAttack;
+    private Pose? weaponRestPose;
 
     private void Awake()
     {
@@ -41,19 +45,29 @@ public class PlayerAppearance : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (attacking && (weaponAnimator == null || !weaponAnimator.isActiveAndEnabled ||
+        if (bodyAttacking && (bodyAnimator == null || !bodyAnimator.isActiveAndEnabled ||
+            bodyAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != CapeFlareHash))
+            StopBodyAttack();
+
+        if (weaponRestPose.HasValue && (weaponAnimator == null || !weaponAnimator.isActiveAndEnabled ||
             weaponAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash == ReadyHash))
             StopWeaponAttack();
     }
 
-    private void OnDisable() => StopWeaponAttack();
+    private void OnDisable()
+    {
+        CancelPendingWeaponAttack();
+        StopBodyAttack();
+        StopWeaponAttack();
+    }
 
     public void ShowBody(UIType type)
     {
         Sprite sprite = spriteLibrary.GetSprite("Body", type.ToString());
         if (sprite == null || bodyRenderer == null) return;
 
-        if (!PlayState(bodyAnimator, Animator.StringToHash($"Base Layer.{type}")))
+        selectedBody = type;
+        if (!bodyAttacking && !PlayState(bodyAnimator, Animator.StringToHash($"Base Layer.{type}")))
             ShowStaticSprite(bodyRenderer, bodyAnimator, sprite);
     }
 
@@ -65,70 +79,97 @@ public class PlayerAppearance : MonoBehaviour
         RestoreWeaponPose();
         selectedWeapon = type;
         selectedWeaponSprite = sprite;
-        
-        Transform weapon = weaponRenderer.transform;
-        weaponRestPosition = weapon.localPosition;
-        weaponRestRotation = weapon.localRotation;
-        
-        if (type == UIType.Attack)
-            weapon.localPosition += (Vector3)attackOffset;
-        if (type == UIType.Defend)
-            weapon.localPosition += (Vector3)defendOffset;
-        if (type == UIType.Act)
-            weapon.localPosition += (Vector3)actOffset;
-        if (type == UIType.Heal)
-            weapon.localPosition += (Vector3)healOffset;
-        if (type == UIType.HealthBar)
-            weapon.localPosition += (Vector3)healthbarOffset;
-        if (type == UIType.Setting)
-            weapon.localPosition += (Vector3)settingOffset;
-        if (type == UIType.TextBar)
-            weapon.localPosition += (Vector3)textbarOffset;
-        
+
+        Vector2 offset = type switch
+        {
+            UIType.Attack => attackOffset,
+            UIType.Defend => defendOffset,
+            UIType.Act => actOffset,
+            UIType.Heal => healOffset,
+            UIType.HealthBar => healthbarOffset,
+            UIType.Setting => settingOffset,
+            UIType.TextBar => textbarOffset,
+            _ => Vector2.zero
+        };
+        weaponRenderer.transform.localPosition += (Vector3)offset;
         ShowSelectedWeapon();
     }
 
     public void HideSelection()
     {
-        ShowStaticSprite(bodyRenderer, bodyAnimator, null);
+        selectedBody = null;
+        if (!bodyAttacking) ShowStaticSprite(bodyRenderer, bodyAnimator, null);
 
         selectedWeapon = null;
         selectedWeaponSprite = null;
-        if (!attacking) ShowSelectedWeapon();
+        if (!weaponRestPose.HasValue) ShowSelectedWeapon();
     }
 
-    public void PlayWeaponAttack(UIType type)
+    public void PlayAttack(UIType? weaponType)
     {
-        int attackHash = Animator.StringToHash($"Base Layer.Attack_{type}");
+        if (!isActiveAndEnabled) return;
+
+        CancelPendingWeaponAttack();
+        bool startedBody = PlayState(bodyAnimator, CapeFlareHash);
+        if (startedBody) bodyAttacking = true;
+
+        if (weaponType is not UIType type) return;
+        if (startedBody)
+            pendingWeaponAttack = StartCoroutine(PlayWeaponAttackAfterDelay(type));
+        else
+            PlayWeaponAttack(type);
+    }
+
+    private IEnumerator PlayWeaponAttackAfterDelay(UIType type)
+    {
+        yield return new WaitForSeconds(WeaponAttackDelay);
+        pendingWeaponAttack = null;
+        PlayWeaponAttack(type);
+    }
+
+    private void CancelPendingWeaponAttack()
+    {
+        if (pendingWeaponAttack == null) return;
+        StopCoroutine(pendingWeaponAttack);
+        pendingWeaponAttack = null;
+    }
+
+    private void StopBodyAttack()
+    {
+        if (!bodyAttacking) return;
+        bodyAttacking = false;
+        if (selectedBody is UIType type)
+            ShowBody(type);
+        else
+            ShowStaticSprite(bodyRenderer, bodyAnimator, null);
+    }
+
+    private void PlayWeaponAttack(UIType type)
+    {
         if (!isActiveAndEnabled || weaponRenderer == null) return;
 
         RestoreWeaponPose();
         Transform weapon = weaponRenderer.transform;
-        weaponRestPosition = weapon.localPosition;
-        weaponRestRotation = weapon.localRotation;
-        if (!PlayState(weaponAnimator, attackHash)) return;
+        var restPose = new Pose(weapon.localPosition, weapon.localRotation);
+        if (!PlayState(weaponAnimator, Animator.StringToHash($"Base Layer.Attack_{type}"))) return;
 
+        weaponRestPose = restPose;
         if (type == UIType.Attack)
             weapon.localPosition += (Vector3)swordAttackOffset;
-
-        attacking = true;
     }
 
     private void StopWeaponAttack()
     {
-        if (!attacking) return;
-
-        RestoreWeaponPose();
-        ShowSelectedWeapon();
+        if (RestoreWeaponPose()) ShowSelectedWeapon();
     }
 
-    private void RestoreWeaponPose()
+    private bool RestoreWeaponPose()
     {
-        if (!attacking) return;
-
-        attacking = false;
+        if (weaponRestPose is not Pose restPose) return false;
+        weaponRestPose = null;
         if (weaponRenderer != null)
-            weaponRenderer.transform.SetLocalPositionAndRotation(weaponRestPosition, weaponRestRotation);
+            weaponRenderer.transform.SetLocalPositionAndRotation(restPose.position, restPose.rotation);
+        return true;
     }
 
     private void ShowSelectedWeapon()

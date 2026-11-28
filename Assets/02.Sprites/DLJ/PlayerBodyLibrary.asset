@@ -21,19 +21,19 @@ MonoBehaviour:
       m_Sprite: {fileID: 7247564697799273448, guid: 7bd77b54dee9c7a44a07404943a711aa, type: 3}
     - m_Name: Defend
       m_Hash: 355029912
-      m_Sprite: {fileID: 3611343145592988713, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
+      m_Sprite: {fileID: 7017196895299903940, guid: 549acd8385e8e3b4f9456e1ba10c66a0, type: 3}
     - m_Name: Act
       m_Hash: 396473252
-      m_Sprite: {fileID: 1469940103629934517, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
+      m_Sprite: {fileID: -768775821209460691, guid: 6f9e7cad87efe5440b6194154c4c92b2, type: 3}
     - m_Name: Heal
       m_Hash: 152752528
-      m_Sprite: {fileID: -6836681163904204092, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
+      m_Sprite: {fileID: -966034160072345623, guid: 8b4e7781de084f846a30239ce29e538c, type: 3}
     - m_Name: HealthBar
       m_Hash: 176953765
-      m_Sprite: {fileID: 5927891723065722450, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
+      m_Sprite: {fileID: 6436451798357178354, guid: 546580aafec47f64cbefc8fb88d0d59f, type: 3}
     - m_Name: Setting
       m_Hash: 281641220
-      m_Sprite: {fileID: -313719836618290768, guid: b0de540adfba16242809b19069229f50, type: 3}
+      m_Sprite: {fileID: -104577341246949296, guid: b0de540adfba16242809b19069229f50, type: 3}
     - m_Name: TextBar
       m_Hash: 247661486
       m_Sprite: {fileID: 4674312620198347305, guid: 3607c2f3e7121bb468d0e3636b1b0980, type: 3}

@@ -9980,7 +9980,9 @@ MonoBehaviour:
   bundle:
     baseDamage: 10
     damageCoefficient: 1
+    parryMode: 4
     parryable: 1
+    counterMultiplier: 1
     inputCount: 1
     goodCoefficient: 0.5
     perfectWindow: 0.08
