@@ -7,7 +7,6 @@ public class KTH_RestBossPattern2 : KTH_BossAction
     [SerializeField]private Transform branch;
     [SerializeField]private float windupTime = 0.4f;
     [SerializeField]private float flyDuration = 0.7f;
-    [Tooltip("날아가는 동안 회전")]
     [SerializeField]private bool spin = true;
     [SerializeField]private float spinDuration = 0.3f;
     [SerializeField]private KTH_AttackBundle bundle = new();
@@ -20,7 +19,6 @@ public class KTH_RestBossPattern2 : KTH_BossAction
     [SerializeField]private float reflectDuration = 0.5f;
 
     [Header("강화: 화차")]
-    [Tooltip("발사 전 보스 앞에서 제자리 회전하는 시간 (이 동안 화차 애니메이션 재생)")]
     [SerializeField]private float enhancedWindupTime = 0.5f;
     [SerializeField]private float enhancedFlyDuration = 0.7f;
     [SerializeField]private bool enhancedSpin = false;
@@ -59,7 +57,6 @@ public class KTH_RestBossPattern2 : KTH_BossAction
         KTH_Throw.Windup(boss, current, windupTime, () => Fire(boss, onComplete));
     }
 
-    // 화차: 보스 앞 제자리에서 회전 + 애니메이션 시작 → 예고 후 회전한 채로 발사 → 패리 튕김 동안에도 유지 → End()에서 종료
     private void BeginEnhanced(KTH_Boss boss, Action onComplete)
     {
         current = enhancedBundle;
@@ -69,7 +66,6 @@ public class KTH_RestBossPattern2 : KTH_BossAction
             .SetRelative().SetEase(Ease.Linear).SetLoops(-1);
         if (animator != null) animator.SetBool(SpinHash, true);
 
-        // 화차 애니메이션·회전은 발사와 패리 튕김 내내 유지하고 End()에서 끈다
         KTH_Throw.Windup(boss, current, enhancedWindupTime,
             () => KTH_Throw.Throw(branch, boss.target, enhancedFlyDuration, Hit(boss, 0, onComplete)));
     }
@@ -89,7 +85,6 @@ public class KTH_RestBossPattern2 : KTH_BossAction
     {
         return KTH_Throw.Judge(boss, current, branch.position, maxParry, r =>
         {
-            Debug.Log($"[화차] {parried + 1}번째 판정 - perfect:{r.perfect} good:{r.good} fail:{r.fail} parried:{r.parried}");
             if (!r.parried)
             {
                 End(onComplete);

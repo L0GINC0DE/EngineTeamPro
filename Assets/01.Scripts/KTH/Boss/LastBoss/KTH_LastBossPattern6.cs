@@ -6,81 +6,54 @@ using UnityEngine;
 [Serializable]
 public class Pattern6Data
 {
-    [Header("차지")]
-    [Tooltip("레이저 발사 전 예고(차지) 시간")]
     public float chargeTime = 1.2f;
-    [Tooltip("차지 중 켤 이펙트 (비우면 없음)")]
-    public GameObject chargeEffect;
-
-    [Header("레이저")]
-    [Tooltip("레이저 유지 시간. 이 시간 동안 패리 키를 꾹 누르고 있어야 한다")]
     public float beamDuration = 2.5f;
-    [Tooltip("레이저 굵기")]
-    public float beamWidth = 1.2f;
-    [Tooltip("플레이어 뒤로 얼마나 더 뻗어 나갈지")]
-    public float beamOverreach = 6f;
-    [Tooltip("레이저가 굵어지는/가늘어지는 시간")]
-    public float beamGrowTime = 0.15f;
-    public Color beamColor = new(1f, 0.25f, 0.25f, 1f);
-    [Tooltip("막는 중일 때 레이저 색")]
-    public Color blockedColor = new(1f, 0.9f, 0.4f, 1f);
-    [Tooltip("레이저 머티리얼 (비우면 Sprites/Default)")]
-    public Material beamMaterial;
-    public int sortingOrder = 20;
-
-    [Header("홀딩 판정")]
-    [Tooltip("레이저 시간 중 이 비율 이상 누르고 있으면 막아낸다")]
+    public float beamWidth = 6f;
     [Range(0, 1)] public float successRatio = 0.8f;
-    [Tooltip("레이저가 닿고 나서 이 시간 안에는 안 누르고 있어도 봐준다")]
-    public float startGrace = 0.15f;
-
-    [Header("피해")]
-    [Tooltip("안 누르고 있을 때 이 간격마다 피해")]
     public float tickInterval = 0.25f;
-    [Tooltip("안 누르고 있을 때 틱당 피해")]
     public int tickDamage = 5;
-    [Tooltip("막는 중일 때 카메라 흔들림 세기 (틱마다)")]
-    public float holdShakeForce = 0.15f;
-    [Tooltip("뚫렸을 때 카메라 흔들림 세기 (틱마다)")]
-    public float hitShakeForce = 0.35f;
-
-    [Header("막아냈을 때")]
-    [Tooltip("켜면 막아낸 뒤 보스에게 피해를 되돌린다")]
-    public bool reflectOnSuccess = true;
-    public int reflectDamage = 30;
+    public LayerMask hitMask = ~0;
 }
 
-/// <summary>
-/// 2페이즈 대형 레이저: 차지 → 플레이어를 향해 레이저 발사 → 레이저가 나가는 동안 패리 키를 꾹 누르고 있어야 한다.
-/// 누르고 있는 동안은 레이저가 플레이어 앞에서 막히고, 떼면 뚫려서 틱 피해를 입는다.
-/// 끝났을 때 누른 시간 비율이 successRatio 이상이면 막아낸 것(패리 성공).
-/// </summary>
+// 레이저 : 차지 후 발사, 나가는 동안 패리키를 꾹 누르고 있어야 함
+// 매 프레임 레이캐스트로 맞은 걸 보고 막는 중이면 플레이어 앞에서 끊김
 public class KTH_LastBossPattern6 : KTH_BossAction
 {
-    [Tooltip("레이저가 나가는 위치 (비우면 보스 위치)")]
+    private const float Overreach = 6f;
+    private const float GrowTime = 0.15f;
+    private const float StartGrace = 0.15f;
+    private const float HoldShake = 0.15f;
+    private const float HitShake = 0.35f;
+    private const string ChargeTrigger = "IsLaserCharge";
+    private const string FireBool = "IsLaser";
     [SerializeField] private Transform muzzle;
-    [SerializeField] private HealthModule hm;
+    [SerializeField] private KTH_LaserBeam laserPrefab;
+    [SerializeField] private GameObject chargePrefab;
     [SerializeField] private KTH_AttackBundle bundle = new() { baseDamage = 0f };
     [SerializeField] private Pattern6Data p6d = new();
 
-    [Header("애니메이션")]
-    [SerializeField] private string chargeTrigger = "IsLaserCharge";
-    [SerializeField] private string fireBool = "IsLaser";
-
-    private LineRenderer line;
+    private KTH_LaserBeam beam;
+    private GameObject charge;
     private Sequence seq;
     private Action endBeam;
 
     private void Awake()
     {
-        if (hm == null) hm = GetComponentInParent<HealthModule>();
-        CreateLine();
+        // 보스가 뒤집혀도 빔은 안 뒤집히게 부모 없이 생성
+        if (laserPrefab != null) beam = Instantiate(laserPrefab);
+    }
+
+    private void OnDestroy()
+    {
+        if (beam != null) Destroy(beam.gameObject);
     }
 
     private void OnDisable()
     {
         seq?.Kill();
         endBeam?.Invoke();
+        StopCharge();
+        if (beam != null) beam.Stop();
     }
 
     public override void Execute(KTH_Boss kthBoss)
@@ -88,15 +61,37 @@ public class KTH_LastBossPattern6 : KTH_BossAction
         seq?.Kill();
 
         Animator animator = kthBoss.GetComponentInChildren<Animator>();
-        SetTrigger(animator, chargeTrigger);
-        SetActive(p6d.chargeEffect, true);
+        SetTrigger(animator, ChargeTrigger);
+        StartCharge(kthBoss);
 
         KTH_Throw.Windup(kthBoss, bundle, p6d.chargeTime, () =>
         {
-            SetActive(p6d.chargeEffect, false);
-            SetBool(animator, fireBool, true);
-            Fire(kthBoss, success => SetBool(animator, fireBool, false));
+            StopCharge();
+            SetBool(animator, FireBool, true);
+            Fire(kthBoss, _ => SetBool(animator, FireBool, false));
         });
+    }
+
+    // 차지 이펙트가 1초짜리라 chargeTime에 맞춰 속도 조절
+    private void StartCharge(KTH_Boss kthBoss)
+    {
+        StopCharge();
+        if (chargePrefab == null) return;
+
+        Transform at = muzzle != null ? muzzle : kthBoss.transform;
+        charge = Instantiate(chargePrefab, at.position, Quaternion.identity, at);
+        float speed = p6d.chargeTime > 0f ? 1f / p6d.chargeTime : 1f;
+        foreach (ParticleSystem ps in charge.GetComponentsInChildren<ParticleSystem>())
+        {
+            var main = ps.main;
+            main.simulationSpeed = speed;
+        }
+    }
+
+    private void StopCharge()
+    {
+        if (charge != null) Destroy(charge);
+        charge = null;
     }
 
     private void Fire(KTH_Boss kthBoss, Action<bool> onEnd)
@@ -105,16 +100,18 @@ public class KTH_LastBossPattern6 : KTH_BossAction
         target.TryGetComponent(out KTH_ParryModule parry);
         target.TryGetComponent(out HealthModule targetHm);
 
-        // 홀딩 중 누르는 입력이 헛친 입력으로 잠기지 않게
+        // 꾹 누르는 동안 헛친 입력으로 안 잠기게
         parry?.BeginMash();
 
-        float elapsed = 0f, held = 0f, tickTimer = 0f;
+        float elapsed = 0f, safe = 0f, tickTimer = 0f;
         bool ended = false;
 
-        line.enabled = true;
-        line.widthMultiplier = 0f;
-        DOTween.To(() => line.widthMultiplier, w => line.widthMultiplier = w, p6d.beamWidth, p6d.beamGrowTime)
-            .SetTarget(line);
+        if (beam != null)
+        {
+            Shot first = Cast(kthBoss, target);
+            beam.Aim(first.from, first.dir, first.maxDistance);
+            beam.Fire();
+        }
 
         void End()
         {
@@ -123,22 +120,13 @@ public class KTH_LastBossPattern6 : KTH_BossAction
             endBeam = null;
             parry?.EndMash();
 
-            float ratio = p6d.beamDuration > 0f ? held / p6d.beamDuration : 1f;
+            float ratio = p6d.beamDuration > 0f ? safe / p6d.beamDuration : 1f;
             bool success = ratio >= p6d.successRatio;
-            Debug.Log($"[레이저] 홀딩 {ratio:P0} → {(success ? "막아냄" : "실패")}");
+            Debug.Log($"레이저 {ratio:P0} {success}");
 
-            if (success)
-            {
-                parry?.OnParryEvent?.Invoke();
-                if (p6d.reflectOnSuccess && hm != null) hm.TakeDamage(p6d.reflectDamage, target.position);
-            }
+            if (success) parry?.OnParryEvent?.Invoke();
 
-            if (line == null) return; // 오브젝트 파괴 중
-            DOTween.Kill(line);
-            DOTween.To(() => line.widthMultiplier, w => line.widthMultiplier = w, 0f, p6d.beamGrowTime)
-                .SetTarget(line)
-                .OnComplete(() => line.enabled = false);
-
+            if (beam != null) beam.Stop();
             onEnd?.Invoke(success);
         }
         endBeam = End;
@@ -151,61 +139,84 @@ public class KTH_LastBossPattern6 : KTH_BossAction
             float dt = Time.deltaTime;
             elapsed += dt;
 
+            Shot shot = Cast(kthBoss, target);
             bool holding = parry != null && parry.IsHolding;
-            if (holding || elapsed <= p6d.startGrace) held += dt;
+            bool hitPlayer = shot.hit && shot.hitTarget;
 
-            Vector3 from = muzzle != null ? muzzle.position : kthBoss.transform.position;
-            DrawBeam(from, target.position, holding);
+            if (!hitPlayer || holding || elapsed <= StartGrace) safe += dt;
+            DrawBeam(shot, hitPlayer, holding, elapsed);
 
             tickTimer += dt;
             if (tickTimer < p6d.tickInterval) return;
             tickTimer -= p6d.tickInterval;
 
+            if (!hitPlayer) return;
             if (holding)
             {
-                Shake(p6d.holdShakeForce);
+                Shake(HoldShake);
             }
-            else if (elapsed > p6d.startGrace)
+            else if (elapsed > StartGrace)
             {
-                Shake(p6d.hitShakeForce);
-                if (targetHm != null) targetHm.TakeDamage(p6d.tickDamage, from);
+                Shake(HitShake);
+                if (targetHm != null) targetHm.TakeDamage(p6d.tickDamage, shot.from);
             }
         });
         seq.OnComplete(End);
         seq.OnKill(End);
     }
 
-    /// <summary>막는 중이면 플레이어 앞에서 끊기고, 아니면 플레이어를 뚫고 뒤로 뻗는다.</summary>
-    private void DrawBeam(Vector3 from, Vector3 to, bool blocked)
+    private void DrawBeam(Shot shot, bool hitPlayer, bool holding, float elapsed)
     {
-        Vector3 dir = to - from;
-        float dist = dir.magnitude;
-        if (dist < 0.001f) return;
-        dir /= dist;
+        if (beam == null) return;
 
-        Vector3 end = blocked
-            ? to - dir * (p6d.beamWidth * 0.5f)
-            : to + dir * p6d.beamOverreach;
+        // 막히면 거기서 끊고 아니면 끝까지
+        bool blocked = hitPlayer ? holding : shot.hit;
+        beam.Aim(shot.from, shot.dir, blocked ? shot.distance : shot.maxDistance);
+        beam.SetImpact(blocked);
 
-        line.SetPosition(0, from);
-        line.SetPosition(1, end);
-
-        Color c = blocked ? p6d.blockedColor : p6d.beamColor;
-        line.startColor = c;
-        line.endColor = c;
+        float grow = Mathf.Clamp01(Mathf.Min(elapsed, p6d.beamDuration - elapsed) / GrowTime);
+        beam.SetWidth(p6d.beamWidth * grow);
     }
 
-    private void CreateLine()
+    private struct Shot
     {
-        GameObject go = new GameObject("Laser");
-        go.transform.SetParent(transform, false);
-        line = go.AddComponent<LineRenderer>();
-        line.positionCount = 2;
-        line.useWorldSpace = true;
-        line.numCapVertices = 6;
-        line.sortingOrder = p6d.sortingOrder;
-        line.material = p6d.beamMaterial != null ? p6d.beamMaterial : new Material(Shader.Find("Sprites/Default"));
-        line.enabled = false;
+        public Vector2 from;
+        public Vector2 dir;
+        public float maxDistance;
+        public bool hit;
+        public bool hitTarget;
+        public float distance;
+    }
+
+    // 보스 자기 콜라이더는 건너뜀
+    private Shot Cast(KTH_Boss kthBoss, Transform target)
+    {
+        Shot shot = new Shot { from = muzzle != null ? muzzle.position : kthBoss.transform.position };
+        Vector2 toTarget = (Vector2)target.position - shot.from;
+        float dist = toTarget.magnitude;
+        shot.dir = dist > 0.001f ? toTarget / dist : Vector2.left;
+        shot.maxDistance = dist + Overreach;
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(shot.from, shot.dir, shot.maxDistance, p6d.hitMask);
+        foreach (RaycastHit2D h in hits)
+        {
+            if (h.collider == null || h.collider.transform.IsChildOf(kthBoss.transform)) continue;
+
+            shot.hit = true;
+            shot.distance = h.distance;
+            Transform t = h.collider.attachedRigidbody != null ? h.collider.attachedRigidbody.transform : h.collider.transform;
+            shot.hitTarget = t == target || h.collider.transform.IsChildOf(target);
+            break;
+        }
+
+        // 플레이어 콜라이더 없으면 그냥 플레이어 위치에서 맞은 걸로
+        if (target.GetComponentInChildren<Collider2D>() == null && (!shot.hit || shot.distance > dist))
+        {
+            shot.hit = true;
+            shot.hitTarget = true;
+            shot.distance = dist;
+        }
+        return shot;
     }
 
     private static void Shake(float force)
@@ -214,14 +225,9 @@ public class KTH_LastBossPattern6 : KTH_BossAction
             KTH_DamageEffectManager.instance.CameraShake(force);
     }
 
-    private static void SetActive(GameObject go, bool active)
-    {
-        if (go != null) go.SetActive(active);
-    }
-
     private static void SetTrigger(Animator animator, string name)
     {
-        if (animator == null || string.IsNullOrEmpty(name)) return;
+        if (animator == null) return;
         foreach (AnimatorControllerParameter p in animator.parameters)
             if (p.name == name && p.type == AnimatorControllerParameterType.Trigger)
             {
@@ -232,7 +238,7 @@ public class KTH_LastBossPattern6 : KTH_BossAction
 
     private static void SetBool(Animator animator, string name, bool on)
     {
-        if (animator == null || string.IsNullOrEmpty(name)) return;
+        if (animator == null) return;
         foreach (AnimatorControllerParameter p in animator.parameters)
             if (p.name == name && p.type == AnimatorControllerParameterType.Bool)
             {

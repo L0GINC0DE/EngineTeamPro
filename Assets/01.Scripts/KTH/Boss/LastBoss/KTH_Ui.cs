@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KTH_Ui : MonoBehaviour
 {
@@ -7,17 +8,10 @@ public class KTH_Ui : MonoBehaviour
 
     public void Init(KTH_RandomSpriteListSo so, KTH_Boss boss, KTH_AttackBundle bundle, KTH_UiThrowStyle style)
     {
-        sr = GetComponent<SpriteRenderer>();
-        sr.sortingOrder = 10;
-        RandomSprite(so);
-
-        if (TryGetComponent(out BoxCollider2D col) && sr.sprite != null)
-            col.size = sr.sprite.bounds.size;
-
+        Setup(RandomSprite(so));
         Go(boss, bundle, style);
     }
 
-    /// <summary>던지기 없이 스프라이트만 세팅 (묶음 투척 패턴에서 사용)</summary>
     public void Setup(Sprite sprite)
     {
         sr = GetComponent<SpriteRenderer>();
@@ -28,15 +22,10 @@ public class KTH_Ui : MonoBehaviour
             col.size = sr.sprite.bounds.size;
     }
 
-    /// <summary>
-    /// 프리팹을 새로 생성해서 자식으로 붙인다.
-    /// 캔버스 UI 프리팹(RectTransform)이면 월드 스페이스 캔버스로 감싸고, 가장 긴 변이 worldSize(유닛)가 되도록 크기를 맞춘다.
-    /// </summary>
+    // 프리팹을 자식으로 생성. 캔버스 UI면 월드 캔버스로 감싸고 긴 변이 worldSize가 되게 맞춤
     public void SetupPrefab(GameObject prefab, float worldSize, int sortingOrder = 10)
     {
-        bool isCanvasUi = prefab.GetComponent<RectTransform>() != null;
-
-        if (isCanvasUi)
+        if (prefab.GetComponent<RectTransform>() != null)
         {
             Canvas canvas = gameObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.WorldSpace;
@@ -45,7 +34,7 @@ public class KTH_Ui : MonoBehaviour
 
             RectTransform root = GetComponent<RectTransform>();
             GameObject inst = Instantiate(prefab, root, false);
-            var rt = (RectTransform)inst.transform;
+            RectTransform rt = (RectTransform)inst.transform;
             rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
             rt.anchoredPosition = Vector2.zero;
 
@@ -53,8 +42,7 @@ public class KTH_Ui : MonoBehaviour
             root.sizeDelta = size;
             root.localScale = Vector3.one * (worldSize / Mathf.Max(1f, Mathf.Max(size.x, size.y)));
 
-            // 날아오는 UI라 클릭/조작은 막는다
-            foreach (var sel in inst.GetComponentsInChildren<UnityEngine.UI.Selectable>()) sel.interactable = false;
+            foreach (Selectable s in inst.GetComponentsInChildren<Selectable>()) s.interactable = false;
 
             if (!TryGetComponent(out BoxCollider2D col)) col = gameObject.AddComponent<BoxCollider2D>();
             col.size = size;
@@ -63,12 +51,12 @@ public class KTH_Ui : MonoBehaviour
         {
             GameObject inst = Instantiate(prefab, transform, false);
             inst.transform.localPosition = Vector3.zero;
-            foreach (var r in inst.GetComponentsInChildren<SpriteRenderer>()) r.sortingOrder = sortingOrder;
+            foreach (SpriteRenderer r in inst.GetComponentsInChildren<SpriteRenderer>()) r.sortingOrder = sortingOrder;
 
             if (GetComponent<BoxCollider2D>() == null)
             {
                 Bounds b = new Bounds(transform.position, Vector3.zero);
-                foreach (var r in inst.GetComponentsInChildren<Renderer>()) b.Encapsulate(r.bounds);
+                foreach (Renderer r in inst.GetComponentsInChildren<Renderer>()) b.Encapsulate(r.bounds);
                 BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
                 col.size = b.size;
                 col.offset = transform.InverseTransformPoint(b.center);
@@ -76,11 +64,11 @@ public class KTH_Ui : MonoBehaviour
         }
     }
 
-    private void RandomSprite(KTH_RandomSpriteListSo so)
+    private Sprite RandomSprite(KTH_RandomSpriteListSo so)
     {
         var list = so.SpriteList;
-        if (list.Count == 0) return;
-        sr.sprite = list[Random.Range(0, list.Count)];
+        if (list.Count == 0) return null;
+        return list[Random.Range(0, list.Count)];
     }
 
     private void Go(KTH_Boss boss, KTH_AttackBundle bundle, KTH_UiThrowStyle style)

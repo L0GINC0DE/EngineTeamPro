@@ -373,6 +373,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1167384847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167384848}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167384848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167384847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.023, y: -0.542, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1861913611}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1183141845
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +420,7 @@ GameObject:
   - component: {fileID: 1183141851}
   - component: {fileID: 1183141852}
   - component: {fileID: 1183141853}
+  - component: {fileID: 1183141854}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Player
@@ -508,7 +540,7 @@ Transform:
   m_GameObject: {fileID: 1183141845}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: 0, z: 0}
+  m_LocalPosition: {x: -1.44, y: -2.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -600,6 +632,22 @@ MonoBehaviour:
   takenModifier: 0
   timingWindowScale: 1
   minDamage: 0
+--- !u!114 &1183141854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183141845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6901f47fc5d3a3e47b6a27d82740f8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KTH_PlayerTurnAttack
+  boss: {fileID: 1861913616}
+  attackKey: 113
+  damage: 40
+  endTurnAfterAttack: 1
 --- !u!1 &1204945006
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,8 +815,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
   patterns:
+  - {fileID: 1861913612}
+  - {fileID: 1861913617}
+  - {fileID: 1861913613}
   - {fileID: 1861913619}
+  - {fileID: 1861913615}
   _target: {fileID: 1183141850}
+  useManagedTurns: 0
   randomOrder: 1
   noRepeat: 1
 --- !u!114 &1861913609
@@ -857,10 +910,11 @@ Transform:
   m_GameObject: {fileID: 1861913604}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.18, y: 0.12, z: 0}
+  m_LocalPosition: {x: -1.12, y: 5.59, z: 0}
   m_LocalScale: {x: 0.9679, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1167384848}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1861913612
@@ -879,7 +933,9 @@ MonoBehaviour:
   bundle:
     baseDamage: 10
     damageCoefficient: 1
+    parryMode: 0
     parryable: 1
+    counterMultiplier: 1
     inputCount: 1
     goodCoefficient: 0.5
     perfectWindow: 0.08
@@ -910,7 +966,9 @@ MonoBehaviour:
   bundle:
     baseDamage: 0
     damageCoefficient: 1
+    parryMode: 0
     parryable: 1
+    counterMultiplier: 1
     inputCount: 1
     goodCoefficient: 0.5
     perfectWindow: 0.08
@@ -935,8 +993,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KTH_CheckHp
   phase1: {fileID: 1861913608}
   phase2: {fileID: 1861913616}
-  hm: {fileID: 0}
-  phaseRatio: 0.5
+  hm: {fileID: 1861913609}
+  phaseRatio: 0.399
 --- !u!114 &1861913615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -952,7 +1010,9 @@ MonoBehaviour:
   bundle:
     baseDamage: 10
     damageCoefficient: 1
+    parryMode: 0
     parryable: 1
+    counterMultiplier: 1
     inputCount: 1
     goodCoefficient: 0.5
     perfectWindow: 0.08
@@ -980,8 +1040,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6341fe838c84f744b65236e0a481d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_Boss
-  patterns: []
+  patterns:
+  - {fileID: 1861913620}
   _target: {fileID: 0}
+  useManagedTurns: 0
   randomOrder: 1
   noRepeat: 1
 --- !u!114 &1861913617
@@ -1008,7 +1070,9 @@ MonoBehaviour:
   bundle:
     baseDamage: 10
     damageCoefficient: 1
+    parryMode: 0
     parryable: 1
+    counterMultiplier: 1
     inputCount: 1
     goodCoefficient: 0.5
     perfectWindow: 0.08
@@ -1083,37 +1147,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab26eed04d8510c4fb92c2523aea899e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KTH_LastBossPattern6
-  muzzle: {fileID: 0}
-  hm: {fileID: 0}
+  muzzle: {fileID: 1167384848}
+  laserPrefab: {fileID: 8402900234648657588, guid: 4f1cf72b3a578214489316cf31c47891, type: 3}
+  chargePrefab: {fileID: 3450511332415200684, guid: 62518c02db23e664e8d7d7face586c73, type: 3}
   bundle:
     baseDamage: 0
     damageCoefficient: 1
+    parryMode: 0
     parryable: 1
+    counterMultiplier: 1
     inputCount: 1
     goodCoefficient: 0.5
     perfectWindow: 0.08
     goodWindow: 0.2
   p6d:
     chargeTime: 1.2
-    chargeEffect: {fileID: 0}
     beamDuration: 2.5
-    beamWidth: 1.2
-    beamOverreach: 6
-    beamGrowTime: 0.15
-    beamColor: {r: 0, g: 0, b: 0, a: 1}
-    blockedColor: {r: 1, g: 1, b: 1, a: 1}
-    beamMaterial: {fileID: 0}
-    sortingOrder: 20
+    beamWidth: 6
     successRatio: 0.8
-    startGrace: 0.15
     tickInterval: 0.25
     tickDamage: 5
-    holdShakeForce: 0.15
-    hitShakeForce: 0.35
-    reflectOnSuccess: 1
-    reflectDamage: 30
-  chargeTrigger: IsLaserCharge
-  fireBool: IsLaser
+    hitMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
 --- !u!1 &1967005346
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ public class KTH_DamageEffectManager : MonoBehaviour
     {
         if (data == null) { Debug.LogError("HitEffectSO가 비어 있음", this); return; }
 
-        float dir = target.position.x >= hitFrom.x ? 1 : -1;
+        float dir = target.position.y >= hitFrom.y ? 1 : -1;
 
         HitStop(data.hitStopTime);
         CameraShake(data.shakeForce);

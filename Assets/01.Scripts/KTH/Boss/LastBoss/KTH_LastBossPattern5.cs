@@ -35,6 +35,7 @@ public class KTH_LastBossPattern5 : KTH_BossAction
         Scratch(kthBoss);
     }
 
+    // 보스는 위, 플레이어는 아래라서 플레이어 쪽 방향으로 내려갔다가 돌아옴
     private void Scratch(KTH_Boss kthBoss)
     {
         tween?.Kill();
@@ -42,22 +43,21 @@ public class KTH_LastBossPattern5 : KTH_BossAction
         Transform t = kthBoss.transform;
         Transform target = kthBoss.target;
         Vector3 origin = t.position;
-        float dir = KTH_Throw.Direction(t, target);
-        float stopX = target.position.x - dir * p5d.Reach;
+        Vector3 dir = (target.position - origin).normalized;
+        Vector3 stop = target.position - dir * p5d.Reach;
 
         Animator animator = kthBoss.GetComponentInChildren<Animator>();
         kthBoss.TryGetComponent(out KTH_ParryTelegraph telegraph);
 
         Sequence seq = DOTween.Sequence().SetLink(gameObject);
 
-        // 패리 결과는 타격 직후 또는 입력 시점에 늦게 올 수 있어서 콜백에서 처리
         Action hit = KTH_Throw.Judge(kthBoss, bundle, origin, 1, r =>
         {
             if (r.parried) Knockback(t, origin, dir);
         });
 
         seq.AppendInterval(p5d.WindupTime);
-        seq.Append(t.DOMoveX(stopX, p5d.ApproachDuration).SetEase(Ease.OutQuad));
+        seq.Append(t.DOMove(stop, p5d.ApproachDuration).SetEase(Ease.OutQuad));
         seq.AppendCallback(() =>
         {
             if (animator != null && !string.IsNullOrEmpty(scratchTrigger))
@@ -68,17 +68,19 @@ public class KTH_LastBossPattern5 : KTH_BossAction
         seq.AppendInterval(p5d.AttackDelayTime);
         seq.AppendCallback(() => hit());
         seq.AppendInterval(p5d.RecoverTime);
-        seq.Append(t.DOMoveX(origin.x, p5d.ReturnDuration).SetEase(Ease.OutQuad));
+        seq.Append(t.DOMove(origin, p5d.ReturnDuration).SetEase(Ease.OutQuad));
 
         tween = seq;
     }
 
-    private void Knockback(Transform t, Vector3 origin, float dir)
+    private void Knockback(Transform t, Vector3 origin, Vector3 dir)
     {
         tween?.Kill();
 
+        Vector3 back = Quaternion.Euler(0, 0, knockbackAngle) * -dir;
+
         Sequence seq = DOTween.Sequence().SetLink(gameObject);
-        seq.Append(KTH_Throw.Return(t, knockbackAngle, -dir, knockbackDistance, knockbackDuration));
+        seq.Append(t.DOMove(t.position + back * knockbackDistance, knockbackDuration).SetEase(Ease.OutQuad));
         seq.Append(t.DOMove(origin, p5d.ReturnDuration).SetEase(Ease.OutQuad));
         tween = seq;
     }
